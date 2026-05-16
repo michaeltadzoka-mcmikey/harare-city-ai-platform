@@ -1,0 +1,440 @@
+{% extends "base.html" %}
+
+{% block title %}Conversations{% endblock %}
+
+{% block content %}
+<div class="conversations-page">
+    <!-- Top bar: heading + action buttons -->
+    <div class="top-bar">
+        <h1>Conversations</h1>
+        <div class="top-actions">
+            <div class="view-toggle">
+                <button class="view-btn active" data-view="sessions">Sessions</button>
+                <button class="view-btn" data-view="messages">Messages</button>
+            </div>
+            <button class="btn btn-sm" onclick="exportCSV()">Export CSV</button>
+            <button class="btn btn-sm" onclick="loadCurrentView()">Refresh</button>
+        </div>
+    </div>
+
+    <!-- Filters row -->
+    <div class="filters-row">
+        <div class="filter-group">
+            <span class="filter-label">Date</span>
+            <select id="dateFilter" onchange="filterChanged()">
+                <option value="last_7_days">Last 7 days</option>
+                <option value="last_30_days">Last 30 days</option>
+                <option value="today">Today</option>
+                <option value="all">All time</option>
+            </select>
+        </div>
+
+        <div class="filter-group">
+            <span class="filter-label">User type</span>
+            <select id="userTypeFilter" onchange="filterChanged()">
+                <option value="all">All types</option>
+                <option value="citizen">Citizen</option>
+                <option value="admin">Admin</option>
+            </select>
+        </div>
+
+        <div class="filter-group">
+            <span class="filter-label">Service</span>
+            <select id="serviceFilter" onchange="filterChanged()">
+                <option value="all">All services</option>
+                {% for service in services %}
+                <option value="{{ service }}">{{ service|title }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="filter-group search-group">
+            <span class="filter-label">Search</span>
+            <input type="text" id="searchInput" placeholder="Keywords..." onkeyup="debouncedSearch()">
+        </div>
+
+        <button class="btn-icon" onclick="toggleAdvancedFilters()" title="Advanced filters">Advanced</button>
+    </div>
+
+    <!-- Advanced filters -->
+    <div id="advancedFilters" class="advanced-filters" style="display: none;">
+        <div class="filter-row">
+            <div class="filter-group">
+                <label>User ID:</label>
+                <select id="userFilter" onchange="filterChanged()">
+                    <option value="all">All users</option>
+                    {% for user_id in user_ids %}
+                    <option value="{{ user_id }}">{{ user_id if user_id else 'Anonymous Citizen' }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="filter-group">
+                <label>Department:</label>
+                <select id="deptFilter" onchange="filterChanged()">
+                    <option value="all">All departments</option>
+                    {% for dept in departments %}
+                    <option value="{{ dept }}">{{ dept|title }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <!-- Dynamic content area -->
+    <div id="contentArea" class="content-area">
+        <div class="loading-spinner"><p>Loading...</p></div>
+    </div>
+</div>
+
+<style>
+.conversations-page {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 15px;
+    display: flex;
+    flex-direction: column;
+    height: calc(100vh - 70px);
+}
+
+.top-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+    padding: 8px 0;
+    flex-shrink: 0;
+}
+.top-bar h1 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #2c3e50;
+    margin: 0;
+}
+.top-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.view-toggle {
+    display: flex;
+    gap: 5px;
+    background: #f0f2f5;
+    border-radius: 6px;
+    padding: 2px;
+}
+.view-btn {
+    background: transparent;
+    border: none;
+    padding: 4px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 500;
+    color: #555;
+}
+.view-btn.active {
+    background: #3498db;
+    color: white;
+}
+.btn-sm {
+    padding: 4px 10px;
+    font-size: 12px;
+    background: #f8f9fa;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    cursor: pointer;
+    color: #2c3e50;
+}
+.btn-sm:hover {
+    background: #e9ecef;
+}
+
+.filters-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 12px;
+    background: white;
+    padding: 6px 12px;
+    border-radius: 6px;
+    margin-bottom: 15px;
+    flex-shrink: 0;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+}
+.filter-group {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    background: #f8f9fa;
+    padding: 3px 8px;
+    border-radius: 16px;
+    border: 1px solid #e0e0e0;
+}
+.filter-label {
+    font-size: 12px;
+    color: #555;
+}
+.filter-group select,
+.filter-group input {
+    border: none;
+    background: transparent;
+    font-size: 12px;
+    padding: 2px 0;
+    outline: none;
+}
+.filter-group.search-group {
+    flex: 1;
+    max-width: 220px;
+}
+.filter-group.search-group input {
+    width: 100%;
+}
+.btn-icon {
+    background: #f8f9fa;
+    border: 1px solid #ddd;
+    border-radius: 16px;
+    padding: 3px 10px;
+    cursor: pointer;
+    font-size: 12px;
+}
+.btn-icon:hover {
+    background: #e9ecef;
+}
+
+.advanced-filters {
+    background: #f8f9fa;
+    border-radius: 6px;
+    padding: 8px 12px;
+    margin-bottom: 15px;
+    border: 1px solid #e0e0e0;
+    flex-shrink: 0;
+}
+.filter-row {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+.filter-row .filter-group {
+    background: white;
+    border-radius: 16px;
+    padding: 3px 10px;
+}
+.filter-row label {
+    font-weight: 500;
+    font-size: 12px;
+    color: #555;
+    margin-right: 4px;
+}
+
+.content-area {
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    overflow: auto;
+    flex: 1;
+    min-height: 0;
+}
+
+.session-layout {
+    display: flex;
+    gap: 20px;
+    height: 100%;
+}
+.session-list-panel {
+    width: 40%;
+    overflow-y: auto;
+    padding: 15px;
+    border-right: 1px solid #e0e0e0;
+}
+.thread-panel {
+    flex: 1;
+    overflow-y: auto;
+    padding: 20px;
+}
+.session-card {
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 10px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+.session-card:hover, .session-card.active {
+    background: #e3f2fd;
+    border-color: #3498db;
+}
+.session-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 6px;
+}
+.session-user {
+    font-weight: bold;
+    color: #2c3e50;
+    font-size: 13px;
+}
+.citizen-badge {
+    background: #f39c12;
+    color: white;
+    font-size: 10px;
+    padding: 2px 5px;
+    border-radius: 10px;
+    margin-left: 5px;
+}
+.session-date {
+    font-size: 11px;
+    color: #7f8c8d;
+}
+.session-preview {
+    font-size: 13px;
+    color: #555;
+    margin-bottom: 6px;
+}
+.session-message-count {
+    background: #ecf0f1;
+    padding: 2px 6px;
+    border-radius: 10px;
+    font-size: 11px;
+}
+
+.messages-view-container {
+    padding: 15px;
+}
+.messages-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+.messages-table th,
+.messages-table td {
+    padding: 8px 10px;
+    text-align: left;
+    border-bottom: 1px solid #eee;
+}
+.messages-table th {
+    background: #f8f9fa;
+    font-weight: 600;
+    color: #2c3e50;
+}
+.messages-table tr:hover {
+    background: #f5f5f5;
+}
+.btn-view-message {
+    background: #3498db;
+    color: white;
+    border: none;
+    padding: 3px 8px;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 11px;
+}
+
+.message-pair {
+    margin-bottom: 20px;
+    border-left: 3px solid #3498db;
+    padding-left: 12px;
+}
+.user-message {
+    background: #f0f7ff;
+    padding: 10px;
+    border-radius: 6px;
+    margin-bottom: 8px;
+}
+.bot-message {
+    background: #f5f5f5;
+    padding: 10px;
+    border-radius: 6px;
+}
+.bot-message.low-confidence {
+    border-left: 3px solid #dc3545;
+}
+.message-meta {
+    display: flex;
+    gap: 10px;
+    margin-top: 6px;
+    font-size: 11px;
+    color: #7f8c8d;
+}
+.badge {
+    padding: 2px 6px;
+    border-radius: 10px;
+    font-size: 10px;
+    font-weight: bold;
+}
+.badge.rag { background: #6c757d; color: white; }
+.badge.rasa { background: #17a2b8; color: white; }
+.badge.fallback { background: #ffc107; color: black; }
+.badge.chitchat { background: #6c757d; color: white; }
+.badge.external { background: #fd7e14; color: white; }
+.badge.llm { background: #20c997; color: white; }
+.badge.confidence-high { background: #28a745; color: white; }
+.badge.confidence-medium { background: #ffc107; color: black; }
+.badge.confidence-low { background: #dc3545; color: white; }
+.knowledge-gap-btn {
+    margin-top: 6px;
+    padding: 2px 8px;
+    background: #f39c12;
+    color: white;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 11px;
+}
+.expand-btn {
+    cursor: pointer;
+    color: #3498db;
+    font-size: 11px;
+    margin-top: 4px;
+    display: inline-block;
+}
+.truncated-text {
+    max-height: 80px;
+    overflow: hidden;
+    position: relative;
+}
+.truncated-text::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 30px;
+    background: linear-gradient(to bottom, rgba(255,255,255,0), white);
+}
+.loading-spinner, .empty-state, .empty-thread {
+    text-align: center;
+    padding: 40px;
+    color: #7f8c8d;
+}
+.pagination {
+    margin-top: 15px;
+    text-align: center;
+}
+.pagination button {
+    margin: 0 3px;
+    padding: 4px 8px;
+    cursor: pointer;
+}
+@media (max-width: 768px) {
+    .top-bar {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+    }
+    .filters-row {
+        flex-wrap: wrap;
+    }
+    .session-layout {
+        flex-direction: column;
+        height: auto;
+    }
+    .session-list-panel {
+        width: 100%;
+        max-height: 250px;
+        border-right: none;
+        border-bottom: 1px solid #e0e0e0;
+    }
+}
+</style>
+
+<script src="{{ url_for('static', filename='js/conversations.js') }}"></script>
+{% endblock %}

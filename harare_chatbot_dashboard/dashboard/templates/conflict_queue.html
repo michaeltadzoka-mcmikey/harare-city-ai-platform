@@ -1,0 +1,101 @@
+<!-- templates/conflict_queue.html -->
+<!-- New v3.2 page for managing document conflicts and provisional resolutions -->
+
+{% extends "base.html" %}
+
+{% block title %}Conflict Queue - Harare Municipal{% endblock %}
+
+{% block extra_css %}
+<style>
+    .tabs {
+        display: flex;
+        border-bottom: 2px solid #ddd;
+        margin-bottom: 1.5rem;
+    }
+    .tab {
+        padding: 0.5rem 1.5rem;
+        cursor: pointer;
+        border: 1px solid transparent;
+        border-bottom: none;
+        background: #f8f9fa;
+        margin-right: 0.25rem;
+        border-radius: 4px 4px 0 0;
+    }
+    .tab.active {
+        background: white;
+        border-color: #ddd;
+        border-bottom-color: white;
+        font-weight: bold;
+    }
+    .tab-content {
+        display: none;
+    }
+    .tab-content.active {
+        display: block;
+    }
+    .conflict-card {
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        padding: 1rem;
+        margin-bottom: 1rem;
+        background: white;
+    }
+    .conflict-header {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 0.5rem;
+    }
+    .conflict-docs {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1rem;
+        margin: 1rem 0;
+    }
+    .doc-panel {
+        border: 1px solid #ccc;
+        padding: 0.5rem;
+        border-radius: 4px;
+    }
+    .doc-panel.highlight {
+        border-left: 4px solid #3498db;
+    }
+    .badge {
+        display: inline-block;
+        padding: 0.2rem 0.5rem;
+        border-radius: 12px;
+        font-size: 0.8rem;
+    }
+    .badge-unresolved { background: #e74c3c; color: white; }
+    .badge-provisional { background: #f39c12; color: white; }
+    .badge-resolved { background: #27ae60; color: white; }
+    .deadline-warning { color: #e74c3c; font-weight: bold; }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1>⚖️ Conflict Queue</h1>
+    <p class="lead">Manage document conflicts and provisional resolutions.</p>
+
+    <div class="tabs">
+        <div class="tab active" data-tab="unresolved">Unresolved Conflicts</div>
+        <div class="tab" data-tab="provisional">Provisional Resolutions</div>
+    </div>
+
+    <div id="unresolvedTab" class="tab-content active">
+        <div id="unresolvedList">
+            <!-- Populated by JS -->
+        </div>
+        <div id="unresolvedPagination" class="pagination"></div>
+    </div>
+
+    <div id="provisionalTab" class="tab-content">
+        <div id="provisionalList">
+            <!-- Populated by JS -->
+        </div>
+        <div id="provisionalPagination" class="pagination"></div>
+    </div>
+</div>
+
+<script src="{{ url_for('static', filename='js/conflict_queue.js') }}"></script>
+{% endblock %}

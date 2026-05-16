@@ -1,0 +1,24 @@
+<div id="bulkImportModal" class="modal" style="display:none;">
+    <div class="modal-content" style="max-width: 600px;">
+        <div class="modal-header">
+            <h3>📦 Bulk Import Documents</h3>
+            <button class="close-btn" onclick="closeModal('bulkImportModal')">&times;</button>
+        </div>
+        <form id="bulkImportForm" enctype="multipart/form-data">
+            <div class="form-group">
+                <label>Select files or ZIP archive</label>
+                <input type="file" id="importFiles" multiple accept=".txt,.md,.pdf,.zip" class="form-control">
+            </div>
+            <p>Files will be validated against RAG 2.2 rules. Invalid files will be rejected.</p>
+            <div id="importProgress" style="display:none;">
+                <progress id="importProgressBar" value="0" max="100" style="width:100%;"></progress>
+                <span id="importStatus"></span>
+            </div>
+            <div id="importResults" style="max-height:200px; overflow-y:auto; border:1px solid #ccc; padding:0.5rem; display:none;"></div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" onclick="closeModal('bulkImportModal')">Cancel</button>
+                <button type="button" class="btn btn-primary" id="startImport">Import All Valid</button>
+            </div>
+        </form>
+    </div>
+</div>

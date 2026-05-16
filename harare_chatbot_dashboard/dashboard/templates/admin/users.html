@@ -1,0 +1,376 @@
+{% extends "base.html" %}
+
+{% block title %}User Management - Harare Municipal{% endblock %}
+
+{% block extra_css %}
+<style>
+    .users-container {
+        padding: 1rem;
+        background: white;
+        border-radius: 5px;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    }
+
+    .top-bar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 1rem;
+    }
+
+    .filters {
+        display: flex;
+        gap: 0.5rem;
+        align-items: center;
+    }
+
+    .status-filter select {
+        padding: 0.4rem;
+        border: 1px solid #ccc;
+        border-radius: 3px;
+    }
+
+    .search-box {
+        display: flex;
+        gap: 0.5rem;
+    }
+
+    .search-box input {
+        padding: 0.4rem;
+        border: 1px solid #ccc;
+        border-radius: 3px;
+        width: 250px;
+    }
+
+    .search-box button {
+        padding: 0.4rem 1rem;
+        background: #3498db;
+        color: white;
+        border: none;
+        border-radius: 3px;
+        cursor: pointer;
+    }
+
+    .table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    .table th {
+        background: #f8f9fa;
+        padding: 0.5rem;
+        text-align: left;
+    }
+
+    .table td {
+        padding: 0.5rem;
+        border-bottom: 1px solid #dee2e6;
+    }
+
+    .table tr:hover {
+        background: #f5f5f5;
+        cursor: pointer;
+    }
+
+    .users-container table th,
+    .users-container table td {
+        color: #212529;
+    }
+
+    .badge {
+        display: inline-block;
+        padding: 0.2rem 0.4rem;
+        border-radius: 3px;
+        font-size: 0.7rem;
+        font-weight: bold;
+    }
+
+    .badge.active {
+        background: #2ecc71;
+        color: white;
+    }
+
+    .badge.inactive {
+        background: #e74c3c;
+        color: white;
+    }
+
+    .flag-badge {
+        background: #3498db;
+        color: white;
+        padding: 0.2rem 0.4rem;
+        border-radius: 3px;
+        font-size: 0.7rem;
+        margin-right: 0.2rem;
+    }
+
+    .flag-badge.read-only {
+        background: #95a5a6;
+    }
+
+    .status-badge {
+        padding: 0.2rem 0.5rem;
+        border-radius: 12px;
+        font-size: 0.75rem;
+        font-weight: bold;
+    }
+
+    .status-active {
+        background: #d4edda;
+        color: #155724;
+    }
+
+    .status-suspended {
+        background: #f8d7da;
+        color: #721c24;
+    }
+
+    .action-btn {
+        background: none;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        padding: 4px 8px;
+        margin: 0 2px;
+        cursor: pointer;
+        font-size: 0.85rem;
+    }
+
+    .action-btn:hover {
+        background-color: #f0f0f0;
+    }
+
+    .action-btn.edit {
+        border-color: #3498db;
+        color: #3498db;
+    }
+
+    .action-btn.reset {
+        border-color: #f39c12;
+        color: #f39c12;
+    }
+
+    .action-btn.suspend {
+        border-color: #e74c3c;
+        color: #e74c3c;
+    }
+
+    .action-btn.reactivate {
+        border-color: #2ecc71;
+        color: #2ecc71;
+    }
+
+    .pagination {
+        display: flex;
+        justify-content: center;
+        gap: 1rem;
+        margin-top: 1rem;
+    }
+
+    .modal {
+        display: none;
+        position: fixed;
+        z-index: 1000;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+    }
+
+    .modal-content {
+        background: white;
+        margin: 10% auto;
+        padding: 20px;
+        width: 400px;
+        border-radius: 5px;
+    }
+
+    .modal-content input[type="text"],
+    .modal-content input[type="email"],
+    .modal-content input[type="password"],
+    .modal-content select {
+        width: 100%;
+        padding: 0.4rem;
+        margin-top: 0.2rem;
+        border: 1px solid #ccc;
+        border-radius: 3px;
+    }
+
+    .modal-footer {
+        display: flex;
+        gap: 0.5rem;
+        justify-content: flex-end;
+        margin-top: 1rem;
+    }
+
+    .modal-footer button {
+        padding: 0.4rem 1rem;
+        border: none;
+        border-radius: 3px;
+        cursor: pointer;
+    }
+
+    .btn-primary {
+        background: #3498db;
+        color: white;
+    }
+
+    .btn-secondary {
+        background: #95a5a6;
+        color: white;
+    }
+
+    .btn-danger {
+        background: #e74c3c;
+        color: white;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="users-container">
+    <div class="top-bar">
+        <h2>👥 Users & Roles</h2>
+        <div class="filters">
+            <div class="status-filter">
+                <select id="statusFilter">
+                    <option value="all">All Status</option>
+                    <option value="active">Active</option>
+                    <option value="suspended">Suspended</option>
+                </select>
+            </div>
+            <div class="search-box">
+                <input type="text" id="searchInput" placeholder="Search by name, username, email...">
+                <button class="btn-primary" id="newUserBtn">+ New User</button>
+            </div>
+        </div>
+    </div>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Username</th>
+                <th>Email</th>
+                <th>Name</th>
+                <th>Department</th>
+                <th>Flags</th>
+                <th>Status</th>
+                <th>Last Login</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody id="userTableBody">
+            <!-- Dynamic rows -->
+        </tbody>
+    </table>
+
+    <div class="pagination">
+        <button id="prevPage" disabled>Previous</button>
+        <span id="pageInfo">Page 1</span>
+        <button id="nextPage" disabled>Next</button>
+    </div>
+</div>
+
+<!-- User Modal (Create/Edit) -->
+<div id="userModal" class="modal">
+    <div class="modal-content">
+        <h3 id="modalTitle">Edit User</h3>
+        <form id="userForm" onsubmit="saveUser(event)">
+            <input type="hidden" id="userId">
+            <div style="margin-bottom:0.5rem;">
+                <label>Username *</label>
+                <input type="text" id="username" required>
+            </div>
+            <div style="margin-bottom:0.5rem;">
+                <label>Email *</label>
+                <input type="email" id="email" required>
+            </div>
+            <div style="margin-bottom:0.5rem;">
+                <label>Full Name</label>
+                <input type="text" id="name">
+            </div>
+            <div style="margin-bottom:0.5rem;">
+                <label>Department</label>
+                <input type="text" id="department">
+            </div>
+            <div id="passwordField" style="margin-bottom:0.5rem; display:none;">
+                <label>Temporary Password *</label>
+                <input type="password" id="password" minlength="8" required>
+                <small style="color:#666;">Minimum 8 characters</small>
+            </div>
+            <div style="margin-bottom:0.5rem;">
+                <label><input type="checkbox" id="canManageUsers"> Manage Users</label>
+            </div>
+            <div style="margin-bottom:0.5rem;">
+                <label><input type="checkbox" id="canManageKnowledge"> Manage Knowledge</label>
+            </div>
+            <div id="statusGroup" style="margin-bottom:0.5rem; display:none;">
+                <label>Status</label>
+                <select id="isActive">
+                    <option value="true">Active</option>
+                    <option value="false">Suspended</option>
+                </select>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn-secondary" onclick="closeModal()">Cancel</button>
+                <button type="submit" class="btn-primary">Save</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Reset Password Confirmation Modal -->
+<div id="resetConfirmModal" class="modal">
+    <div class="modal-content">
+        <h3>Confirm Password Reset</h3>
+        <p>Reset password for <strong id="resetUserName"></strong>?</p>
+        <p>A temporary password will be generated and shown.</p>
+        <div class="modal-footer">
+            <button class="btn-secondary" onclick="closeResetConfirmModal()">Cancel</button>
+            <button class="btn-primary" onclick="confirmResetPassword()">Reset</button>
+        </div>
+    </div>
+</div>
+
+<!-- Suspend Confirmation Modal -->
+<div id="suspendConfirmModal" class="modal">
+    <div class="modal-content">
+        <h3>Confirm Suspension</h3>
+        <p>Suspend user <strong id="suspendUserName"></strong>? They will not be able to log in.</p>
+        <div class="modal-footer">
+            <button class="btn-secondary" onclick="closeSuspendConfirmModal()">Cancel</button>
+            <button class="btn-danger" onclick="confirmSuspend()">Suspend</button>
+        </div>
+    </div>
+</div>
+
+<!-- Reactivate Confirmation Modal -->
+<div id="reactivateConfirmModal" class="modal">
+    <div class="modal-content">
+        <h3>Confirm Reactivation</h3>
+        <p>Reactivate user <strong id="reactivateUserName"></strong>? They will be able to log in again.</p>
+        <div class="modal-footer">
+            <button class="btn-secondary" onclick="closeReactivateConfirmModal()">Cancel</button>
+            <button class="btn-primary" onclick="confirmReactivate()">Reactivate</button>
+        </div>
+    </div>
+</div>
+
+<!-- Temporary Password Display Modal (for password reset only) -->
+<div id="passwordModal" class="modal">
+    <div class="modal-content">
+        <h3>Temporary Password</h3>
+        <p>Please provide this password to the user securely.</p>
+        <div style="background:#f8f9fa; padding:1rem; text-align:center; margin:1rem 0;">
+            <code id="tempPasswordDisplay" style="font-size:1.2rem;"></code>
+        </div>
+        <p style="color:#e74c3c;">The user will be required to change this password on first login.</p>
+        <div class="modal-footer">
+            <button class="btn-secondary" onclick="copyPassword()">Copy</button>
+            <button class="btn-primary" onclick="closePasswordModal()">OK</button>
+        </div>
+    </div>
+</div>
+
+<script src="{{ url_for('static', filename='js/users.js') }}"></script>
+{% endblock %}

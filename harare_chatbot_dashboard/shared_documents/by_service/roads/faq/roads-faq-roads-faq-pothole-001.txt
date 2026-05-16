@@ -1,0 +1,43 @@
+# TITLE: ROADS-FAQ-POTHOLE-001
+document_id: roads-faq-roads-faq-pothole-001
+# DOCUMENT_ID: [AUTO-GENERATED]
+# VERSION: 1
+
+## METADATA_BLOCK
+department: [Department name]
+owner_email: ggg@gmail.com
+valid_from: 2026-05-12
+valid_to: 2027-05-12
+locations: ["Council-wide"]
+authority_confidence: 0.9
+confidence_source: [Source of authority, e.g., Council Resolution]
+content_type: faq
+service_area: roads
+topic_tags: ["roads", "pothole", "faq", "repair"]
+related_documents: []
+prerequisites: []
+review_cycle: 
+cross_service_flag: false
+## CONTENT_BLOCK
+
+### Summary
+Answers to common questions about pothole reporting, repair timelines, and compensation.
+
+### Questions and Answers
+- Q: How do I report a pothole?
+  A: Call 0800 1234, send a WhatsApp to 0712 345 678, or use the Harare City Connect app. Provide the exact location and a photo if possible.
+
+- Q: What information do I need to provide?
+  A: Street name, suburb, nearest landmark, approximate size (e.g., “30 cm wide, 10 cm deep”), and a photo.
+
+- Q: How long does it take to fix a pothole?
+  A: Emergency potholes (dangerous, deep, on highways) are usually fixed within 48 hours. Standard potholes within 2 weeks, depending on weather and asphalt availability.
+
+- Q: Can I track the status of my report?
+  A: Yes – use your reference ID on the Harare City Connect app or call the hotline and ask for an update.
+
+- Q: Can I claim compensation for vehicle damage caused by a pothole?
+  A: Yes, but you must prove the council was notified and failed to act within a reasonable time. Contact the Legal Services department at townclerk@harare.gov.zw with your reference ID, photos, and repair invoice.
+
+- Q: What if the pothole is on a road managed by the central government (e.g., A1 highway)?
+  A: Report it to the Department of Roads (ZINARA) instead. For most urban roads in Harare, the council is responsible.

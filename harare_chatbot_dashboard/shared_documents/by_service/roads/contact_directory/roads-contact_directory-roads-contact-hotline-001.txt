@@ -1,0 +1,49 @@
+# TITLE: ROADS-CONTACT-HOTLINE-001
+document_id: roads-contact_directory-roads-contact-hotline-001
+# DOCUMENT_ID: [AUTO-GENERATED]
+# VERSION: 1
+
+## METADATA_BLOCK
+department: [Department name]
+owner_email: ggg@gmail.com
+valid_from: 2026-05-12
+valid_to: 2027-05-12
+locations: ["Council-wide"]
+authority_confidence: 0.9
+confidence_source: [Source of authority, e.g., Council Resolution]
+content_type: contact_directory
+service_area: roads
+topic_tags: ["roads", "contacts", "hotline", "report"]
+related_documents: []
+prerequisites: []
+review_cycle: 
+cross_service_flag: false
+## CONTENT_BLOCK
+
+### Summary
+Contact numbers, WhatsApp, and app details for reporting road issues in Harare.
+
+### Department Contacts
+| Service | Phone | Email / App | Location |
+|---------|-------|-------------|----------|
+| Pothole Reporting Hotline | 0800 1234 (toll‑free) | WhatsApp: 0712 345 678 | 24/7 |
+| Streetlight Faults | +263 242 752130 | streetlights@harare.gov.zw | Works Department, Cecil Avenue |
+| Road Closures & Diversions | 0800 1234 (option 3) | roads.closures@harare.gov.zw | Traffic Control Centre |
+| Complaints (unrepaired potholes) | +263 242 752131 | complaints.roads@harare.gov.zw | Customer Service, Mbare |
+| Traffic Signals (robots) | +263 242 752132 | traffic.signals@harare.gov.zw | Cecil Avenue |
+
+### Zonal Roads Offices (for local maintenance)
+| Zone | Areas Covered | Phone |
+|------|---------------|-------|
+| Zone 2 | Hatfield, Waterfalls | +263 242 752202 |
+| Zone 6 | Mabelreign, Marlborough, Warren Park | +263 242 752206 |
+| Zone 7 | Borrowdale, Hatcliffe, Greendale | +263 242 752207 |
+
+### Mobile App
+- **Harare City Connect** (Google Play & Apple Store) – report potholes, track repairs, view road closures.
+
+### Common Questions Answered
+- Q: What is the fastest way to report a pothole?
+  A: WhatsApp (0712 345 678) with a photo and location is usually fastest, as it automatically captures GPS.
+- Q: I reported a pothole weeks ago – who can I escalate to?
+  A: Call the Complaints line (+263 242 752131) with your reference ID.

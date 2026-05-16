@@ -1,0 +1,53 @@
+# TITLE: ROADS-POL-MAINTENANCE-001
+document_id: roads-policy-roads-pol-maintenance-001
+# DOCUMENT_ID: [AUTO-GENERATED]
+# VERSION: 1
+
+## METADATA_BLOCK
+department: [Department name]
+owner_email: ggg@gmail.com
+valid_from: 2026-05-06
+valid_to: 2027-05-06
+locations: ["Council-wide"]
+authority_confidence: 0.9
+confidence_source: [Source of authority, e.g., Council Resolution]
+content_type: policy
+service_area: roads
+topic_tags: ["roads", "maintenance", "policy", "repair"]
+related_documents: []
+prerequisites: []
+review_cycle: 
+cross_service_flag: false
+## CONTENT_BLOCK
+
+### Summary
+This policy defines the council’s obligations, response times, and prioritisation for road maintenance and pothole repairs.
+
+### Policy Statement
+Harare City Council is responsible for maintaining all classified urban roads within city limits (excluding national highways). The council will prioritise repairs based on safety, traffic volume, and road category.
+
+### Repair Response Targets
+| Road Category | Emergency (dangerous) | Standard Repair |
+|---------------|----------------------|------------------|
+| Primary arterials (e.g., Samora Machel, Simon Muzenda) | 24 hours | 7 days |
+| Secondary roads (e.g., Mutley Bend, Seke Road) | 48 hours | 14 days |
+| Tertiary/residential streets | 72 hours | 21 days |
+
+### Who It Applies To
+- All residents and road users in Harare.
+- Contractors employed by the council for road works.
+
+### Exceptions
+- During prolonged rainy seasons, repairs may be delayed. The council will publish temporary notices.
+- Roads that require full reconstruction are handled separately under the Capital Works Programme.
+
+### Reporting and Accountability
+- Citizens can report potholes via the channels in ROADS-PROC-REPORT-POTHOLE-001.
+- The council must acknowledge all reports within 2 working days.
+- Unresolved reports after 30 days are escalated to the Town Clerk’s office.
+
+### Common Questions Answered
+- Q: Are there penalties if the council misses the repair target?
+  A: Not for individual potholes, but the department’s performance is reviewed quarterly. Persistent underperformance can lead to budget cuts.
+- Q: Who pays for road maintenance?
+  A: Funded by the council’s budget (rates and central government devolution funds).

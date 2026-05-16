@@ -1,0 +1,699 @@
+{% extends "base.html" %}
+
+{% block title %}Knowledge Gaps{% endblock %}
+
+{% block content %}
+<div class="knowledge-gaps-page">
+    <!-- Hidden data for JS -->
+    <input type="hidden" id="currentUserId" value="{{ current_user.id }}">
+    <input type="hidden" id="canManageKnowledge" value="{{ 'true' if current_user.can_manage_knowledge else 'false' }}">
+
+    <!-- Fixed header area (no scroll) -->
+    <div class="fixed-header">
+        <div class="page-heading">
+            <h1>Knowledge Gaps</h1>
+        </div>
+
+        <!-- Top bar with stats, filters, actions -->
+        <div class="top-bar">
+            <div class="stats-row">
+                <div class="stat-chip" onclick="filterByStatus('open')">Open: <span id="openCount">{{ open_count }}</span></div>
+                <div class="stat-chip" onclick="filterByStatus('critical')">Critical: <span id="criticalCount">{{ critical_count }}</span></div>
+                <div class="stat-chip" onclick="filterByStatus('recurring')">Recurring: <span id="recurringCount">{{ recurring_count }}</span></div>
+                <div class="stat-chip">Trend: <span id="trendIndicator">Improving</span></div>
+                <div class="stat-chip">Health: <span id="healthIndicator">82%</span></div>
+            </div>
+            <div class="filters-actions">
+                <select id="priorityFilter" class="filter-select" onchange="applyFilters()">
+                    <option value="all">Priority: All</option>
+                    <option value="critical">Critical</option>
+                    <option value="high">High</option>
+                    <option value="medium">Medium</option>
+                    <option value="low">Low</option>
+                </select>
+                <select id="serviceFilter" class="filter-select" onchange="applyFilters()">
+                    <option value="all">Service: All</option>
+                    {% for service in services %}
+                    <option value="{{ service }}">{{ service|title }}</option>
+                    {% endfor %}
+                </select>
+                <select id="statusFilter" class="filter-select" onchange="applyFilters()">
+                    <option value="all">Status: All</option>
+                    <option value="open">Open</option>
+                    <option value="drafting">Drafting</option>
+                    <option value="review">In Review</option>
+                    <option value="completed">Completed</option>
+                    <option value="recurring">Recurring</option>
+                </select>
+                <button class="btn btn-primary" onclick="showCreateModal()" {% if not current_user.can_manage_knowledge %}disabled{% endif %}>+ New Issue</button>
+                <button class="btn btn-secondary" onclick="refreshPage()">Refresh</button>
+            </div>
+        </div>
+
+        <!-- Tabs -->
+        <div class="tabs">
+            <button class="tab-btn active" data-tab="issues">Issues</button>
+            <button class="tab-btn" data-tab="metrics">Metrics</button>
+            <button class="tab-btn" data-tab="trends">Trends</button>
+            <button class="tab-btn" data-tab="recurrence">Recurrence</button>
+            <button class="tab-btn" data-tab="audit">Audit</button>
+        </div>
+    </div>
+
+    <!-- Scrollable content area -->
+    <div class="scrollable-content">
+        <!-- Tab content containers -->
+        <div id="tab-issues" class="tab-content active">
+            <!-- Two-column layout: issues list + detail panel -->
+            <div class="issues-layout">
+                <div class="issues-list-panel">
+                    <div class="panel-header">
+                        <h3>Issues</h3>
+                    </div>
+                    <div class="issues-list" id="issuesList">
+                        <div class="loading">Loading issues...</div>
+                    </div>
+                </div>
+                <div class="detail-panel">
+                    <div class="panel-header">
+                        <h3 id="detailTitle">Issue Details</h3>
+                    </div>
+                    <!-- Action buttons now in a centered row below the header -->
+                    <div class="detail-actions-row" id="detailActions" style="display: none;">
+                        <button class="btn btn-sm btn-success" onclick="markResolved()" {% if not current_user.can_manage_knowledge %}disabled{% endif %}>Mark Resolved</button>
+                        <button class="btn btn-sm btn-primary" onclick="generateDraft()" {% if not current_user.can_manage_knowledge %}disabled{% endif %}>Generate Draft</button>
+                        <button class="btn btn-sm btn-warning" onclick="showCreateOverrideModal()" {% if not current_user.can_manage_knowledge %}disabled{% endif %}>Create Override</button>
+                        <button class="btn btn-sm btn-secondary" onclick="assignToMe(currentGapId)" {% if not current_user.can_manage_knowledge %}disabled{% endif %}>Assign to Me</button>
+                    </div>
+                    <div class="detail-content" id="detailContent">
+                        <div class="empty-state">Select an issue from the list</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Collapsible Kanban board -->
+            <div class="kanban-section">
+                <div class="section-header" onclick="toggleKanban()">
+                    <h3>Kanban Board</h3>
+                    <span class="toggle-icon">▼</span>
+                </div>
+                <div class="kanban-board" id="kanbanBoard">
+                    <div class="kanban-column" data-status="open">
+                        <div class="column-header">Open (<span id="kanbanOpenCount">{{ open_count }}</span>)</div>
+                        <div class="column-cards" id="kanban-open"></div>
+                    </div>
+                    <div class="kanban-column" data-status="drafting">
+                        <div class="column-header">Drafting (<span id="kanbanDraftingCount">{{ drafting_count }}</span>)</div>
+                        <div class="column-cards" id="kanban-drafting"></div>
+                    </div>
+                    <div class="kanban-column" data-status="review">
+                        <div class="column-header">In Review (<span id="kanbanReviewCount">{{ review_count }}</span>)</div>
+                        <div class="column-cards" id="kanban-review"></div>
+                    </div>
+                    <div class="kanban-column" data-status="completed">
+                        <div class="column-header">Completed (<span id="kanbanCompletedCount">{{ completed_count }}</span>)</div>
+                        <div class="column-cards" id="kanban-completed"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Metrics tab -->
+        <div id="tab-metrics" class="tab-content">
+            <div class="metrics-container" id="metricsContent">Loading...</div>
+        </div>
+
+        <!-- Trends tab -->
+        <div id="tab-trends" class="tab-content">
+            <div class="trends-container" id="trendsContent">Loading...</div>
+        </div>
+
+        <!-- Recurrence tab -->
+        <div id="tab-recurrence" class="tab-content">
+            <div class="recurrence-container" id="recurrenceContent">Loading...</div>
+        </div>
+
+        <!-- Audit tab -->
+        <div id="tab-audit" class="tab-content">
+            <div class="audit-container" id="auditContent">Loading...</div>
+        </div>
+    </div>
+</div>
+
+<!-- Modals -->
+<div id="createIssueModal" class="modal" style="display: none;">
+    <div class="modal-content">
+        <span class="close" onclick="closeCreateModal()">&times;</span>
+        <h2>Create New Issue</h2>
+        <form onsubmit="saveNewIssue(event)">
+            <div class="form-group">
+                <label>Question *</label>
+                <input type="text" id="issueQuestion" required>
+            </div>
+            <div class="form-group">
+                <label>Service *</label>
+                <select id="issueService" required>
+                    <option value="">Select</option>
+                    {% for service in services %}
+                    <option value="{{ service }}">{{ service|title }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Root Cause</label>
+                <select id="issueRootCause">
+                    <option value="other">Other</option>
+                    <option value="no_document">No document exists</option>
+                    <option value="poorly_written">Document exists but poorly written</option>
+                    <option value="tagging_error">Service tagging error</option>
+                    <option value="contradictory">Contradictory documents</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Priority (0-100)</label>
+                <input type="number" id="issuePriority" min="0" max="100" value="50">
+            </div>
+            <div class="modal-actions">
+                <button type="button" class="btn btn-secondary" onclick="closeCreateModal()">Cancel</button>
+                <button type="submit" class="btn btn-primary">Create</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div id="smartDraftModal" class="modal" style="display: none;">
+    <div class="modal-content" style="width: 800px;">
+        <span class="close" onclick="closeSmartDraftModal()">&times;</span>
+        <h2>Smart Draft Generator</h2>
+        <div class="form-group">
+            <label>Based on Issue</label>
+            <select id="draftIssueId">
+                <option value="">-- Create from scratch --</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label>Service</label>
+            <select id="draftService" required>
+                <option value="">Select</option>
+                {% for service in services %}
+                <option value="{{ service }}">{{ service|title }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="form-group">
+            <label>Document Type</label>
+            <select id="draftType">
+                <option value="procedure">Procedure</option>
+                <option value="policy">Policy</option>
+                <option value="faq">FAQ</option>
+                <option value="fee_schedule">Fee Schedule</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label>Title</label>
+            <input type="text" id="draftTitle">
+        </div>
+        <div class="form-group">
+            <label>Content (Markdown)</label>
+            <textarea id="draftContent" rows="12"></textarea>
+        </div>
+        <div class="modal-actions">
+            <button class="btn btn-secondary" onclick="closeSmartDraftModal()">Cancel</button>
+            <button class="btn btn-primary" onclick="saveDraft()">Save Draft</button>
+            <button class="btn btn-success" onclick="submitForReview()">Submit for Review</button>
+        </div>
+    </div>
+</div>
+
+<div id="resolveModal" class="modal" style="display: none;">
+    <div class="modal-content">
+        <span class="close" onclick="closeResolveModal()">&times;</span>
+        <h2>Mark Issue Resolved</h2>
+        <div class="form-group">
+            <label>Resolution Type</label>
+            <select id="resolveType">
+                <option value="document_created">Document Created</option>
+                <option value="override_created">Override Created</option>
+                <option value="duplicate">Duplicate</option>
+                <option value="invalid_question">Invalid Question</option>
+                <option value="no_action">No Action</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label>Linked Document/Override ID (optional)</label>
+            <input type="text" id="resolveLink">
+        </div>
+        <div class="form-group">
+            <label>Notes</label>
+            <textarea id="resolveNotes" rows="3"></textarea>
+        </div>
+        <div class="modal-actions">
+            <button class="btn btn-secondary" onclick="closeResolveModal()">Cancel</button>
+            <button class="btn btn-success" onclick="confirmResolve()">Resolve</button>
+        </div>
+    </div>
+</div>
+
+<!-- Override Modal (will be created by helper if not present) -->
+{% include '_override_modal.html' %}
+
+<style>
+/* Base layout */
+.knowledge-gaps-page {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 15px;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+.fixed-header {
+    flex-shrink: 0;
+    padding-top: 10px;
+}
+.page-heading {
+    margin-bottom: 12px;
+}
+.page-heading h1 {
+    font-size: 1.6rem;
+    font-weight: 600;
+    color: #2c3e50;
+    margin: 0;
+}
+.top-bar {
+    background: white;
+    border-radius: 8px;
+    padding: 10px 16px;
+    margin-bottom: 15px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+.stats-row {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+.stat-chip {
+    background: #f8f9fa;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 12px;
+    cursor: pointer;
+    border: 1px solid #e0e0e0;
+}
+.stat-chip:hover {
+    background: #e9ecef;
+}
+.filters-actions {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+.filter-select {
+    padding: 4px 10px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    background: white;
+    font-size: 12px;
+}
+.tabs {
+    display: flex;
+    border-bottom: 2px solid #e9ecef;
+    margin-bottom: 15px;
+    gap: 4px;
+}
+.tab-btn {
+    padding: 6px 16px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-weight: 500;
+    color: #6c757d;
+    border-bottom: 3px solid transparent;
+    transition: 0.2s;
+    font-size: 13px;
+}
+.tab-btn.active {
+    color: #3498db;
+    border-bottom-color: #3498db;
+}
+.scrollable-content {
+    flex: 1;
+    overflow-y: auto;
+    padding-bottom: 15px;
+}
+.tab-content {
+    display: none;
+}
+.tab-content.active {
+    display: block;
+}
+/* Two‑column layout */
+.issues-layout {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 20px;
+    min-height: 300px;
+}
+.issues-list-panel {
+    width: 35%;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+.issues-list-panel .panel-header {
+    flex-shrink: 0;
+}
+.issues-list {
+    flex: 1;
+    overflow-y: auto;
+}
+.detail-panel {
+    flex: 1;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+.detail-content {
+    flex: 1;
+    overflow-y: auto;
+}
+.panel-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid #ecf0f1;
+}
+.panel-header h3 {
+    margin: 0;
+    font-size: 0.95rem;
+}
+/* Centered action buttons */
+.detail-actions-row {
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    gap: 12px;
+    margin: 16px auto 20px auto !important;
+    flex-wrap: wrap;
+    width: 100%;
+    text-align: center;
+}
+.detail-actions-row .btn-sm {
+    margin: 0 !important;
+    padding: 6px 14px;
+    font-size: 12px;
+}
+.issue-item {
+    padding: 8px;
+    border-bottom: 1px solid #ecf0f1;
+    cursor: pointer;
+    border-left: 4px solid transparent;
+    transition: 0.2s;
+}
+.issue-item:hover {
+    background: #f8f9fa;
+}
+.issue-item.selected {
+    background: #e3f2fd;
+    border-left-color: #3498db;
+}
+.issue-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 4px;
+}
+.issue-service {
+    font-size: 10px;
+    background: #ecf0f1;
+    padding: 1px 4px;
+    border-radius: 3px;
+}
+.issue-priority {
+    font-size: 10px;
+    font-weight: bold;
+}
+.issue-question {
+    font-weight: 500;
+    margin-bottom: 4px;
+    font-size: 12px;
+}
+.issue-meta {
+    display: flex;
+    gap: 8px;
+    font-size: 10px;
+    color: #7f8c8d;
+}
+.impact-HIGH, .issue-priority.impact-high, .kanban-card.high { color: #e74c3c; }
+.impact-MEDIUM, .issue-priority.impact-medium, .kanban-card.medium { color: #e67e22; }
+.impact-LOW, .issue-priority.impact-low, .kanban-card.low { color: #3498db; }
+
+.detail-section {
+    margin-top: 12px;
+}
+.detail-section .section-header {
+    cursor: pointer;
+    background: #f8f9fa;
+    padding: 6px;
+    border-radius: 4px;
+    font-weight: 500;
+    font-size: 12px;
+}
+.detail-section .section-content {
+    padding: 8px;
+    background: white;
+    font-size: 12px;
+}
+.detail-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+    font-size: 12px;
+}
+.kanban-section {
+    background: white;
+    border-radius: 8px;
+    margin-top: 20px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+.section-header {
+    padding: 10px 12px;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #ecf0f1;
+}
+.section-header h3 {
+    margin: 0;
+    font-size: 0.9rem;
+}
+.kanban-board {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    padding: 12px;
+}
+.kanban-column {
+    background: #f8f9fa;
+    border-radius: 6px;
+    padding: 8px;
+}
+.column-header {
+    font-weight: bold;
+    padding-bottom: 6px;
+    border-bottom: 2px solid #3498db;
+    margin-bottom: 8px;
+    font-size: 12px;
+}
+.column-cards {
+    min-height: 80px;
+}
+.kanban-card {
+    background: white;
+    border-radius: 4px;
+    padding: 6px;
+    margin-bottom: 6px;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+    cursor: grab;
+    border-left: 3px solid transparent;
+}
+.card-question {
+    font-weight: 500;
+    font-size: 11px;
+    margin-bottom: 4px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.card-meta {
+    display: flex;
+    justify-content: space-between;
+    font-size: 9px;
+    color: #7f8c8d;
+}
+.metrics-container, .trends-container, .recurrence-container, .audit-container {
+    background: white;
+    border-radius: 8px;
+    padding: 15px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    font-size: 13px;
+}
+.metrics-container ul, .recurrence-container ul {
+    list-style: none;
+    padding-left: 0;
+}
+.metrics-container li, .recurrence-container li {
+    padding: 4px 0;
+    border-bottom: 1px solid #ecf0f1;
+}
+.audit-container table,
+.trends-table {
+    width: 100%;
+    border-collapse: collapse;
+    color: #2c3e50 !important;
+}
+.audit-container th, .audit-container td,
+.trends-table th, .trends-table td {
+    padding: 6px;
+    text-align: left;
+    border-bottom: 1px solid #ecf0f1;
+    color: #2c3e50 !important;
+}
+.audit-container th,
+.trends-table th {
+    background: #f8f9fa !important;
+    font-weight: 600;
+}
+.loading, .empty-state {
+    text-align: center;
+    padding: 30px;
+    color: #7f8c8d;
+    font-size: 12px;
+}
+.error {
+    color: #e74c3c;
+}
+.btn-sm {
+    padding: 3px 6px;
+    font-size: 11px;
+}
+.modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+    margin-top: 15px;
+}
+.form-group {
+    margin-bottom: 12px;
+}
+.form-group label {
+    display: block;
+    margin-bottom: 4px;
+    font-weight: 500;
+    font-size: 13px;
+}
+.form-group input, .form-group select, .form-group textarea {
+    width: 100%;
+    padding: 6px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 13px;
+}
+
+/* ========== MODAL CENTERING FIX ========== */
+.modal {
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.modal-content {
+    background-color: white;
+    margin: auto;
+    padding: 20px;
+    border-radius: 8px;
+    width: 90%;
+    max-width: 600px;
+    max-height: 90vh;
+    overflow-y: auto;
+    position: relative;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+.modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 20px;
+}
+.modal-actions button {
+    padding: 6px 12px;
+}
+.close {
+    position: absolute;
+    right: 15px;
+    top: 10px;
+    font-size: 24px;
+    cursor: pointer;
+    color: #aaa;
+}
+.close:hover {
+    color: #000;
+}
+
+@media (max-width: 768px) {
+    .top-bar {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    .filters-actions {
+        justify-content: space-between;
+    }
+    .issues-layout {
+        flex-direction: column;
+    }
+    .issues-list-panel, .detail-panel {
+        width: 100%;
+        max-height: 250px;
+    }
+    .kanban-board {
+        grid-template-columns: 1fr;
+    }
+    .tabs {
+        overflow-x: auto;
+        white-space: nowrap;
+    }
+    .modal-content {
+        width: 95%;
+        margin: 10% auto;
+    }
+}
+</style>
+
+<!-- Override Modal Helper (lightweight, no dependencies on documents.js) -->
+<script src="{{ url_for('static', filename='js/override_modal_helper.js') }}"></script>
+<script src="{{ url_for('static', filename='js/knowledge_gaps.js') }}"></script>
+{% endblock %}

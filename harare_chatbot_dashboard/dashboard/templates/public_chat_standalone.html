@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Harare City Council Assistant</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background: #f0f2f5;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .chat-container {
+            width: 100%;
+            max-width: 800px;
+            height: 90vh;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+        .chat-header {
+            background: #2c3e50;
+            color: white;
+            padding: 0.8rem 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .chat-header h1 {
+            font-size: 1.2rem;
+            margin: 0;
+        }
+        .header-actions {
+            display: flex;
+            gap: 0.8rem;
+        }
+        .header-actions button {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 0.8rem;
+            cursor: pointer;
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            transition: background 0.2s;
+        }
+        .header-actions button:hover {
+            background: rgba(255,255,255,0.2);
+        }
+        .chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 1rem;
+            background: #f9f9f9;
+            display: flex;
+            flex-direction: column;
+        }
+        .empty-chat {
+            text-align: center;
+            color: #95a5a6;
+            margin-top: 2rem;
+            font-style: italic;
+        }
+        .message {
+            margin-bottom: 1rem;
+            display: flex;
+            flex-direction: column;
+        }
+        .message.user {
+            align-items: flex-end;
+        }
+        .message.bot {
+            align-items: flex-start;
+        }
+        .message-header {
+            font-size: 0.7rem;
+            margin-bottom: 0.2rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .message-header .sender {
+            font-weight: 600;
+            color: #2c3e50;
+        }
+        .message-header .timestamp {
+            color: #95a5a6;
+        }
+        .message-text {
+            max-width: 75%;
+            padding: 0.6rem 1rem;
+            border-radius: 18px;
+            word-wrap: break-word;
+            line-height: 1.4;
+            font-size: 0.9rem;
+        }
+        .user .message-text {
+            background: #3498db;
+            color: white;
+            border-bottom-right-radius: 4px;
+        }
+        .bot .message-text {
+            background: #ecf0f1;
+            color: #2c3e50;
+            border-bottom-left-radius: 4px;
+        }
+        .message-footer {
+            margin-top: 4px;
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+        .feedback-buttons {
+            display: flex;
+            gap: 8px;
+        }
+        .feedback-btn {
+            background: none;
+            border: 1px solid #ddd;
+            font-size: 0.7rem;
+            cursor: pointer;
+            padding: 2px 8px;
+            border-radius: 12px;
+            color: #555;
+            transition: all 0.2s;
+        }
+        .feedback-btn:hover {
+            background: #e0e0e0;
+        }
+        .feedback-btn.selected {
+            background: #3498db;
+            color: white;
+            border-color: #3498db;
+        }
+        .chat-input-area {
+            display: flex;
+            padding: 1rem;
+            border-top: 1px solid #ecf0f1;
+            background: white;
+        }
+        .chat-input-area input {
+            flex: 1;
+            padding: 0.6rem 1rem;
+            border: 1px solid #bdc3c7;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            outline: none;
+        }
+        .chat-input-area input:focus {
+            border-color: #3498db;
+        }
+        .chat-input-area button {
+            margin-left: 0.5rem;
+            padding: 0.6rem 1.2rem;
+            background: #3498db;
+            color: white;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+        }
+        .chat-input-area button:disabled {
+            background: #bdc3c7;
+            cursor: not-allowed;
+        }
+        /* Help modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+        .modal-content {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            max-width: 400px;
+            width: 90%;
+        }
+        .modal-content h3 {
+            margin-bottom: 0.5rem;
+        }
+        .modal-content ul {
+            margin-left: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        .modal-content button {
+            background: #3498db;
+            color: white;
+            border: none;
+            padding: 0.4rem 1rem;
+            border-radius: 20px;
+            cursor: pointer;
+        }
+        @media (max-width: 640px) {
+            .chat-container {
+                height: 100vh;
+                border-radius: 0;
+            }
+            .message-text {
+                max-width: 85%;
+            }
+            .header-actions button {
+                font-size: 0.7rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="chat-container">
+        <div class="chat-header">
+            <h1>Harare City Council Assistant</h1>
+            <div class="header-actions">
+                <button id="clearChatBtn">Clear chat</button>
+                <button id="copyChatBtn">Copy conversation</button>
+                <button id="helpBtn">Help</button>
+            </div>
+        </div>
+        <div class="chat-messages" id="chatHistory">
+            <div class="empty-chat">
+                <p>No messages yet. Start a conversation!</p>
+            </div>
+        </div>
+        <div class="chat-input-area">
+            <input type="text" id="messageInput" placeholder="Type your message here…" autofocus>
+            <button id="sendBtn">Send</button>
+        </div>
+    </div>
+
+    <!-- Help Modal -->
+    <div id="helpModal" class="modal">
+        <div class="modal-content">
+            <h3>Example questions you can ask:</h3>
+            <ul>
+                <li>What is the water connection fee?</li>
+                <li>How do I apply for a business permit?</li>
+                <li>Report a pothole</li>
+                <li>Clinic hours in Mbare</li>
+                <li>Check report status HCC-RPT-2026-00001</li>
+                <li>REPORT123 (starts a report form)</li>
+            </ul>
+            <button id="closeModalBtn">Got it</button>
+        </div>
+    </div>
+
+    <script>
+        // Public chat with text actions, no emojis, professional UI
+        let isSending = false;
+        let currentAbortController = null;
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const input = document.getElementById('messageInput');
+            if (input) {
+                input.addEventListener('keypress', handleEnter);
+                input.focus();
+            }
+            const sendBtn = document.getElementById('sendBtn');
+            if (sendBtn) sendBtn.addEventListener('click', sendMessage);
+
+            document.getElementById('clearChatBtn').addEventListener('click', clearChat);
+            document.getElementById('copyChatBtn').addEventListener('click', copyConversation);
+            document.getElementById('helpBtn').addEventListener('click', showHelpModal);
+            document.getElementById('closeModalBtn').addEventListener('click', closeHelpModal);
+
+            loadHistory();
+            scrollToBottom();
+        });
+
+        async function loadHistory() {
+            try {
+                const response = await fetch('/public-chat/api/history');
+                if (!response.ok) return;
+                const history = await response.json();
+                const chatHistory = document.getElementById('chatHistory');
+                if (history.length) {
+                    const empty = chatHistory.querySelector('.empty-chat');
+                    if (empty) empty.remove();
+                    history.forEach(msg => {
+                        addMessageToUI('user', msg.user_message, null);
+                        addMessageToUI('bot', msg.bot_response, msg.id);
+                    });
+                }
+            } catch (error) {
+                console.error('Failed to load history:', error);
+            }
+        }
+
+        async function sendMessage() {
+            if (isSending) return;
+            const input = document.getElementById('messageInput');
+            const sendBtn = document.getElementById('sendBtn');
+            const message = input.value.trim();
+            if (!message) return;
+
+            addMessageToUI('user', message, null);
+            input.value = '';
+            setInputDisabled(true);
+            isSending = true;
+
+            const thinkingId = showThinkingMessage();
+
+            if (currentAbortController) {
+                currentAbortController.abort();
+            }
+            currentAbortController = new AbortController();
+            const timeoutId = setTimeout(() => currentAbortController.abort(), 180000);
+
+            try {
+                const response = await fetch('/public-chat/api/send', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ message: message }),
+                    signal: currentAbortController.signal
+                });
+
+                clearTimeout(timeoutId);
+                removeThinkingMessage(thinkingId);
+
+                if (!response.ok) {
+                    let errorMsg = `HTTP ${response.status}`;
+                    try {
+                        const errData = await response.json();
+                        errorMsg = errData.error || errorMsg;
+                    } catch (e) {}
+                    throw new Error(errorMsg);
+                }
+
+                const data = await response.json();
+                addMessageToUI('bot', data.response, data.id);
+            } catch (error) {
+                clearTimeout(timeoutId);
+                removeThinkingMessage(thinkingId);
+                let errorMessage = error.message || 'Failed to send message';
+                if (error.name === 'AbortError') {
+                    errorMessage = 'The request timed out. Please try again later.';
+                }
+                addMessageToUI('bot', `Error: ${errorMessage}`, null);
+            } finally {
+                setInputDisabled(false);
+                isSending = false;
+                currentAbortController = null;
+                input.focus();
+            }
+        }
+
+        function addMessageToUI(sender, text, conversationId = null) {
+            const chatHistory = document.getElementById('chatHistory');
+            if (!chatHistory) return;
+
+            const empty = chatHistory.querySelector('.empty-chat');
+            if (empty) empty.remove();
+
+            const timestamp = new Date().toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' });
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${sender}-message`;
+            if (conversationId && sender === 'bot') {
+                messageDiv.setAttribute('data-conv-id', conversationId);
+            }
+
+            const safeText = text.replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/\n/g, '<br>');
+
+            let footerHtml = '';
+            if (sender === 'bot' && conversationId) {
+                footerHtml = `
+                    <div class="message-footer">
+                        <div class="feedback-buttons">
+                            <button class="feedback-btn thumbs-up" data-conv-id="${conversationId}" data-feedback="helpful">Helpful</button>
+                            <button class="feedback-btn thumbs-down" data-conv-id="${conversationId}" data-feedback="not-helpful">Not helpful</button>
+                        </div>
+                    </div>
+                `;
+            }
+
+            messageDiv.innerHTML = `
+                <div class="message-header">
+                    <span class="sender">${sender === 'user' ? 'You' : 'Assistant'}</span>
+                    <span class="timestamp">${timestamp}</span>
+                </div>
+                <div class="message-text">${safeText}</div>
+                ${footerHtml}
+            `;
+
+            chatHistory.appendChild(messageDiv);
+            scrollToBottom();
+
+            if (sender === 'bot' && conversationId) {
+                const helpfulBtn = messageDiv.querySelector('.feedback-btn[data-feedback="helpful"]');
+                const notHelpfulBtn = messageDiv.querySelector('.feedback-btn[data-feedback="not-helpful"]');
+                if (helpfulBtn) helpfulBtn.addEventListener('click', () => sendFeedback(conversationId, 'helpful', helpfulBtn, notHelpfulBtn));
+                if (notHelpfulBtn) notHelpfulBtn.addEventListener('click', () => sendFeedback(conversationId, 'not-helpful', helpfulBtn, notHelpfulBtn));
+            }
+        }
+
+        async function sendFeedback(conversationId, type, helpfulBtn, notHelpfulBtn) {
+            // Remove selected class from both
+            if (helpfulBtn) helpfulBtn.classList.remove('selected');
+            if (notHelpfulBtn) notHelpfulBtn.classList.remove('selected');
+            const selectedBtn = type === 'helpful' ? helpfulBtn : notHelpfulBtn;
+            if (selectedBtn) selectedBtn.classList.add('selected');
+
+            try {
+                await fetch('/public-chat/api/feedback', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ conversation_id: conversationId, feedback: type })
+                });
+                console.log(`Feedback recorded: ${type} for conversation ${conversationId}`);
+            } catch (error) {
+                console.error('Failed to send feedback:', error);
+            }
+        }
+
+        function showThinkingMessage() {
+            const chatHistory = document.getElementById('chatHistory');
+            const empty = chatHistory.querySelector('.empty-chat');
+            if (empty) empty.remove();
+
+            const thinkingDiv = document.createElement('div');
+            thinkingDiv.className = 'message bot-message thinking-message';
+            thinkingDiv.setAttribute('data-thinking-id', Date.now().toString());
+            thinkingDiv.innerHTML = `
+                <div class="message-header">
+                    <span class="sender">Assistant</span>
+                    <span class="timestamp">${new Date().toLocaleTimeString('en-GB', { hour:'2-digit', minute:'2-digit' })}</span>
+                </div>
+                <div class="message-text"><em>Thinking…</em></div>
+            `;
+            chatHistory.appendChild(thinkingDiv);
+            scrollToBottom();
+            return thinkingDiv.getAttribute('data-thinking-id');
+        }
+
+        function removeThinkingMessage(thinkingId) {
+            const thinkingMsg = document.querySelector(`.thinking-message[data-thinking-id="${thinkingId}"]`);
+            if (thinkingMsg) thinkingMsg.remove();
+        }
+
+        async function clearChat() {
+            if (!confirm('Clear all messages and start a new conversation?')) return;
+            try {
+                await fetch('/public-chat/api/clear', { method: 'POST' });
+                const chatHistory = document.getElementById('chatHistory');
+                chatHistory.innerHTML = '<div class="empty-chat"><p>No messages yet. Start a conversation!</p></div>';
+                currentAbortController = null;
+                isSending = false;
+                setInputDisabled(false);
+                scrollToBottom();
+            } catch (error) {
+                console.error('Failed to clear chat:', error);
+                alert('Could not clear chat. Please try again.');
+            }
+        }
+
+        async function copyConversation() {
+            const messages = document.querySelectorAll('.message');
+            if (messages.length === 0) {
+                alert('No messages to copy.');
+                return;
+            }
+            let text = '';
+            messages.forEach(msg => {
+                const sender = msg.querySelector('.sender')?.innerText || '';
+                const timestamp = msg.querySelector('.timestamp')?.innerText || '';
+                const messageText = msg.querySelector('.message-text')?.innerText || '';
+                if (sender && messageText) {
+                    text += `[${timestamp}] ${sender}: ${messageText}\n`;
+                }
+            });
+            try {
+                await navigator.clipboard.writeText(text);
+                alert('Conversation copied to clipboard!');
+            } catch (err) {
+                console.error('Failed to copy:', err);
+                alert('Could not copy. Please copy manually.');
+            }
+        }
+
+        function showHelpModal() {
+            document.getElementById('helpModal').style.display = 'flex';
+        }
+
+        function closeHelpModal() {
+            document.getElementById('helpModal').style.display = 'none';
+        }
+
+        function scrollToBottom() {
+            const chatHistory = document.getElementById('chatHistory');
+            if (chatHistory) chatHistory.scrollTop = chatHistory.scrollHeight;
+        }
+
+        function setInputDisabled(disabled) {
+            const input = document.getElementById('messageInput');
+            const sendBtn = document.getElementById('sendBtn');
+            if (input) input.disabled = disabled;
+            if (sendBtn) sendBtn.disabled = disabled;
+        }
+
+        function handleEnter(event) {
+            if (event.key === 'Enter' && !event.shiftKey) {
+                event.preventDefault();
+                sendMessage();
+            }
+        }
+    </script>
+</body>
+</html>

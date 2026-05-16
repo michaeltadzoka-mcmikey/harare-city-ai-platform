@@ -1,0 +1,76 @@
+<div id="overrideModal" class="modal" style="display:none;">
+    <div class="modal-content" style="max-width: 600px;">
+        <div class="modal-header">
+            <h3>Create Override (RAG 2.2)</h3>
+            <button class="close-btn" onclick="document.getElementById('overrideModal').style.display='none'">&times;</button>
+        </div>
+        <form id="overrideForm">
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                <div>
+                    <label>Override Type *</label>
+                    <select name="override_type" required class="form-control">
+                        <option value="">Select</option>
+                        <option value="pinned">Pinned Answer</option>
+                        <option value="freeze">Freeze</option>
+                        <option value="correction">Correction</option>
+                        <option value="suspension">Suspension</option>
+                        <option value="force_verbatim">Force Verbatim</option>
+                        <option value="emergency">Emergency Notice</option>
+                        <option value="intent_override">Intent Override</option>
+                    </select>
+                </div>
+                <div>
+                    <label>Target Type *</label>
+                    <select name="target_type" required class="form-control">
+                        <option value="document_id">Document ID</option>
+                        <option value="intent_pattern">Intent Pattern</option>
+                        <option value="keyword">Keyword/Topic</option>
+                        <option value="service">Service</option>
+                    </select>
+                </div>
+                <div>
+                    <label>Target Value *</label>
+                    <input type="text" name="target_value" required class="form-control">
+                </div>
+                <div>
+                    <label>Service (optional)</label>
+                    <select name="service" class="form-control">
+                        <option value="">None</option>
+                    </select>
+                </div>
+                <div>
+                    <label>Valid From</label>
+                    <input type="date" name="valid_from" class="form-control" value="{{ now().date().isoformat() }}">
+                </div>
+                <div>
+                    <label>Valid To</label>
+                    <input type="date" name="valid_to" class="form-control">
+                </div>
+                <div style="grid-column:span 2;">
+                    <label>Location Scope (comma separated, or "Council-wide")</label>
+                    <input type="text" name="location_scope" class="form-control">
+                </div>
+                <div style="grid-column:span 2;">
+                    <label>Trigger Conditions (JSON, optional)</label>
+                    <textarea name="trigger_conditions" rows="2" class="form-control"></textarea>
+                </div>
+                <div style="grid-column:span 2;">
+                    <label>Override Content *</label>
+                    <textarea name="content" rows="4" required class="form-control"></textarea>
+                </div>
+                <div style="grid-column:span 2;">
+                    <label>Justification * (min 30 chars)</label>
+                    <textarea name="justification" rows="3" required class="form-control"></textarea>
+                </div>
+                <div style="grid-column:span 2;">
+                    <label><input type="checkbox" name="approved"> I confirm this override has been approved by the responsible authority.</label>
+                </div>
+            </div>
+            <div style="margin-top:1rem; display:flex; gap:0.5rem; justify-content:flex-end;">
+                <button type="button" class="btn btn-secondary" onclick="document.getElementById('overrideModal').style.display='none'">Cancel</button>
+                <button type="button" id="clearOverride" class="btn btn-secondary">Clear Fields</button>
+                <button type="submit" class="btn btn-primary">Create Override</button>
+            </div>
+        </form>
+    </div>
+</div>

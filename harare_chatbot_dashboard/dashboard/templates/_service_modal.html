@@ -1,0 +1,43 @@
+<div id="serviceModal" class="modal" style="display:none;">
+    <div class="modal-content" style="max-width: 500px;">
+        <div class="modal-header">
+            <h3>➕ Create New Service Area</h3>
+            <button class="close-btn" onclick="closeModal('serviceModal')">&times;</button>
+        </div>
+        <form id="serviceForm">
+            <div class="form-group">
+                <label>Service Name <span class="required">*</span>
+                    <span class="tooltip" title="Lowercase, underscores allowed. Will create a folder under by_service/">ⓘ</span>
+                </label>
+                <input type="text" name="name" required class="form-control" placeholder="e.g., water, waste_management">
+            </div>
+            <div class="form-group">
+                <label>Description (optional)</label>
+                <textarea name="description" rows="2" class="form-control"></textarea>
+            </div>
+            <div class="form-group">
+                <label>Tags (comma separated, optional)</label>
+                <input type="text" name="tags" class="form-control" placeholder="e.g., billing, payments">
+            </div>
+            <div class="form-group">
+                <label>Template</label>
+                <div class="radio-group">
+                    <label><input type="radio" name="template" value="standard" checked> Standard (all content types)</label>
+                    <label><input type="radio" name="template" value="custom"> Custom</label>
+                </div>
+            </div>
+            <div id="customContentTypes" style="display:none; margin-top:1rem;">
+                <label>Select content types:</label>
+                <div class="checkbox-group">
+                    {% for ct in config.CONTENT_TYPES %}
+                    <label><input type="checkbox" name="content_types" value="{{ ct }}"> {{ ct|replace('_',' ')|capitalize }}</label>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" onclick="closeModal('serviceModal')">Cancel</button>
+                <button type="submit" class="btn btn-primary">Create Service</button>
+            </div>
+        </form>
+    </div>
+</div>

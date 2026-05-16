@@ -1,0 +1,113 @@
+{% extends "base.html" %}
+{% block title %}Review Queue{% endblock %}
+{% block content %}
+<div class="review-queue">
+    <h1>Review Queue</h1>
+    <p class="description">Low‑confidence interactions that need operator review.</p>
+    <div class="filters">
+        <input type="text" id="search" placeholder="Search messages...">
+        <button onclick="loadQueue()">Refresh</button>
+    </div>
+    <div id="queueList" class="queue-list"></div>
+</div>
+
+<style>
+.review-queue {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+.queue-list {
+    margin-top: 20px;
+}
+.queue-item {
+    background: white;
+    border-radius: 8px;
+    padding: 15px;
+    margin-bottom: 15px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+.queue-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+.user-message {
+    background: #f8f9fa;
+    padding: 10px;
+    border-radius: 4px;
+    margin: 10px 0;
+    font-family: monospace;
+}
+.answer {
+    background: #e9ecef;
+    padding: 10px;
+    border-radius: 4px;
+    margin: 10px 0;
+}
+.queue-actions {
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+}
+.btn-accept {
+    background: #28a745;
+    color: white;
+}
+.btn-reject {
+    background: #dc3545;
+    color: white;
+}
+</style>
+
+<script>
+async function loadQueue() {
+    const response = await fetch('/analytics/api/review_queue');
+    const data = await response.json();
+    const container = document.getElementById('queueList');
+    container.innerHTML = data.items.map(item => `
+        <div class="queue-item" data-id="${item.id}">
+            <div class="queue-header">
+                <strong>${item.intent || 'unknown'} (${(item.confidence * 100).toFixed(0)}%)</strong>
+                <span>${new Date(item.created_at).toLocaleString()}</span>
+            </div>
+            <div class="user-message">
+                <strong>User:</strong> ${escapeHtml(item.user_message)}
+            </div>
+            <div class="answer">
+                <strong>Bot answer:</strong> ${escapeHtml(item.generated_answer)}
+            </div>
+            <div class="queue-actions">
+                <button class="btn btn-sm btn-accept" onclick="reviewItem(${item.id}, 'accept')">Accept</button>
+                <button class="btn btn-sm btn-reject" onclick="reviewItem(${item.id}, 'reject')">Reject</button>
+            </div>
+        </div>
+    `).join('');
+}
+
+async function reviewItem(id, action) {
+    try {
+        const response = await fetch(`/analytics/api/review_queue/${id}`, {
+            method: 'PUT',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({action})
+        });
+        if (response.ok) {
+            loadQueue();
+        } else {
+            alert('Failed to update');
+        }
+    } catch (error) {
+        console.error(error);
+        alert('Error updating');
+    }
+}
+
+function escapeHtml(text) {
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
+}
+
+document.addEventListener('DOMContentLoaded', loadQueue);
+</script>
+{% endblock %}

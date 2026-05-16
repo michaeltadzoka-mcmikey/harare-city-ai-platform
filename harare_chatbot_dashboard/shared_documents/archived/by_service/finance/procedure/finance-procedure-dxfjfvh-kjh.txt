@@ -1,0 +1,38 @@
+# TITLE: dxfjfvh.kjh
+# DOCUMENT_ID: [AUTO-GENERATED]
+# VERSION: 1
+
+## METADATA_BLOCK
+department: [Department name]
+owner_email: ggg@gmail.com
+valid_from: 2026-04-27
+valid_to: 2026-04-17
+locations: ["Council-wide"]
+authority_confidence: 0.9
+confidence_source: [Source of authority, e.g., Council Resolution]
+content_type: procedure
+service_area: finance
+topic_tags: ["ADSGDHNJDD"]
+related_documents: []
+prerequisites: []
+review_cycle: 
+cross_service_flag: false
+## CONTENT_BLOCK
+
+### Summary
+Brief description of the procedure.
+
+### Step‑by‑Step Instructions
+1. First step
+2. Second step
+3. Third step
+
+### Required Documents
+- Document A
+- Document B
+
+### Common Questions Answered
+- Q: Frequently asked question about this procedure?
+- A: Answer.
+
+## END_OF_DOCUMENT

@@ -1,0 +1,43 @@
+# TITLE: WATER-EMERG-OUTAGE-001
+document_id: water-emergency-water-emerg-outage-001
+# DOCUMENT_ID: [AUTO-GENERATED]
+# VERSION: 1
+
+## METADATA_BLOCK
+department: [Department name]
+owner_email: ggg@gmail.com
+valid_from: 2026-05-14
+valid_to: 2027-05-14
+locations: ["Council-wide"]
+authority_confidence: 0.9
+confidence_source: [Source of authority, e.g., Council Resolution]
+content_type: emergency
+service_area: water
+topic_tags: ["water", "outage", "emergency", "burst"]
+related_documents: []
+prerequisites: []
+review_cycle: 
+cross_service_flag: false
+## CONTENT_BLOCK
+
+### Summary
+This document explains what to do if you have a burst pipe or water outage in Harare. You can report the issue immediately by phone, WhatsApp, or by typing **REPORT123** in the chatbot.
+
+### How to Report a Burst Pipe or Water Outage
+
+1. **Use the REPORT123 trigger** – Type **REPORT123** in this chat at any time. The system will start a step‑by‑step form to collect the exact location, description, and a nearby landmark. Your report will be sent directly to the Water and Sanitation Department.
+
+2. **Call the emergency hotline** – Dial 0800 1234 (toll‑free, 24/7) and provide your street name and nearest cross street.
+
+3. **WhatsApp** – Send a message to 0712 345 678 with the location, a photo if possible, and the word “BURST”.
+
+### Important Contacts
+- Water Emergency Hotline: 0800 1234 (toll‑free) or 0712 345 678 (WhatsApp)
+- Morton Jaffray Plant: +263 242 123456
+- City of Harare Switchboard: +263 242 789101
+
+### Common Questions Answered
+- Q: What should I do while waiting for the repair?
+  A: Store enough drinking water for 24 hours. Do not use brown water after restoration – let it run for a few minutes.
+- Q: Will I get a reference number?
+  A: Yes – if you use the chatbot and type REPORT123, you will receive a reference ID to track your report.

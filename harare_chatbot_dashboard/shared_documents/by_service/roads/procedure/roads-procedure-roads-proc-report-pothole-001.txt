@@ -1,0 +1,45 @@
+# TITLE: ROADS-PROC-REPORT-POTHOLE-001
+document_id: roads-procedure-roads-proc-report-pothole-001
+# DOCUMENT_ID: [AUTO-GENERATED]
+# VERSION: 1
+
+## METADATA_BLOCK
+department: [Department name]
+owner_email: ggg@gmail.com
+valid_from: 2026-05-12
+valid_to: 2027-05-12
+locations: ["Council-wide"]
+authority_confidence: 0.9
+confidence_source: [Source of authority, e.g., Council Resolution]
+content_type: procedure
+service_area: roads
+topic_tags: ["roads", "pothole", "report", "maintenance"]
+related_documents: []
+prerequisites: []
+review_cycle: 
+cross_service_flag: false
+## CONTENT_BLOCK
+
+### Summary
+Step‑by‑step instructions for reporting a pothole to Harare City Council for repair.
+
+### Step‑by‑Step Instructions
+1. **Gather information:** Note the exact location – street name, nearest landmark (e.g., shop, school), suburb. Estimate the pothole’s size (width and depth).
+2. **Take a photo** (if possible) to help the repair team assess severity.
+3. **Choose a reporting method:**
+   - **Phone:** Call 0800 1234 (toll‑free) and select option 2 for roads.
+   - **WhatsApp:** Send a message to 0712 345 678 with location, photo, and “POTHOLE” in the text.
+   - **Mobile app:** Use the “Harare City Connect” app (available on Google Play) – select “Roads” > “Report Pothole”.
+   - **In person:** Visit your nearest zonal office (see ROADS-CONTACT-HOTLINE-001).
+4. **Provide your name and contact number** (optional but helpful for follow‑up). You will receive a reference ID.
+5. **Keep the reference ID** to check the repair status.
+6. **Wait for repair:** Emergency potholes (deep or on high‑speed roads) are prioritised within 48 hours. Standard repairs take up to 2 weeks.
+
+### Required Documents
+- None, but a photo helps.
+
+### Common Questions Answered
+- Q: Can I report anonymously?
+  A: Yes, but you won’t receive status updates. The pothole will still be logged.
+- Q: What if the same pothole reappears after repair?
+  A: Report it again with the old reference ID and note “recurrence”. The roads department will investigate the underlying drainage issue.

@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Harare Municipal Chatbot Dashboard{% endblock %}</title>
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}">
+    {% block extra_css %}{% endblock %}
+    <style>
+        /* Global nav toggle styles – improved collapsed appearance */
+        .dashboard-container {
+            transition: all 0.3s ease;
+        }
+
+        .left-nav {
+            width: 260px;
+            background: #2c3e50;
+            color: #ecf0f1;
+            transition: width 0.3s ease;
+            overflow: hidden;
+        }
+
+        .left-nav.collapsed {
+            width: 60px;
+        }
+
+        /* Hide all text elements in collapsed state */
+        .left-nav.collapsed .nav-header h1,
+        .left-nav.collapsed .nav-header h2,
+        .left-nav.collapsed .nav-menu .menu-text,
+        .left-nav.collapsed .user-info .user-name,
+        .left-nav.collapsed .user-flags,
+        .left-nav.collapsed .system-status span:not(.status-dot),
+        .left-nav.collapsed .logout-btn .menu-text {
+            display: none;
+        }
+
+        .left-nav.collapsed .nav-menu a {
+            justify-content: flex-start;
+            padding: 1rem 0.8rem;
+        }
+
+        .left-nav.collapsed .nav-icon {
+            margin-right: 0;
+            font-size: 1.4rem;  /* larger icons in collapsed mode */
+        }
+
+        .left-nav.collapsed .nav-menu li:hover {
+            background: rgba(255,255,255,0.1);
+        }
+
+        /* Optional: tooltip on hover for collapsed nav items */
+        .left-nav.collapsed .nav-menu a:hover::after {
+            content: attr(title);
+            position: absolute;
+            left: 70px;
+            background: #34495e;
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            white-space: nowrap;
+            z-index: 1000;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        /* Toggle button styling */
+        .toggle-nav-btn {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.8rem;
+            cursor: pointer;
+            padding: 0.5rem 0.8rem;
+            margin-right: 0.5rem;
+            transition: transform 0.2s;
+        }
+
+        .toggle-nav-btn:hover {
+            transform: scale(1.1);
+            color: #3498db;
+        }
+
+        .nav-header {
+            display: flex;
+            align-items: center;
+        }
+
+        .main-content {
+            transition: margin-left 0.3s ease;
+            margin-left: 260px; /* default width of left-nav */
+        }
+
+        .left-nav.collapsed + .main-content {
+            margin-left: 60px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="dashboard-container">
+        <!-- Left Navigation (fixed) -->
+        <nav class="left-nav" id="leftNav">
+            <div class="nav-header">
+                <button class="toggle-nav-btn" id="toggleNavBtn">☰</button>
+                <h1>COH CONNECT</h1>
+                <h2>CHATBOT DASHBOARD</h2>
+            </div>
+
+            <ul class="nav-menu">
+                <li class="{% if request.endpoint == 'main.index' %}active{% endif %}">
+                    <a href="{{ url_for('main.index') }}" title="Dashboard">
+                        <span class="nav-icon"><i class="fas fa-chart-pie"></i></span>
+                        <span class="menu-text">Dashboard</span>
+                    </a>
+                </li>
+                <li class="{% if request.endpoint == 'chat.index' %}active{% endif %}">
+                    <a href="{{ url_for('chat.index') }}" title="Chat">
+                        <span class="nav-icon"><i class="fas fa-comment-dots"></i></span>
+                        <span class="menu-text">Chat</span>
+                    </a>
+                </li>
+                <li class="{% if request.endpoint == 'conversations.index' %}active{% endif %}">
+                    <a href="{{ url_for('conversations.index') }}" title="Conversations">
+                        <span class="nav-icon"><i class="fas fa-history"></i></span>
+                        <span class="menu-text">Conversations</span>
+                    </a>
+                </li>
+                <li class="{% if request.endpoint == 'documents.index' %}active{% endif %}">
+                    <a href="{{ url_for('documents.index') }}" title="Documents & RAG">
+                        <span class="nav-icon"><i class="fas fa-file-alt"></i></span>
+                        <span class="menu-text">Documents & RAG</span>
+                    </a>
+                </li>
+                <li class="{% if request.endpoint == 'knowledge_gaps.index' %}active{% endif %}">
+                    <a href="{{ url_for('knowledge_gaps.index') }}" title="Knowledge Gaps">
+                        <span class="nav-icon"><i class="fas fa-exclamation-triangle"></i></span>
+                        <span class="menu-text">Knowledge Gaps</span>
+                    </a>
+                </li>
+                <li class="{% if request.endpoint == 'analytics.index' %}active{% endif %}">
+                    <a href="{{ url_for('analytics.index') }}" title="Analytics">
+                        <span class="nav-icon"><i class="fas fa-chart-line"></i></span>
+                        <span class="menu-text">Analytics</span>
+                    </a>
+                </li>
+                <li class="{% if request.endpoint == 'reports.index' %}active{% endif %}">
+                    <a href="{{ url_for('reports.index') }}" title="Reports">
+                        <span class="nav-icon"><i class="fas fa-clipboard-list"></i></span>
+                        <span class="menu-text">Reports</span>
+                    </a>
+                </li>
+                {% if current_user.is_authenticated and current_user.can_manage_users %}
+                <li class="{% if request.endpoint == 'admin.users' %}active{% endif %}">
+                    <a href="{{ url_for('admin.users') }}" title="Users & Roles">
+                        <span class="nav-icon"><i class="fas fa-users-cog"></i></span>
+                        <span class="menu-text">Users & Roles</span>
+                    </a>
+                </li>
+                {% endif %}
+            </ul>
+
+            <div class="nav-footer">
+                {% if current_user.is_authenticated %}
+                <div class="user-info">
+                    <div class="user-name">{{ current_user.username }}</div>
+                    <div class="user-flags">
+                        {% if current_user.can_manage_knowledge %}
+                        <span class="flag">Knowledge</span>
+                        {% endif %}
+                        {% if current_user.can_manage_users %}
+                        <span class="flag">Users</span>
+                        {% endif %}
+                        {% if not current_user.can_manage_knowledge and not current_user.can_manage_users %}
+                        <span class="flag read-only">Read‑Only</span>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="system-status" id="systemStatus">
+                    <div class="status-item">
+                        <span class="status-dot" id="ragStatus"></span>
+                        <span>RAG</span>
+                    </div>
+                    <div class="status-item">
+                        <span class="status-dot" id="llmStatus"></span>
+                        <span>LLM</span>
+                    </div>
+                    <div class="status-item">
+                        <span class="status-dot" id="rasaStatus"></span>
+                        <span>RASA</span>
+                    </div>
+                </div>
+                <a href="{{ url_for('auth.logout') }}" class="logout-btn" title="Logout">
+                    <span class="nav-icon"><i class="fas fa-sign-out-alt"></i></span>
+                    <span class="menu-text">Logout</span>
+                </a>
+                {% else %}
+                <a href="{{ url_for('auth.login') }}" class="logout-btn" title="Login">
+                    <span class="nav-icon"><i class="fas fa-key"></i></span>
+                    <span class="menu-text">Login</span>
+                </a>
+                {% endif %}
+            </div>
+        </nav>
+
+        <!-- Main Content Area (starts after left nav) -->
+        <main class="main-content" id="mainContent">
+            <!-- Loader that covers only the main content (fixed with left offset) -->
+            <div id="main-loader"
+                style="display: none; position: fixed; top: 0; left: 260px; right: 0; bottom: 0; background: rgba(255,255,255,0.8); z-index: 999; align-items: center; justify-content: center; backdrop-filter: blur(2px);">
+                <div class="spinner"
+                    style="border: 4px solid #f3f3f3; border-top: 4px solid #3498db; border-radius: 50%; width: 40px; height: 40px; animation: spin 1s linear infinite;">
+                </div>
+            </div>
+
+            <!-- Offline Banner -->
+            <div id="offline-banner"
+                style="display: none; background: #fee2e2; color: #991b1b; padding: 0.5rem 1rem; margin-bottom: 1rem; border-radius: 4px;">
+            </div>
+
+            <!-- Flash Messages -->
+            {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+            <div class="flash-messages">
+                {% for category, message in messages %}
+                <div class="flash flash-{{ category }}">{{ message }}</div>
+                {% endfor %}
+            </div>
+            {% endif %}
+            {% endwith %}
+
+            <!-- Page Content -->
+            {% block content %}{% endblock %}
+
+            <!-- Current user data for JavaScript -->
+            <script>
+                window.currentUser = {
+                    id: {{ current_user.id }},
+                    username: {{ current_user.username | tojson }},
+                    email: {{ (current_user.email or '') | tojson }},
+                    department: {{ (current_user.department or '') | tojson }},
+                    can_manage_users: {{ 'true' if current_user.can_manage_users else 'false' }},
+                    can_manage_knowledge: {{ 'true' if current_user.can_manage_knowledge else 'false' }}
+                };
+            </script>
+
+            <style>
+                @keyframes spin {
+                    0% { transform: rotate(0deg); }
+                    100% { transform: rotate(360deg); }
+                }
+            </style>
+
+            <script src="{{ url_for('static', filename='js/main.js') }}" type="module"></script>
+            {% block extra_js %}{% endblock %}
+        </main>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const toggleNavBtn = document.getElementById('toggleNavBtn');
+            const leftNav = document.getElementById('leftNav');
+            const mainContent = document.getElementById('mainContent');
+            toggleNavBtn.addEventListener('click', function() {
+                leftNav.classList.toggle('collapsed');
+                // Adjust loader left offset
+                const loader = document.getElementById('main-loader');
+                if (leftNav.classList.contains('collapsed')) {
+                    loader.style.left = '60px';
+                } else {
+                    loader.style.left = '260px';
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>

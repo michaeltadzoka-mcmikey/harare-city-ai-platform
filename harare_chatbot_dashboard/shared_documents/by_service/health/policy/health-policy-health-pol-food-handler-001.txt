@@ -1,0 +1,56 @@
+# TITLE: HEALTH-POL-FOOD-HANDLER-001
+document_id: health-policy-health-pol-food-handler-001
+# DOCUMENT_ID: [AUTO-GENERATED]
+# VERSION: 1
+
+## METADATA_BLOCK
+department: [Department name]
+owner_email: ggg@gmail.com
+valid_from: 2026-05-12
+valid_to: 2027-05-12
+locations: ["Council-wide"]
+authority_confidence: 0.9
+confidence_source: [Source of authority, e.g., Council Resolution]
+content_type: policy
+service_area: health
+topic_tags: ["health", "food", "certificate", "hygiene"]
+related_documents: []
+prerequisites: []
+review_cycle: 
+cross_service_flag: false
+## CONTENT_BLOCK
+
+### Summary
+All persons handling food for sale in Harare (including restaurants, tuckshops, vendors) must obtain a Food Handler’s Certificate.
+
+### Policy Statement
+Under the Harare (Public Health) By‑Laws, anyone who handles, prepares, or serves food to the public must undergo medical examination and hygiene training and be issued a Food Handler’s Certificate. The certificate is valid for one year.
+
+### Who It Applies To
+- Chefs, cooks, kitchen assistants
+- Waiters and waitresses
+- Food vendors (including informal traders)
+- Supermarket deli staff
+- Bakery workers
+- Any person who touches unwrapped food intended for sale
+
+### Exceptions
+- Factory‑packaged food handlers (if food remains sealed) – but recommended.
+- Occasional charity events (less than 50 meals) – encouraged but not mandatory.
+
+### Requirements for Certification
+1. Medical examination at a council clinic (tests for typhoid, tuberculosis, and infectious skin conditions).
+2. Attendance at a half‑day hygiene course (offered weekly at Mbare Polyclinic).
+3. Payment of the certificate fee (20 ZiG, valid for 1 year).
+
+### Penalties for Non‑Compliance
+- Fine of up to 500 ZiG for first offence.
+- Closure of the food establishment for repeat offences.
+
+### Common Questions Answered
+- Q: Where do I get the medical exam?
+  A: Any council clinic – see HEALTH-CONTACT-POLYCLINICS-001. The exam costs 10 ZiG.
+- Q: How long does it take to get the certificate?
+  A: Medical results take 3 days. The course is 4 hours. Total about one week.
+- Q: I lost my certificate. Can I get a copy?
+  A: Yes, request a duplicate at the clinic where you were examined. Fee 5 ZiG.

@@ -1,0 +1,46 @@
+# TITLE: HEALTH-FAQ-CLINICS-001
+document_id: health-faq-health-faq-clinics-001
+# DOCUMENT_ID: [AUTO-GENERATED]
+# VERSION: 1
+
+## METADATA_BLOCK
+department: [Department name]
+owner_email: ggg@gmail.com
+valid_from: 2026-05-06
+valid_to: 2027-05-06
+locations: ["Council-wide"]
+authority_confidence: 0.9
+confidence_source: [Source of authority, e.g., Council Resolution]
+content_type: faq
+service_area: health
+topic_tags: ["health", "clinics", "hours", "services\""]
+related_documents: []
+prerequisites: []
+review_cycle: 
+cross_service_flag: false
+## CONTENT_BLOCK
+
+### Summary
+Frequently asked questions about Harare City Council clinics, including operating hours, services, and fees.
+
+### Questions and Answers
+- Q: What services do council clinics offer?
+  A: General outpatient care, immunisations, maternity services, HIV testing and counselling, TB treatment, family planning, and treatment of minor injuries.
+
+- Q: What are the clinic hours?
+  A: Most clinics are open Monday to Friday 7:30 AM – 4:30 PM. Some polyclinics (e.g., Mbare, Budiriro) are open Saturdays 8 AM – 12 PM. Emergency care is available 24/7 at Harare Hospital.
+
+- Q: Do I need to pay for treatment?
+  A: Consultation is free for children under 5 and senior citizens (65+). Others pay a small fee: 5 ZiG for a routine visit, 10 ZiG for maternity. Medicines are free at council clinics.
+
+- Q: How do I find my nearest clinic?
+  A: See HEALTH-CONTACT-POLYCLINICS-001 for a full list. Or call 0800 1234 and say “nearest clinic” with your suburb name.
+
+- Q: Can I get HIV testing at a clinic?
+  A: Yes, all council clinics offer free, confidential HIV testing and counselling.
+
+- Q: Do clinics offer ambulance services?
+  A: No, ambulances are coordinated by Harare Emergency Services (call 994). However, clinics can stabilise a patient before transfer.
+
+- Q: I have a complaint about a clinic. Who do I contact?
+  A: Call the Health Services Department at +263 242 752140 or email health.complaints@harare.gov.zw.

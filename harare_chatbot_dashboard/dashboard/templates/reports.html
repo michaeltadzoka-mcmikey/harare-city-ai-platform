@@ -1,0 +1,556 @@
+{% extends "base.html" %}
+
+{% block title %}Reports{% endblock %}
+
+{% block content %}
+<div class="reports-page">
+    <div class="page-header">
+        <h1>Reports – Structured Citizen Feedback</h1>
+        <div class="header-actions">
+            <button class="btn btn-primary" onclick="exportCSV()">Export CSV</button>
+            <button class="btn btn-primary" onclick="exportJSON()">Export JSON</button>
+            <button class="btn btn-primary" onclick="refreshReports()">Refresh</button>
+            <button class="btn btn-primary" onclick="document.getElementById('spamModal').style.display='flex'">Spam Blacklist</button>
+        </div>
+    </div>
+
+    <!-- Stats & Filter Bar -->
+    <div class="stats-filter-bar">
+        <div class="stats">
+            <span class="stat" onclick="filterByStatus('all')">Total: <span id="totalReports">-</span></span>
+            <span class="stat" onclick="filterByStatus('submitted')">Submitted: <span id="submittedCount">-</span></span>
+            <span class="stat" onclick="filterByStatus('in_progress')">In Progress: <span id="inProgressCount">-</span></span>
+            <span class="stat" onclick="filterByStatus('resolved')">Resolved: <span id="resolvedCount">-</span></span>
+            <span class="stat">Avg Time: <span id="avgTime">-</span></span>
+        </div>
+        <div class="filters">
+            <select id="statusFilter" onchange="applyFilters()">
+                <option value="all">Status: All</option>
+                <option value="submitted">Submitted</option>
+                <option value="in_progress">In Progress</option>
+                <option value="on_hold">On Hold</option>
+                <option value="resolved">Resolved</option>
+                <option value="closed">Closed</option>
+            </select>
+            <select id="urgencyFilter" onchange="applyFilters()">
+                <option value="all">Urgency: All</option>
+                <option value="low">Low</option>
+                <option value="medium">Medium</option>
+                <option value="high">High</option>
+                <option value="emergency">Emergency</option>
+            </select>
+            <select id="duplicateFilter" onchange="applyFilters()">
+                <option value="all">Duplicate: All</option>
+                <option value="duplicate">Duplicate</option>
+                <option value="not_duplicate">Not Duplicate</option>
+            </select>
+            <select id="spamFilter" onchange="applyFilters()">
+                <option value="all">Spam: All</option>
+                <option value="spam">Spam</option>
+                <option value="not_spam">Not Spam</option>
+            </select>
+            <select id="dateFilter" onchange="applyFilters()">
+                <option value="all">Date: All</option>
+                <option value="today">Today</option>
+                <option value="last_7_days">Last 7 Days</option>
+                <option value="last_30_days">Last 30 Days</option>
+            </select>
+            <input type="text" id="searchInput" placeholder="Search..." onkeyup="debouncedSearch()">
+        </div>
+    </div>
+
+    <!-- Reports Table -->
+    <div class="table-container">
+        <table class="reports-table">
+            <thead>
+                <tr>
+                    <th>Ref #</th>
+                    <th>Submitted</th>
+                    <th>User ID</th>
+                    <th>Type</th>
+                    <th>Location</th>
+                    <th>Urgency</th>
+                    <th>Status</th>
+                    <th>Flags</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody id="reportsTableBody">
+                <tr>
+                    <td colspan="9" class="loading">Loading reports...</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Pagination -->
+    <div class="pagination" id="pagination"></div>
+</div>
+
+<!-- Report Detail Modal (improved layout) -->
+<div id="reportModal" class="modal" style="display: none;">
+    <div class="modal-content" style="max-width: 800px; width: 90%;">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <div id="reportDetails"></div>
+    </div>
+</div>
+
+<!-- Override Modal (for standardized fields) -->
+<div id="overrideModal" class="modal" style="display: none;">
+    <div class="modal-content" style="width: 400px;">
+        <span class="close" onclick="closeOverrideModal()">&times;</span>
+        <h3>Override Standardized Field</h3>
+        <div class="form-group">
+            <label id="overrideFieldLabel">Field</label>
+            <input type="text" id="overrideNewValue" placeholder="New value">
+        </div>
+        <div class="form-group">
+            <label>Justification</label>
+            <textarea id="overrideJustification" rows="3"></textarea>
+        </div>
+        <div class="modal-actions">
+            <button class="btn btn-secondary" onclick="closeOverrideModal()">Cancel</button>
+            <button class="btn btn-primary" onclick="confirmOverride()">Save Override</button>
+        </div>
+    </div>
+</div>
+
+<!-- Spam Blacklist Modal -->
+<div id="spamModal" class="modal" style="display: none;">
+    <div class="modal-content" style="width: 450px;">
+        <span class="close" onclick="document.getElementById('spamModal').style.display='none'">&times;</span>
+        <h3>Spam Keywords</h3>
+        <p style="color: #666; margin-bottom: 15px;">Manage keywords used to flag potential spam in citizen reports.</p>
+        <div style="max-height: 250px; overflow-y: auto; border: 1px solid #ddd; border-radius: 4px; padding: 10px; background: #f9f9f9; margin-bottom: 15px;">
+            <ul id="spamKeywordList" style="list-style: none; padding: 0; margin: 0;">
+                <!-- Populated by JavaScript -->
+            </ul>
+        </div>
+        <div style="display: flex; gap: 8px; margin-bottom: 15px;">
+            <input type="text" id="newSpamKeyword" placeholder="Enter new keyword" style="flex: 1; padding: 8px; border: 1px solid #bdc3c7; border-radius: 4px;">
+            <button class="btn btn-primary" onclick="addSpamKeyword()">Add</button>
+        </div>
+        <div style="text-align: right;">
+            <button class="btn btn-secondary" onclick="document.getElementById('spamModal').style.display='none'">Close</button>
+        </div>
+    </div>
+</div>
+
+<style>
+    .reports-page {
+        max-width: 1400px;
+        margin: 0 auto;
+    }
+
+    .page-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+    }
+
+    .header-actions {
+        display: flex;
+        gap: 8px;
+        align-items: center;
+    }
+
+    .stats-filter-bar {
+        background: white;
+        padding: 15px 20px;
+        border-radius: 8px;
+        margin-bottom: 20px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 15px;
+    }
+
+    .stats {
+        display: flex;
+        gap: 20px;
+        flex-wrap: wrap;
+    }
+
+    .stat {
+        cursor: pointer;
+        padding: 5px 10px;
+        border-radius: 4px;
+    }
+
+    .stat:hover {
+        background: #ecf0f1;
+    }
+
+    .filters {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+        align-items: center;
+    }
+
+    .filters select,
+    .filters input {
+        padding: 8px;
+        border: 1px solid #bdc3c7;
+        border-radius: 4px;
+        min-width: 120px;
+    }
+
+    .table-container {
+        background: white;
+        border-radius: 8px;
+        padding: 20px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        overflow-x: auto;
+    }
+
+    .reports-table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    .reports-table th {
+        background: #34495e;
+        color: white;
+        padding: 12px;
+        text-align: left;
+    }
+
+    .reports-table td {
+        padding: 12px;
+        border-bottom: 1px solid #ecf0f1;
+    }
+
+    .reports-table tr:hover {
+        background: #f8f9fa;
+        cursor: pointer;
+    }
+
+    .urgency-badge {
+        padding: 4px 8px;
+        border-radius: 4px;
+        font-size: 12px;
+        font-weight: bold;
+        display: inline-block;
+    }
+
+    .urgency-low {
+        background: #d4edda;
+        color: #155724;
+    }
+
+    .urgency-medium {
+        background: #fff3cd;
+        color: #856404;
+    }
+
+    .urgency-high {
+        background: #f8d7da;
+        color: #721c24;
+    }
+
+    .urgency-emergency {
+        background: #721c24;
+        color: white;
+    }
+
+    .status-badge {
+        padding: 4px 8px;
+        border-radius: 4px;
+        font-size: 12px;
+        display: inline-block;
+    }
+
+    .status-submitted {
+        background: #e3f2fd;
+        color: #1976d2;
+    }
+
+    .status-in_progress {
+        background: #e1bee7;
+        color: #6a1b9a;
+    }
+
+    .status-on_hold {
+        background: #fff3cd;
+        color: #856404;
+    }
+
+    .status-resolved {
+        background: #c8e6c9;
+        color: #2e7d32;
+    }
+
+    .status-closed {
+        background: #e2e3e5;
+        color: #383d41;
+    }
+
+    .flag-icon {
+        font-size: 16px;
+        margin-right: 5px;
+        cursor: help;
+    }
+
+    .btn-sm {
+        padding: 4px 8px;
+        font-size: 12px;
+        background: #3498db;
+        color: white;
+        border: none;
+        border-radius: 3px;
+        cursor: pointer;
+        margin-right: 5px;
+    }
+
+    .btn-sm:hover {
+        background: #2980b9;
+    }
+
+    .btn-primary {
+        background-color: #3498db;
+        color: white;
+        border: none;
+        padding: 6px 12px;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+    .btn-primary:hover {
+        background-color: #2980b9;
+    }
+
+    .btn-secondary {
+        background-color: #6c757d;
+        color: white;
+        border: none;
+        padding: 6px 12px;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+    .btn-secondary:hover {
+        background-color: #5a6268;
+    }
+
+    .pagination {
+        display: flex;
+        justify-content: center;
+        gap: 15px;
+        margin-top: 20px;
+        align-items: center;
+    }
+
+    .modal {
+        display: none;
+        position: fixed;
+        z-index: 1000;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        align-items: center;
+        justify-content: center;
+    }
+
+    .modal-content {
+        background: white;
+        padding: 20px;
+        border-radius: 8px;
+        max-width: 800px;
+        width: 90%;
+        max-height: 80vh;
+        overflow-y: auto;
+        position: relative;
+    }
+
+    .close {
+        position: absolute;
+        right: 15px;
+        top: 10px;
+        font-size: 24px;
+        font-weight: bold;
+        cursor: pointer;
+        color: #aaa;
+    }
+
+    .close:hover {
+        color: #333;
+    }
+
+    /* Report detail modal specific styles */
+    .report-detail {
+        padding: 10px 0;
+    }
+
+    .report-header {
+        margin-bottom: 20px;
+        border-bottom: 2px solid #ecf0f1;
+        padding-bottom: 10px;
+    }
+
+    .report-header h2 {
+        margin: 0 0 5px 0;
+        font-size: 1.4rem;
+    }
+
+    .report-header .submitted {
+        color: #7f8c8d;
+        font-size: 0.9rem;
+    }
+
+    .detail-grid {
+        display: grid;
+        grid-template-columns: 180px 1fr;
+        gap: 12px;
+        margin: 20px 0;
+        background: #f9f9f9;
+        padding: 15px;
+        border-radius: 6px;
+    }
+
+    .detail-grid .label {
+        font-weight: 600;
+        color: #2c3e50;
+    }
+
+    .detail-grid .value {
+        color: #34495e;
+    }
+
+    .detail-section {
+        margin: 20px 0;
+        border-top: 1px solid #ecf0f1;
+        padding-top: 15px;
+    }
+
+    .detail-section h3 {
+        font-size: 1.1rem;
+        margin-bottom: 12px;
+        color: #2c3e50;
+    }
+
+    .message-box {
+        background: #f8f9fa;
+        border: 1px solid #e9ecef;
+        padding: 12px;
+        border-radius: 6px;
+        font-size: 0.95rem;
+        line-height: 1.5;
+        margin-bottom: 15px;
+    }
+
+    .timeline {
+        margin: 10px 0;
+        max-height: 150px;
+        overflow-y: auto;
+        border: 1px solid #e9ecef;
+        border-radius: 4px;
+        padding: 8px;
+        background: #fff;
+    }
+
+    .timeline-item {
+        padding: 6px 8px;
+        border-bottom: 1px solid #ecf0f1;
+        font-size: 0.85rem;
+    }
+
+    .timeline-item:last-child {
+        border-bottom: none;
+    }
+
+    .form-group {
+        margin-bottom: 15px;
+    }
+
+    .form-group label {
+        display: block;
+        margin-bottom: 5px;
+        font-weight: 500;
+    }
+
+    .form-group input, .form-group select, .form-group textarea {
+        width: 100%;
+        padding: 8px;
+        border: 1px solid #bdc3c7;
+        border-radius: 4px;
+    }
+
+    .form-actions {
+        display: flex;
+        gap: 10px;
+        justify-content: flex-end;
+        margin-top: 15px;
+    }
+
+    .audit-log {
+        max-height: 200px;
+        overflow-y: auto;
+        border: 1px solid #ddd;
+        padding: 10px;
+        background: #f9f9f9;
+        font-size: 0.85rem;
+    }
+
+    .audit-item {
+        padding: 4px 0;
+        border-bottom: 1px solid #eee;
+    }
+
+    .audit-time {
+        color: #7f8c8d;
+        margin-right: 8px;
+    }
+
+    .loading {
+        text-align: center;
+        padding: 40px;
+        color: #7f8c8d;
+    }
+
+    #spamKeywordList li {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 6px 8px;
+        border-bottom: 1px solid #eee;
+    }
+
+    #spamKeywordList li:last-child {
+        border-bottom: none;
+    }
+
+    #spamKeywordList li button {
+        padding: 2px 6px;
+        font-size: 11px;
+    }
+
+    .inline-actions {
+        display: inline-flex;
+        gap: 8px;
+        margin-left: 10px;
+    }
+
+    .btn-outline {
+        background: none;
+        border: 1px solid #3498db;
+        color: #3498db;
+        padding: 2px 8px;
+        border-radius: 3px;
+        cursor: pointer;
+        font-size: 12px;
+    }
+
+    .btn-outline:hover {
+        background: #3498db;
+        color: white;
+    }
+</style>
+
+<script src="{{ url_for('static', filename='js/reports.js') }}"></script>
+{% endblock %}

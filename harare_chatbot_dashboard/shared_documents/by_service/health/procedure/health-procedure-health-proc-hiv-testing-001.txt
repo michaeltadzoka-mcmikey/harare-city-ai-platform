@@ -1,0 +1,46 @@
+# TITLE: HEALTH-PROC-HIV-TESTING-001
+document_id: health-procedure-health-proc-hiv-testing-001
+# DOCUMENT_ID: [AUTO-GENERATED]
+# VERSION: 1
+
+## METADATA_BLOCK
+department: [Department name]
+owner_email: ggg@gmail.com
+valid_from: 2026-05-12
+valid_to: 2027-05-12
+locations: ["Council-wide"]
+authority_confidence: 0.9
+confidence_source: [Source of authority, e.g., Council Resolution]
+content_type: procedure
+service_area: health
+topic_tags: ["health", "hiv", "testing", "counselling"]
+related_documents: []
+prerequisites: []
+review_cycle: 
+cross_service_flag: false
+## CONTENT_BLOCK
+
+### Summary
+How to get a free, confidential HIV test at any Harare City Council clinic.
+
+### Step‑by‑Step Instructions
+1. **Visit any council clinic** (see HEALTH-CONTACT-POLYCLINICS-001). No appointment needed.
+2. **Go to the HIV testing room** – usually signposted or ask reception. All services are confidential.
+3. **Pre‑test counselling** – a nurse will explain the test, what results mean, and answer your questions.
+4. **Provide a small blood sample** (finger prick) or oral swab. Results take about 15 minutes.
+5. **Receive your result** in a private room.
+6. **Post‑test counselling** – if negative, you will receive prevention advice. If positive, the nurse will discuss treatment options and refer you to the ART (antiretroviral therapy) clinic.
+7. **If positive**, you will be registered for free ART medication on the same day.
+
+### Required Documents
+- None – you can use a pseudonym if you wish. However, to collect ART medication long‑term, you will need a national ID.
+
+### Common Questions Answered
+- Q: Is the test really free?
+  A: Yes, HIV testing is free at all council clinics.
+- Q: How accurate is the rapid test?
+  A: Over 99% accurate. If positive, a confirmatory blood test may be done.
+- Q: Can I get tested without my parents if I am under 16?
+  A: Yes, for HIV testing, consent is not required from a guardian. The service is confidential.
+- Q: What if I test positive?
+  A: You will be offered immediate counselling and same‑day ART (antiretroviral therapy) initiation. ART is free and very effective.

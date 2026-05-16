@@ -1,0 +1,103 @@
+<!-- templates/document_quality_dashboard.html -->
+<!-- New for v3.2 – dedicated view for metadata quality metrics -->
+
+{% extends "base.html" %}
+
+{% block title %}Document Quality Dashboard - Harare Municipal{% endblock %}
+
+{% block extra_css %}
+<style>
+    .quality-stats { display: flex; gap: 2rem; margin: 1rem 0; }
+    .stat-card { background: white; padding: 1rem; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); flex: 1; }
+    .stat-card h3 { margin: 0; color: #2c3e50; }
+    .stat-number { font-size: 2rem; font-weight: bold; color: #3498db; }
+    .warning { color: #e67e22; }
+    .danger { color: #e74c3c; }
+    .table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+    .table th { background: #34495e; color: white; padding: 0.5rem; text-align: left; }
+    .table td { padding: 0.5rem; border-bottom: 1px solid #ecf0f1; }
+    .table tr:hover { background: #f5f5f5; }
+    .badge { padding: 0.2rem 0.5rem; border-radius: 12px; font-size: 0.8rem; }
+    .badge-warning { background: #f39c12; color: white; }
+    .badge-danger { background: #e74c3c; color: white; }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1>📊 Document Quality Dashboard</h1>
+    <p class="lead">Monitor metadata completeness and document health across the knowledge base.</p>
+
+    <div class="quality-stats">
+        <div class="stat-card">
+            <h3>Total Documents</h3>
+            <div class="stat-number" id="totalDocs">0</div>
+        </div>
+        <div class="stat-card">
+            <h3>Complete Metadata</h3>
+            <div class="stat-number" id="completePct">0%</div>
+        </div>
+        <div class="stat-card">
+            <h3>Missing Topic Tags</h3>
+            <div class="stat-number" id="missingTags">0</div>
+        </div>
+        <div class="stat-card">
+            <h3>Missing Related Docs</h3>
+            <div class="stat-number" id="missingRelated">0</div>
+        </div>
+    </div>
+
+    <h2>📄 Documents Missing Topic Tags</h2>
+    <table class="table" id="missingTagsTable">
+        <thead>
+            <tr>
+                <th>Document ID</th>
+                <th>Title</th>
+                <th>Service</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Populated by JS -->
+        </tbody>
+    </table>
+
+    <h2>🔗 Documents Missing Related Documents</h2>
+    <table class="table" id="missingRelatedTable">
+        <thead>
+            <tr>
+                <th>Document ID</th>
+                <th>Title</th>
+                <th>Service</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Populated by JS -->
+        </tbody>
+    </table>
+
+    <h2>⚠️ Suspicious Authority Overrides</h2>
+    <table class="table" id="overridesTable">
+        <thead>
+            <tr>
+                <th>Document ID</th>
+                <th>Title</th>
+                <th>Overridden Tier</th>
+                <th>Justification</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Populated by JS -->
+        </tbody>
+    </table>
+
+    <div class="mt-4">
+        <button id="bulkUpdateBtn" class="btn btn-primary">Bulk Update Tags</button>
+        <button id="refreshBtn" class="btn btn-secondary">Refresh</button>
+    </div>
+</div>
+
+<script src="{{ url_for('static', filename='js/quality_dashboard.js') }}"></script>
+{% endblock %}

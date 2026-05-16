@@ -1,0 +1,48 @@
+# TITLE: ROADS-EMERG-CLOSURE-001
+document_id: roads-emergency-roads-emerg-closure-001
+# DOCUMENT_ID: [AUTO-GENERATED]
+# VERSION: 1
+
+## METADATA_BLOCK
+department: [Department name]
+owner_email: ggg@gmail.com
+valid_from: 2026-05-06
+valid_to: 2027-05-06
+locations: ["Council-wide"]
+authority_confidence: 0.9
+confidence_source: [Source of authority, e.g., Council Resolution]
+content_type: emergency
+service_area: roads
+topic_tags: ["roads", "closure", "emergency", "diversion"]
+related_documents: []
+prerequisites: []
+review_cycle: 
+cross_service_flag: false
+## CONTENT_BLOCK
+
+### Summary
+Template for urgent road closures due to accidents, collapsed drains, or sinkholes.
+
+### Affected Areas
+[Street name(s) and between which intersections – e.g., Samora Machel Avenue between Simon Muzenda Street and Leopold Takawira Street]
+
+### Reason for Closure
+[Collapsed sewer / burst water main / serious accident / sinkhole / fallen tree]
+
+### Expected Duration
+[Start date and time] to [estimated end date and time]
+
+### Recommended Diversions
+- **Eastbound traffic:** Use [alternative street name]
+- **Westbound traffic:** Use [alternative street name]
+- **Local access only** for residents on the closed section.
+
+### Instructions for Motorists
+- Follow police and traffic officer directions.
+- Do not remove barriers – danger of collapse.
+- Use public transport where possible.
+
+### Important Contacts
+- Roads Department: 0800 1234
+- Traffic Police: +263 242 700111
+- Emergency Ambulance/Fire: 994 or 0800 1234

@@ -1,0 +1,31 @@
+<div id="restoreModal" class="modal" style="display:none;">
+    <div class="modal-content" style="max-width: 500px;">
+        <div class="modal-header">
+            <h3>📄 Restore Archived Document</h3>
+            <button class="close-btn" onclick="closeModal('restoreModal')">&times;</button>
+        </div>
+        <div class="modal-body">
+            <p>This will create a new active version of the archived document.</p>
+            <input type="hidden" id="restoreDocId">
+            <div class="form-group">
+                <label>Valid From</label>
+                <input type="date" id="restoreValidFrom" class="form-control" value="{{ now().date().isoformat() }}">
+            </div>
+            <div class="form-group">
+                <label>Valid To (optional)</label>
+                <input type="date" id="restoreValidTo" class="form-control">
+            </div>
+            <div class="form-group">
+                <label>Restore Mode</label>
+                <div>
+                    <label><input type="radio" name="restoreMode" value="draft" checked> Restore as Draft</label>
+                    <label><input type="radio" name="restoreMode" value="ingest"> Restore and Ingest Immediately</label>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" id="cancelRestore">Cancel</button>
+            <button type="button" class="btn btn-primary" id="executeRestore">Restore</button>
+        </div>
+    </div>
+</div>

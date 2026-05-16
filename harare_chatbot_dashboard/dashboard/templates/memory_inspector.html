@@ -1,0 +1,92 @@
+{% extends "base.html" %}
+{% block title %}Memory Inspector{% endblock %}
+{% block content %}
+<div class="memory-inspector">
+    <h1>Memory Inspector</h1>
+    <p class="description">View and edit user memory for active sessions.</p>
+    <div class="search">
+        <input type="text" id="userId" placeholder="Enter user ID">
+        <button onclick="loadMemory()">Load</button>
+    </div>
+    <div id="memoryView" class="memory-view"></div>
+</div>
+
+<style>
+.memory-inspector {
+    max-width: 800px;
+    margin: 0 auto;
+}
+.search {
+    margin: 20px 0;
+}
+.memory-view {
+    background: white;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+.memory-item {
+    border-bottom: 1px solid #ecf0f1;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+.memory-key {
+    font-weight: bold;
+    width: 120px;
+    display: inline-block;
+}
+.memory-value {
+    display: inline-block;
+}
+.edit-btn {
+    float: right;
+    background: #3498db;
+    color: white;
+    border: none;
+    padding: 2px 8px;
+    border-radius: 3px;
+    cursor: pointer;
+}
+</style>
+
+<script>
+async function loadMemory() {
+    const userId = document.getElementById('userId').value;
+    if (!userId) return;
+    const response = await fetch(`/memory/api/${userId}`);
+    const data = await response.json();
+    displayMemory(data);
+}
+
+function displayMemory(profile) {
+    const container = document.getElementById('memoryView');
+    if (!profile || !profile.user_facts || Object.keys(profile.user_facts).length === 0) {
+        container.innerHTML = '<p>No memory found for this user.</p>';
+        return;
+    }
+    let html = '<h3>User Facts</h3>';
+    for (const [key, val] of Object.entries(profile.user_facts)) {
+        const value = typeof val === 'object' ? val.value : val;
+        html += `
+            <div class="memory-item" data-key="${key}">
+                <span class="memory-key">${key}:</span>
+                <span class="memory-value">${escapeHtml(value)}</span>
+                <button class="edit-btn" onclick="editFact('${key}', '${escapeHtml(value)}')">Edit</button>
+            </div>
+        `;
+    }
+    container.innerHTML = html;
+}
+
+function editFact(key, currentValue) {
+    const newValue = prompt(`Edit ${key}:`, currentValue);
+    if (newValue !== null) {
+        fetch(`/memory/api/${userId}`, {
+            method: 'PUT',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({key, value: newValue})
+        }).then(() => loadMemory());
+    }
+}
+</script>
+{% endblock %}

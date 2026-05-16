@@ -1,0 +1,46 @@
+# TITLE: HEALTH-PROC-IMMUNISATION-001
+document_id: health-procedure-health-proc-immunisation-001
+# DOCUMENT_ID: [AUTO-GENERATED]
+# VERSION: 1
+
+## METADATA_BLOCK
+department: [Department name]
+owner_email: ggg@gmail.com
+valid_from: 2026-05-12
+valid_to: 2027-05-12
+locations: ["Council-wide"]
+authority_confidence: 0.9
+confidence_source: [Source of authority, e.g., Council Resolution]
+content_type: procedure
+service_area: health
+topic_tags: ["health", "immunisation", "children", "vaccines"]
+related_documents: []
+prerequisites: []
+review_cycle: 
+cross_service_flag: false
+## CONTENT_BLOCK
+
+### Summary
+How to get your child vaccinated at any Harare City Council clinic. Vaccines are free for children under 5.
+
+### Step‑by‑Step Instructions
+1. **Find your nearest clinic** – see HEALTH-CONTACT-POLYCLINICS-001 for locations and hours.
+2. **Bring the child’s birth certificate** and any existing child health card (brown card). If you don’t have one, the clinic will issue a new card.
+3. **Go to the clinic on the correct day** – most clinics have immunisation days on Tuesdays and Thursdays. Call ahead to confirm.
+4. **Register at the reception** – give your child’s details. No fee.
+5. **Wait for the nurse** – the nurse will check the child’s weight, temperature, and health status.
+6. **Receive the vaccine(s)** according to the national schedule (BCG, polio, DTP, measles, etc.).
+7. **Get the next appointment date** written on the child health card.
+8. **Observe the child for 30 minutes** at the clinic for any immediate reaction (rare).
+
+### Required Documents
+- Child’s birth certificate (or clinic registration number)
+- Child health card (if previously issued)
+
+### Common Questions Answered
+- Q: Are vaccines really free?
+  A: Yes, all routine childhood vaccines are provided free by the Ministry of Health through council clinics.
+- Q: What if I lost my child’s health card?
+  A: The clinic can issue a replacement for a small fee (5 ZiG). Bring the birth certificate.
+- Q: Can I take my child to any clinic, even if we live in a different suburb?
+  A: Yes, immunisation services are available at all council clinics regardless of where you live.

@@ -1,0 +1,43 @@
+# TITLE: WATER-FAQ-BILLING-001
+document_id: water-faq-water-faq-billing-001
+# DOCUMENT_ID: [AUTO-GENERATED]
+# VERSION: 1
+
+## METADATA_BLOCK
+department: [Department name]
+owner_email: ggg@gmail.com
+valid_from: 2026-05-06
+valid_to: 2027-05-06
+locations: ["Council-wide"]
+authority_confidence: 0.9
+confidence_source: [Source of authority, e.g., Council Resolution]
+content_type: faq
+service_area: water
+topic_tags: ["water", "billing", "meter", "payments"]
+related_documents: []
+prerequisites: []
+review_cycle: 
+cross_service_flag: false
+## CONTENT_BLOCK
+
+### Summary
+Answers to common questions about water bills, meter reading, and payments.
+
+### Questions and Answers
+- Q: How is my water bill calculated?
+  A: Your bill = (volume used × tariff per kilolitre) + fixed service fee + sewerage charge (80% of water used). Tariffs are tiered: first 5 kL at lower rate, above at higher rate.
+
+- Q: How do I read my water meter?
+  A: The meter is usually in a concrete box near the street. Read the black numbers (kilolitres). Subtract last month’s reading to get your usage. Send a photo to water.meter@harare.gov.zw if you suspect a mistake.
+
+- Q: I think my bill is too high. What can I do?
+  A: First check for leaks (turn off all taps, see if meter still moves). Then request a re‑reading by calling 0800 1234. If still unresolved, visit the water billing office at Selous Avenue.
+
+- Q: Can I pay my bill online?
+  A: Yes. Use the council portal (pay.harare.gov.zw) or mobile money (EcoCash, OneMoney) using biller code 2020. Also possible via CABS and NMB bank apps.
+
+- Q: What happens if I don’t pay?
+  A: After 30 days, a 10% penalty is added. After 90 days, water may be disconnected. Reconnection fee is 400 ZiG plus full settlement of arrears.
+
+- Q: How do I report a billing error?
+  A: Send an email to water.billing@harare.gov.zw with your account number and a photo of your meter. Response within 5 working days.

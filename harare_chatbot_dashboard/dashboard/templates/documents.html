@@ -1,0 +1,1000 @@
+{% extends "base.html" %}
+
+{% block title %}Documents & RAG - Harare Municipal{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+<style>
+    /* ===== Base Layout ===== */
+    .documents-container {
+        display: flex;
+        flex-direction: column;
+        height: 100vh;
+    }
+    
+    /* ===== Top Bar – Professional, no wrap, no scroll ===== */
+    .top-bar {
+        background: white;
+        padding: 0.6rem 1rem;
+        border-radius: 8px;
+        margin-bottom: 1rem;
+        display: flex;
+        flex-wrap: nowrap;
+        gap: 0.8rem;
+        align-items: center;
+        justify-content: flex-start;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+        border: 1px solid #e9ecef;
+    }
+    .top-bar button {
+        padding: 0.5rem 1rem;
+        background: #3498db;
+        color: white;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 0.9rem;
+        font-weight: 600;
+        white-space: nowrap;
+        transition: all 0.2s ease;
+        box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+    }
+    .top-bar button:hover {
+        background: #2980b9;
+        transform: translateY(-1px);
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    .top-bar .dropdown button {
+        background: #6c757d;
+    }
+    .top-bar .dropdown button:hover {
+        background: #5a6268;
+    }
+    .rag-status {
+        margin-left: auto;
+        background: #f8f9fa;
+        padding: 0.3rem 1rem;
+        border-radius: 30px;
+        font-size: 0.85rem;
+        font-weight: 500;
+        color: #2c3e50;
+        white-space: nowrap;
+        border: 1px solid #e9ecef;
+        cursor: pointer;
+        transition: background 0.2s;
+    }
+    .rag-status:hover {
+        background: #e9ecef;
+    }
+    .dropdown {
+        position: relative;
+    }
+    .dropdown-content {
+        display: none;
+        position: absolute;
+        background: white;
+        min-width: 160px;
+        box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+        z-index: 100;
+        border-radius: 8px;
+        border: 1px solid #e9ecef;
+        overflow: hidden;
+    }
+    .dropdown-content a {
+        color: #333;
+        padding: 0.6rem 1rem;
+        text-decoration: none;
+        display: block;
+        font-size: 0.85rem;
+        transition: background 0.1s;
+    }
+    .dropdown-content a:hover {
+        background: #f1f3f5;
+    }
+    .dropdown:hover .dropdown-content {
+        display: block;
+    }
+    
+    /* Stats & Filter Bar */
+    .stats-bar {
+        background: white;
+        padding: 0.5rem 0.8rem;
+        border-radius: 5px;
+        margin-bottom: 1rem;
+        display: flex;
+        gap: 2rem;
+        align-items: center;
+        flex-wrap: wrap;
+        font-size: 0.9rem;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+    .stats-bar a {
+        text-decoration: none;
+        color: #3498db;
+        cursor: pointer;
+    }
+    .filter-bar {
+        background: white;
+        padding: 0.5rem 0.8rem;
+        border-radius: 5px;
+        margin-bottom: 1rem;
+        display: flex;
+        gap: 1rem;
+        align-items: center;
+        flex-wrap: wrap;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+    .filter-bar select, .filter-bar input {
+        padding: 0.3rem;
+        border: 1px solid #ccc;
+        border-radius: 3px;
+        min-width: 120px;
+    }
+    
+    /* Tabs */
+    .doc-tabs {
+        display: flex;
+        gap: 0.5rem;
+        margin-bottom: 1rem;
+        border-bottom: 1px solid #ddd;
+        padding-bottom: 0.5rem;
+    }
+    .doc-tab {
+        padding: 0.5rem 1rem;
+        background: #f8f9fa;
+        border: 1px solid #ced4da;
+        border-radius: 4px 4px 0 0;
+        cursor: pointer;
+        font-weight: 500;
+    }
+    .doc-tab.active {
+        background: white;
+        border-bottom-color: white;
+        color: #3498db;
+    }
+    
+    /* Three-column layout */
+    .main-panel {
+        display: flex;
+        gap: 1rem;
+        flex: 1;
+        min-height: 0;
+        height: 100%;
+    }
+    
+    .left-panel {
+        width: 280px;
+        background: white;
+        border-radius: 5px;
+        padding: 0.5rem;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        transition: width 0.3s ease;
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        overflow-y: hidden;
+    }
+    .left-panel.collapsed {
+        width: 40px;
+        padding: 0.5rem 0;
+        overflow: hidden;
+    }
+    .left-panel.collapsed .tree-controls,
+    .left-panel.collapsed .knowledge-tree,
+    .left-panel.collapsed .panel-header span:not(.toggle-tree-btn) {
+        display: none;
+    }
+    .panel-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 0.5rem;
+        flex-shrink: 0;
+    }
+    .toggle-tree-btn {
+        background: none;
+        border: none;
+        font-size: 1.2rem;
+        cursor: pointer;
+        padding: 0.2rem 0.5rem;
+    }
+    .tree-controls {
+        display: flex;
+        gap: 0.5rem;
+        margin-bottom: 0.5rem;
+        padding-bottom: 0.5rem;
+        border-bottom: 1px solid #eee;
+        flex-shrink: 0;
+    }
+    .tree-controls button {
+        padding: 0.2rem 0.5rem;
+        background: #f8f9fa;
+        border: 1px solid #ced4da;
+        border-radius: 3px;
+        cursor: pointer;
+        font-size: 0.8rem;
+    }
+    
+    /* Knowledge tree */
+    .knowledge-tree {
+        list-style: none;
+        padding-left: 0;
+        margin: 0;
+        font-size: 0.85rem;
+        flex: 1;
+        overflow-y: auto;
+        min-height: 0;
+    }
+    .knowledge-tree li {
+        margin: 0;
+        padding: 0;
+        position: relative;
+    }
+    .tree-folder {
+        cursor: pointer;
+        font-weight: 500;
+        padding: 0.2rem 0.2rem 0.2rem 0;
+        border-radius: 4px;
+        transition: background 0.2s;
+        display: flex;
+        align-items: center;
+        gap: 4px;
+    }
+    .tree-folder:hover {
+        background: #f0f0f0;
+    }
+    .tree-folder .expand-icon {
+        display: inline-block;
+        width: 16px;
+        font-size: 10px;
+        text-align: center;
+        flex-shrink: 0;
+    }
+    .tree-folder .badge {
+        font-weight: normal;
+        background: #e9ecef;
+        padding: 0.1rem 0.3rem;
+        border-radius: 10px;
+        margin-left: 0.2rem;
+        font-size: 0.65rem;
+        color: #495057;
+        flex-shrink: 0;
+    }
+    .tree-folder .completeness-badge {
+        font-weight: normal;
+        background: #3498db;
+        color: white;
+        padding: 0.1rem 0.3rem;
+        border-radius: 10px;
+        margin-left: 0.2rem;
+        font-size: 0.65rem;
+        flex-shrink: 0;
+    }
+    .tree-folder .add-icon {
+        margin-left: 0.2rem;
+        color: #28a745;
+        cursor: pointer;
+        font-size: 0.8rem;
+        opacity: 0;
+        transition: opacity 0.2s;
+        flex-shrink: 0;
+    }
+    .tree-folder:hover .add-icon {
+        opacity: 1;
+    }
+    .knowledge-tree ul {
+        list-style: none;
+        padding-left: 1.2rem;
+        margin: 0;
+        border-left: 1px dashed #dee2e6;
+    }
+    .tree-file {
+        cursor: pointer;
+        padding: 0.2rem 0.2rem 0.2rem 0;
+        margin: 1px 0;
+        border-radius: 4px;
+        transition: background 0.2s;
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        font-size: 0.8rem;
+    }
+    .tree-file:hover {
+        background: #f0f0f0;
+    }
+    .tree-file.selected {
+        background: #e3f2fd;
+        border-left: 3px solid #3498db;
+        padding-left: 1px;
+    }
+    .empty-message {
+        padding: 0.5rem 1rem;
+        color: #999;
+        font-style: italic;
+        font-size: 0.8rem;
+    }
+    
+    .center-panel {
+        flex: 1;
+        background: white;
+        border-radius: 5px;
+        padding: 1rem;
+        overflow-x: auto;
+        overflow-y: auto;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+    .right-panel {
+        width: 280px;
+        background: white;
+        border-radius: 5px;
+        padding: 1rem;
+        overflow-y: auto;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+    
+    /* Table styling */
+    .table-wrapper {
+        overflow-x: auto;
+        margin: 0.5rem 0;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+    }
+    #docTable {
+        min-width: 1100px;
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 0.8rem;
+    }
+    #docTable th, #docTable td {
+        padding: 6px 8px;
+        white-space: nowrap;
+        border-bottom: 1px solid #eee;
+    }
+    #docTable th {
+        background-color: #2c3e50 !important;
+        color: white !important;
+        position: sticky;
+        top: 0;
+        z-index: 10;
+    }
+    #docTable td:nth-child(9) {
+        white-space: normal;
+        max-width: 200px;
+    }
+    #docTable th:first-child, #docTable td:first-child {
+        position: sticky;
+        left: 0;
+        background-color: white;
+        z-index: 5;
+    }
+    #docTable th:first-child {
+        background-color: #2c3e50 !important;
+        z-index: 15;
+    }
+    .table-scroll-btn {
+        background: #3498db;
+        color: white;
+        border: none;
+        padding: 0.2rem 0.6rem;
+        border-radius: 3px;
+        cursor: pointer;
+        font-size: 0.8rem;
+        margin-left: 0.5rem;
+    }
+    .table-scroll-btn:hover {
+        background: #2980b9;
+    }
+    
+    /* Compact metadata and collapsible */
+    .document-meta {
+        background: #f8f9fa;
+        padding: 0.5rem;
+        border-radius: 5px;
+        margin-bottom: 1rem;
+        font-size: 0.85rem;
+    }
+    .meta-collapsible {
+        margin-bottom: 10px;
+    }
+    .meta-toggle {
+        background: none;
+        border: none;
+        color: #3498db;
+        cursor: pointer;
+        font-size: 0.85rem;
+        padding: 0;
+        margin-bottom: 5px;
+    }
+    .meta-field {
+        margin: 0;
+        padding: 0.1rem 0;
+    }
+    .meta-field label {
+        font-weight: bold;
+        font-size: 0.7rem;
+        color: #555;
+        display: block;
+    }
+    .meta-field .value {
+        font-size: 0.8rem;
+    }
+    .document-content pre {
+        padding: 0.5rem;
+        font-size: 12px;
+        max-height: 300px;
+        overflow-y: auto;
+        background: #f8f9fa;
+        border-left: 3px solid #3498db;
+        white-space: pre-wrap;
+    }
+    
+    /* Override items */
+    .override-item {
+        background: #f8f9fa;
+        padding: 6px;
+        margin: 5px 0;
+        border-radius: 4px;
+        font-size: 0.8rem;
+    }
+    .revoke-override-btn {
+        margin-left: 10px;
+        background: #dc3545;
+        color: white;
+        border: none;
+        padding: 2px 6px;
+        border-radius: 3px;
+        cursor: pointer;
+    }
+    
+    /* Validation progress */
+    .validation-progress {
+        margin-bottom: 10px;
+    }
+    .progress-bar {
+        transition: width 0.3s;
+    }
+    .validation-summary {
+        background: #f0f0f0;
+        padding: 0.5rem;
+        border-radius: 4px;
+        margin-bottom: 0.5rem;
+        cursor: pointer;
+    }
+    .validation-details {
+        margin-top: 0.5rem;
+        padding-left: 1.5rem;
+    }
+    .check-pass {
+        color: #2ecc71;
+    }
+    .check-fail {
+        color: #e74c3c;
+    }
+    
+    /* Edit Mode */
+    .edit-layout {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+    }
+    /* New collapsible section for metadata/validation */
+    .edit-collapsible {
+        margin-bottom: 1rem;
+    }
+    .edit-collapsible-header {
+        background: #f8f9fa;
+        padding: 0.5rem;
+        border-radius: 4px;
+        cursor: pointer;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        border: 1px solid #e9ecef;
+    }
+    .edit-collapsible-header:hover {
+        background: #e9ecef;
+    }
+    .edit-top-row {
+        display: flex;
+        gap: 1rem;
+        padding: 1rem 0;
+        border-top: 1px solid #ddd;
+        margin-top: 0.5rem;
+    }
+    .edit-toolbar {
+        display: flex;
+        gap: 0.5rem;
+        margin: 1rem 0;
+        padding: 0.5rem 0;
+        border-top: 1px solid #ddd;
+        border-bottom: 1px solid #ddd;
+    }
+    .edit-toolbar button {
+        padding: 0.4rem 0.8rem;
+        background: #f8f9fa;
+        border: 1px solid #ced4da;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: all 0.2s;
+    }
+    .edit-toolbar button:hover {
+        background: #e9ecef;
+    }
+    .edit-metadata-panel {
+        flex: 2;
+        background: #f8f9fa;
+        padding: 0.5rem;
+        border-radius: 5px;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0.25rem;
+        font-size: 0.85rem;
+    }
+    .edit-validation-panel {
+        flex: 1;
+        background: #f8f9fa;
+        padding: 0.5rem;
+        border-radius: 5px;
+    }
+    .edit-validation-panel button {
+        width: 100%;
+        margin-bottom: 0.3rem;
+    }
+    .edit-editor-area {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+    }
+    .edit-editor-area textarea {
+        width: 100%;
+        min-height: 400px;
+        font-family: monospace;
+        padding: 0.5rem;
+        border: 1px solid #ccc;
+        border-radius: 3px;
+        resize: vertical;
+    }
+    
+    /* Button styles consistent */
+    .btn-primary {
+        background-color: #3498db !important;
+        color: white;
+        border: none;
+        padding: 0.4rem 0.8rem;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: all 0.2s ease;
+    }
+    .btn-primary:hover {
+        background-color: #2980b9 !important;
+        transform: translateY(-1px);
+    }
+    .btn-secondary {
+        background-color: #6c757d !important;
+        color: white;
+        border: none;
+        padding: 0.4rem 0.8rem;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: all 0.2s ease;
+    }
+    .btn-secondary:hover {
+        background-color: #5a6268 !important;
+        transform: translateY(-1px);
+    }
+    .btn-danger {
+        background-color: #e74c3c !important;
+        color: white;
+        border: none;
+        padding: 0.4rem 0.8rem;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: all 0.2s ease;
+    }
+    .btn-danger:hover {
+        background-color: #c0392b !important;
+        transform: translateY(-1px);
+    }
+    .btn-warning {
+        background-color: #f39c12 !important;
+        color: white;
+        border: none;
+        padding: 0.4rem 0.8rem;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: all 0.2s ease;
+    }
+    .btn-warning:hover {
+        background-color: #e67e22 !important;
+        transform: translateY(-1px);
+    }
+    .btn-small {
+        font-size: 0.8rem;
+        padding: 0.2rem 0.5rem;
+    }
+    .btn-back {
+        background: #6c757d;
+        color: white;
+        border: none;
+        padding: 0.3rem 0.8rem;
+        border-radius: 3px;
+        cursor: pointer;
+        font-size: 0.85rem;
+    }
+    .btn-back:hover {
+        background: #5a6268;
+    }
+    
+    /* Other panels */
+    .expanded-panel {
+        background: white;
+        border-radius: 5px;
+        padding: 1rem;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        flex: 1;
+        overflow-y: auto;
+    }
+    .panel-controls {
+        display: flex;
+        gap: 0.5rem;
+        margin-bottom: 1rem;
+    }
+    .pagination {
+        display: flex;
+        justify-content: center;
+        gap: 1rem;
+        margin: 1rem 0;
+        align-items: center;
+    }
+    .service-health-score {
+        font-weight: bold;
+        margin-left: 0.5rem;
+    }
+    .service-health-score.green {
+        color: #2ecc71;
+    }
+    .service-health-score.yellow {
+        color: #f39c12;
+    }
+    .service-health-score.red {
+        color: #e74c3c;
+    }
+    .analytics-strip-tabs {
+        display: flex;
+        gap: 0.25rem;
+        margin-bottom: 1rem;
+        border-bottom: 1px solid #dee2e6;
+    }
+    .analytics-strip-tabs .tab {
+        padding: 0.5rem 1rem;
+        background: #f8f9fa;
+        border: 1px solid #dee2e6;
+        border-bottom: none;
+        border-radius: 4px 4px 0 0;
+        cursor: pointer;
+        font-weight: 500;
+        color: #495057;
+        margin-bottom: -1px;
+    }
+    .analytics-strip-tabs .tab.active {
+        background: white;
+        border-bottom-color: white;
+        color: #007bff;
+    }
+    
+    /* Modals */
+    .modal {
+        position: fixed;
+        z-index: 1000;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0,0,0,0.5);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .modal-content {
+        background-color: white;
+        padding: 1.5rem;
+        border-radius: 8px;
+        width: 90%;
+        max-width: 600px;
+        max-height: 90vh;
+        overflow-y: auto;
+        position: relative;
+    }
+    .modal-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 1rem;
+    }
+    .close-btn {
+        font-size: 1.5rem;
+        cursor: pointer;
+        background: none;
+        border: none;
+    }
+    .form-group {
+        margin-bottom: 1rem;
+    }
+    .form-group label {
+        display: block;
+        margin-bottom: 0.3rem;
+        font-weight: 600;
+    }
+    .form-control {
+        width: 100%;
+        padding: 0.4rem;
+        border: 1px solid #ccc;
+        border-radius: 3px;
+    }
+    .step-indicator {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 1.5rem;
+    }
+    .step {
+        flex: 1;
+        text-align: center;
+        padding: 0.5rem;
+        border-bottom: 3px solid #ccc;
+    }
+    .step.active {
+        border-bottom-color: #3498db;
+        font-weight: bold;
+    }
+    .required {
+        color: #e74c3c;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="documents-container">
+    <!-- Top Action Bar (Bulk Import button removed) -->
+    <div class="top-bar">
+        <button id="newDocumentBtn" class="btn-primary"><i class="fas fa-plus"></i> New Document</button>
+        <button id="newServiceBtn" class="btn-primary"><i class="fas fa-folder-plus"></i> New Service Area</button>
+        <button id="createOverrideBtn" class="btn-primary"><i class="fas fa-ban"></i> Create Override</button>
+        <div class="dropdown">
+            <button id="wipeDropdownBtn" class="btn-danger"><i class="fas fa-trash-alt"></i> Wipe RAG ▼</button>
+            <div class="dropdown-content" id="wipeMenu">
+                <a data-scope="vectors"><i class="fas fa-database"></i> Vectors only</a>
+                <a data-scope="service"><i class="fas fa-folder"></i> By Service Area</a>
+                <a data-scope="overrides"><i class="fas fa-ban"></i> Overrides only</a>
+                <a data-scope="full"><i class="fas fa-skull-crossbones"></i> Full wipe</a>
+            </div>
+        </div>
+        <!-- Bulk Import button removed -->
+        <div class="rag-status" id="ragStatus">
+            <span>RAG Status: <span id="ragHealth"><i class="fas fa-circle" style="color:#2ecc71;"></i> Healthy</span></span>
+        </div>
+    </div>
+
+    <!-- Stats & Filter Bar -->
+    <div class="stats-bar" id="statsBar">
+        <span><i class="fas fa-file-alt"></i> Docs: <a href="#" id="totalDocs">0</a></span>
+        <span><i class="fas fa-clock"></i> Pending: <a href="#" id="pendingDocs">0</a></span>
+        <span><i class="fas fa-calendar-times"></i> Expired: <a href="#" id="expiredDocs">0</a></span>
+        <button id="refreshStats" class="btn-secondary btn-small"><i class="fas fa-sync-alt"></i> Refresh</button>
+    </div>
+    <div class="filter-bar">
+        <select id="serviceFilter"><option value="">All Services</option></select>
+        <select id="contentTypeFilter"><option value="">All Content Types</option></select>
+        <select id="statusFilter">
+            <option value="">All Status</option>
+            <option value="active">Active</option>
+            <option value="archived">Archived</option>
+            <option value="draft">Draft</option>
+            <option value="expired">Expired</option>
+            <option value="locked">Locked</option>
+        </select>
+        <input type="text" id="searchInput" placeholder="Search...">
+        <button id="exportBtn" class="btn-secondary btn-small"><i class="fas fa-download"></i> Export Filtered View</button>
+    </div>
+
+    <!-- Tab Bar -->
+    <div class="doc-tabs">
+        <div class="doc-tab active" data-tab="knowledge"><i class="fas fa-folder-tree"></i> Knowledge Base</div>
+        <div class="doc-tab" data-tab="analytics"><i class="fas fa-chart-line"></i> Analytics Strip</div>
+        <div class="doc-tab" data-tab="expired"><i class="fas fa-calendar-times"></i> Expired Documents</div>
+        <div class="doc-tab" data-tab="ledger"><i class="fas fa-book"></i> Decision Ledger</div>
+        <div class="doc-tab" data-tab="conflict"><i class="fas fa-fist-raised"></i> Conflict Queue</div>
+    </div>
+
+    <!-- Knowledge Base View -->
+    <div id="knowledgeView" style="display: flex; flex-direction: column; flex: 1;">
+        <div class="main-panel" id="mainPanel">
+            <div class="left-panel" id="knowledgeTreePanel">
+                <div class="panel-header">
+                    <span><i class="fas fa-sitemap"></i> Knowledge Tree</span>
+                    <button class="toggle-tree-btn" id="toggleTreeBtn">◀</button>
+                </div>
+                <div class="tree-controls">
+                    <button id="expandAll"><i class="fas fa-expand-alt"></i> Expand All</button>
+                    <button id="collapseAll"><i class="fas fa-compress-alt"></i> Collapse All</button>
+                </div>
+                <ul class="knowledge-tree" id="knowledgeTree"></ul>
+            </div>
+
+            <div class="center-panel" id="centerPanel">
+                <div id="listView" style="display: block;">
+                    <div style="margin-bottom: 0.5rem; display: flex; justify-content: space-between; align-items: center;">
+                        <div>
+                            <button id="bulkActionsBtn" class="btn-secondary btn-small"><i class="fas fa-cogs"></i> Bulk Actions ▼</button>
+                            <button id="selectAllBtn" class="btn-secondary btn-small"><i class="fas fa-check-double"></i> Select All</button>
+                            <span id="columnPickerContainer"></span>
+                        </div>
+                        <div>
+                            <button id="scrollTableLeft" class="table-scroll-btn" title="Scroll left"><i class="fas fa-chevron-left"></i> Scroll Left</button>
+                            <button id="scrollTableRight" class="table-scroll-btn" title="Scroll right">Scroll Right <i class="fas fa-chevron-right"></i></button>
+                        </div>
+                    </div>
+                    <div class="table-wrapper" id="tableWrapper">
+                        <table class="table" id="docTable">
+                            <thead>
+                                <tr>
+                                    <th><input type="checkbox" id="selectAllCheckbox"></th>
+                                    <th class="title">Title</th>
+                                    <th class="service">Service</th>
+                                    <th class="content_type">Content Type</th>
+                                    <th class="status">Status</th>
+                                    <th class="document_id">Document ID</th>
+                                    <th class="version">Version</th>
+                                    <th class="uploaded_at">Last Modified</th>
+                                    <th class="tags">Tags</th>
+                                    <th class="actions">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="docTableBody"></tbody>
+                        </table>
+                    </div>
+                    <div class="pagination">
+                        <button id="prevPageDoc" class="btn-secondary btn-small" disabled><i class="fas fa-chevron-left"></i> Previous</button>
+                        <span id="pageInfoDoc">Page 1</span>
+                        <button id="nextPageDoc" class="btn-secondary btn-small" disabled>Next <i class="fas fa-chevron-right"></i></button>
+                    </div>
+                </div>
+                <div id="editorView" style="display: none;"></div>
+            </div>
+
+            <div class="right-panel" id="rightPanel">
+                <h4 style="margin-top:0;"><i class="fas fa-check-double"></i> Validation Checklist</h4>
+                <ul class="validation-checklist" id="validationList"><li>Loading...</li></ul>
+                <button id="autoFixBtn" class="btn-secondary" data-requires-rag="true" title="Auto‑fix missing metadata using AI"><i class="fas fa-magic"></i> Auto-Fix Metadata</button>
+                <button id="ingestBtn" class="btn-primary" disabled data-requires-rag="true" title="Ingest document into RAG knowledge base"><i class="fas fa-cloud-upload-alt"></i> Ingest</button>
+                <div id="overrideRisk" style="margin-top:1rem; font-size:0.9rem;"></div>
+                <div id="activeOverridesList" style="margin-top:1rem;"></div>
+            </div>
+        </div>
+
+        <!-- Edit Mode Template (Modified: added back button, repositioned toolbar, collapsible metadata/validation) -->
+        <div id="editModeTemplate" style="display: none;">
+            <div class="edit-layout">
+                <!-- Collapsible metadata & validation section (collapsed by default) -->
+                <div class="edit-collapsible">
+                    <div class="edit-collapsible-header" id="editCollapseHeader">
+                        <i class="fas fa-chevron-right"></i> Metadata & Validation
+                    </div>
+                    <div class="edit-top-row" id="editMetadataValidationRow" style="display: none;">
+                        <div class="edit-metadata-panel" id="editMetadataPanel"></div>
+                        <div class="edit-validation-panel" id="editValidationPanel"></div>
+                    </div>
+                </div>
+                <!-- Toolbar with Back button, Save, Undo, Redo, Cancel -->
+                <div class="edit-toolbar">
+                    <button id="editBackBtn" class="btn-secondary"><i class="fas fa-arrow-left"></i> Back to List</button>
+                    <button id="editSaveBtn" class="btn-primary"><i class="fas fa-save"></i> Save</button>
+                    <button id="editUndoBtn" class="btn-secondary"><i class="fas fa-undo-alt"></i> Undo</button>
+                    <button id="editRedoBtn" class="btn-secondary"><i class="fas fa-redo-alt"></i> Redo</button>
+                    <button id="editCancelBtn" class="btn-secondary"><i class="fas fa-times"></i> Cancel</button>
+                </div>
+                <!-- Editor area -->
+                <div class="edit-editor-area">
+                    <div class="document-content" id="editDocumentContent"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Analytics Strip View -->
+    <div id="analyticsView" style="display: none; flex: 1;">
+        <div class="expanded-panel">
+            <div class="panel-controls">
+                <button id="refreshAnalytics" class="btn-secondary btn-small"><i class="fas fa-sync-alt"></i> Refresh</button>
+            </div>
+            <div class="analytics-strip-tabs">
+                <button class="tab active" data-analytics-tab="coverage"><i class="fas fa-chart-pie"></i> Service Coverage</button>
+                <button class="tab" data-analytics-tab="conflict"><i class="fas fa-fist-raised"></i> Conflict Analytics</button>
+                <button class="tab" data-analytics-tab="overrides"><i class="fas fa-ban"></i> Override Registry</button>
+            </div>
+            <div id="analyticsContent"></div>
+            <div class="service-health-list"></div>
+        </div>
+    </div>
+
+    <!-- Expired Documents View -->
+    <div id="expiredView" style="display: none; flex: 1;">
+        <div class="expanded-panel">
+            <div class="panel-controls">
+                <button id="refreshExpired" class="btn-secondary btn-small"><i class="fas fa-sync-alt"></i> Refresh</button>
+            </div>
+            <div id="expiredContent"></div>
+        </div>
+    </div>
+
+    <!-- Decision Ledger View -->
+    <div id="ledgerView" style="display: none; flex: 1;">
+        <div class="expanded-panel">
+            <div class="panel-controls">
+                <button id="refreshLedger" class="btn-secondary btn-small"><i class="fas fa-sync-alt"></i> Refresh</button>
+                <select id="ledgerFilter">
+                    <option value="">All</option>
+                    <option value="ingest">Ingest</option>
+                    <option value="override">Override</option>
+                    <option value="wipe">Wipe</option>
+                </select>
+            </div>
+            <div id="ledgerContent"></div>
+        </div>
+    </div>
+
+    <!-- Conflict Queue View -->
+    <div id="conflictView" style="display: none; flex: 1;">
+        <div class="expanded-panel">
+            <div class="panel-controls">
+                <button id="refreshConflict" class="btn-secondary btn-small"><i class="fas fa-sync-alt"></i> Refresh</button>
+            </div>
+            <div id="conflictContent"></div>
+        </div>
+    </div>
+</div>
+
+<!-- Modals (included as separate files) -->
+{% include '_create_document_modal.html' %}
+{% include '_service_modal.html' %}
+{% include '_wipe_confirm_modal.html' %}
+{% include '_override_modal.html' %}
+{% include '_bulk_import_modal.html' %}
+{% include '_restore_modal.html' %}
+{% include '_version_modal.html' %}
+{% include '_history_modal.html' %}
+{% include '_add_content_types_modal.html' %}
+{% include '_version_diff_modal.html' %}
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Tree panel toggle
+        const toggleTreeBtn = document.getElementById('toggleTreeBtn');
+        const treePanel = document.getElementById('knowledgeTreePanel');
+        if (toggleTreeBtn && treePanel) {
+            toggleTreeBtn.addEventListener('click', function() {
+                treePanel.classList.toggle('collapsed');
+                toggleTreeBtn.textContent = treePanel.classList.contains('collapsed') ? '▶' : '◀';
+            });
+        }
+        
+        // Table horizontal scroll buttons
+        const tableWrapper = document.getElementById('tableWrapper');
+        const scrollLeftBtn = document.getElementById('scrollTableLeft');
+        const scrollRightBtn = document.getElementById('scrollTableRight');
+        
+        if (tableWrapper && scrollLeftBtn && scrollRightBtn) {
+            scrollLeftBtn.addEventListener('click', function() {
+                tableWrapper.scrollBy({ left: -300, behavior: 'smooth' });
+            });
+            scrollRightBtn.addEventListener('click', function() {
+                tableWrapper.scrollBy({ left: 300, behavior: 'smooth' });
+            });
+        }
+    });
+</script>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{{ url_for('static', filename='js/documents.js') }}" type="module"></script>
+{% endblock %}

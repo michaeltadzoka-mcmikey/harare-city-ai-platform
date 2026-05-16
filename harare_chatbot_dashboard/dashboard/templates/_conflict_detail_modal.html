@@ -1,0 +1,27 @@
+<div id="conflictDetailModal" class="modal" style="display:none;">
+    <div class="modal-content" style="max-width: 800px;">
+        <div class="modal-header">
+            <h3>⚔️ Conflict Details</h3>
+            <button class="close-btn" onclick="closeModal('conflictDetailModal')">&times;</button>
+        </div>
+        <div style="overflow-x: auto;">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Document 1</th>
+                        <th>Title</th>
+                        <th>Document 2</th>
+                        <th>Title</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="conflictDetailBody">
+                    <!-- Populated by JS -->
+                </tbody>
+            </table>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" onclick="closeModal('conflictDetailModal')">Close</button>
+        </div>
+    </div>
+</div>

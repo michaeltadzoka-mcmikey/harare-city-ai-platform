@@ -1,0 +1,46 @@
+# TITLE: GENERAL-REPORTING-INSTRUCTIONS-001
+document_id: general-procedure-general-reporting-instructions-001
+# DOCUMENT_ID: [AUTO-GENERATED]
+# VERSION: 1
+
+## METADATA_BLOCK
+department: Customer Service
+owner_email: digital@harare.gov.zw
+valid_from: 2026-05-06
+valid_to: 2027-05-06
+locations: ["Council-wide"]
+authority_confidence: 0.9
+confidence_source: Council Standard Operating Procedure
+content_type: procedure
+service_area: general
+topic_tags: ["report", "how to report", "submit issue", "complaint", "REPORT123"]
+related_documents: []
+prerequisites: []
+review_cycle: 
+cross_service_flag: false
+## CONTENT_BLOCK
+
+### Summary
+To report any municipal issue (pothole, water leak, illegal dumping, etc.), type REPORT123 in the chat and follow the prompts. You will receive a reference number to track your report.
+
+### Step‑by‑Step Instructions
+1. Type `REPORT123` (you can use uppercase, lowercase, or a mix; with or without a space between REPORT and 123).
+2. When asked, describe the issue: what is happening and where (e.g., "burst water pipe flooding the road near Mbare Musika").
+3. Provide the location (suburb or street name) and a nearby landmark if possible.
+4. Confirm your report when the bot asks "Submit this report?" (answer yes or y).
+5. Save the reference number you receive (e.g., HCC-RPT-2026-12345) to check status later.
+
+### Required Documents
+- None – you only need to describe the issue.
+
+### Common Questions Answered
+- Q: How do I start a report?
+  A: Type REPORT123 in the chat.
+- Q: What if I make a mistake?
+  A: Type cancel to stop the report, then start over with REPORT123.
+- Q: How do I check my report status?
+  A: Type your reference number (e.g., HCC-RPT-2026-12345) into the chat.
+- Q: Is there a cost to report?
+  A: No, reporting is free.
+
+## END_OF_DOCUMENT

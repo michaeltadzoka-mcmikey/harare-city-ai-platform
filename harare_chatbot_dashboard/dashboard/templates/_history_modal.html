@@ -1,0 +1,27 @@
+<div id="historyModal" class="modal" style="display:none;">
+    <div class="modal-content" style="max-width: 800px;">
+        <div class="modal-header">
+            <h3>📜 Version History</h3>
+            <button class="close-btn" onclick="closeModal('historyModal')">&times;</button>
+        </div>
+        <div class="modal-body">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Version</th>
+                        <th>Date</th>
+                        <th>User</th>
+                        <th>Reason</th>
+                        <th>Compare</th>
+                    </tr>
+                </thead>
+                <tbody id="historyBody">
+                    <!-- Populated by JS -->
+                </tbody>
+            </table>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" id="closeHistory">Close</button>
+        </div>
+    </div>
+</div>

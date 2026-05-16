@@ -1,0 +1,159 @@
+<div id="createDocumentModal" class="modal" style="display:none;">
+    <div class="modal-content" style="max-width: 700px;">
+        <div class="modal-header">
+            <h3>📄 Create New Document Draft</h3>
+            <button class="close-btn" onclick="closeModal('createDocumentModal')">&times;</button>
+        </div>
+
+        <!-- Required field legend -->
+        <div class="form-legend" style="margin: 0 1rem 1rem 1rem; font-size: 0.85rem; color: #555; border-bottom: 1px solid #eee; padding-bottom: 0.5rem;">
+            <span class="required" style="color: #e74c3c; margin-right: 0.25rem;">*</span> Required field
+        </div>
+
+        <!-- Step Indicator -->
+        <div class="step-indicator" style="display: flex; justify-content: space-between; margin-bottom: 1.5rem; padding: 0 1rem;">
+            <div class="step" data-step="1" style="flex: 1; text-align: center; padding: 0.5rem; border-bottom: 3px solid #ccc;">1. Core</div>
+            <div class="step" data-step="2" style="flex: 1; text-align: center; padding: 0.5rem; border-bottom: 3px solid #ccc;">2. Ownership</div>
+            <div class="step" data-step="3" style="flex: 1; text-align: center; padding: 0.5rem; border-bottom: 3px solid #ccc;">3. Scope</div>
+            <div class="step" data-step="4" style="flex: 1; text-align: center; padding: 0.5rem; border-bottom: 3px solid #ccc;">4. Advanced</div>
+        </div>
+
+        <!-- Error messages container -->
+        <div id="stepErrorMsg" style="color: #e74c3c; margin: 0 1rem 1rem 1rem; display: none; background: #f8d7da; padding: 0.5rem; border-radius: 4px;"></div>
+
+        <form id="createDocForm">
+            <!-- Step 1: Core -->
+            <div class="step-content" data-step="1">
+                <div class="form-group">
+                    <label>Service Area <span class="required" style="color: #e74c3c;">*</span></label>
+                    <select name="service_area" required class="form-control" id="serviceAreaSelect">
+                        <option value="">-- Select a service --</option>
+                    </select>
+                    <small class="form-text">Choose an existing service area. If your service is not listed, create it first using "New Service Area".</small>
+                </div>
+                <div class="form-group">
+                    <label>Content Type <span class="required" style="color: #e74c3c;">*</span></label>
+                    <select name="content_type" required class="form-control">
+                        <option value="">Select</option>
+                        <option value="procedure">Procedure</option>
+                        <option value="policy">Policy</option>
+                        <option value="fee_schedule">Fee Schedule</option>
+                        <option value="faq">FAQ</option>
+                        <option value="emergency">Emergency Notice</option>
+                        <option value="contact_directory">Contact Directory</option>
+                    </select>
+                    <small class="form-text">Type of document – determines chunking.</small>
+                </div>
+                <div class="form-group">
+                    <label>Title <span class="required" style="color: #e74c3c;">*</span></label>
+                    <input type="text" name="title" required class="form-control" placeholder="e.g., Water Connection Procedure">
+                </div>
+                <div style="text-align: right;">
+                    <button type="button" class="btn btn-primary next-step">Next</button>
+                </div>
+            </div>
+
+            <!-- Step 2: Ownership & Validity -->
+            <div class="step-content" data-step="2" style="display: none;">
+                <div class="form-group">
+                    <label>Department <span class="optional" style="color: #95a5a6; font-size: 0.8rem;">(optional)</span></label>
+                    <input type="text" name="department" class="form-control" value="{{ current_user.department or '' }}">
+                </div>
+                <div class="form-group">
+                    <label>Owner Email <span class="required" style="color: #e74c3c;">*</span></label>
+                    <input type="email" name="owner_email" required class="form-control" value="{{ current_user.email }}">
+                </div>
+                <div class="form-group">
+                    <label>Valid From <span class="required" style="color: #e74c3c;">*</span></label>
+                    <input type="date" name="valid_from" required class="form-control" value="{{ now().date().isoformat() }}">
+                </div>
+                <div class="form-group">
+                    <label>Valid To <span class="required" style="color: #e74c3c;">*</span></label>
+                    <input type="date" name="valid_to" required class="form-control">
+                    <small class="form-text">Required – expiry date.</small>
+                </div>
+                <div style="display: flex; justify-content: space-between;">
+                    <button type="button" class="btn btn-secondary prev-step">Back</button>
+                    <button type="button" class="btn btn-primary next-step">Next</button>
+                </div>
+            </div>
+
+            <!-- Step 3: Scope & Metadata -->
+            <div class="step-content" data-step="3" style="display: none;">
+                <div class="form-group">
+                    <label>Locations <span class="optional" style="color: #95a5a6; font-size: 0.8rem;">(optional)</span></label>
+                    <input type="text" name="locations" class="form-control" value="Council-wide">
+                    <small class="form-text">Comma separated or "Council-wide".</small>
+                </div>
+                <div class="form-group">
+                    <label>Topic Tags <span class="required" style="color: #e74c3c;">*</span></label>
+                    <input type="text" name="topic_tags" class="form-control" placeholder="e.g., water, billing, fees" required>
+                    <small class="form-text">Comma separated keywords. At least one required.</small>
+                </div>
+                <div class="form-group">
+                    <label>Prerequisites <span class="optional" style="color: #95a5a6; font-size: 0.8rem;">(optional)</span></label>
+                    <input type="text" name="prerequisites" class="form-control" placeholder="e.g., National ID, Proof of Residence">
+                </div>
+                <div class="form-group">
+                    <label>Related Documents <span class="optional" style="color: #95a5a6; font-size: 0.8rem;">(optional)</span></label>
+                    <input type="text" name="related_documents" class="form-control" placeholder="e.g., DOC-001, DOC-002">
+                </div>
+                <div style="display: flex; justify-content: space-between;">
+                    <button type="button" class="btn btn-secondary prev-step">Back</button>
+                    <button type="button" class="btn btn-primary next-step">Next</button>
+                </div>
+            </div>
+
+            <!-- Step 4: Advanced & Review -->
+            <div class="step-content" data-step="4" style="display: none;">
+                <div class="form-group">
+                    <label>Review Cycle <span class="optional" style="color: #95a5a6; font-size: 0.8rem;">(optional)</span></label>
+                    <select name="review_cycle" class="form-control">
+                        <option value="">None</option>
+                        <option value="quarterly">Quarterly</option>
+                        <option value="annually">Annually</option>
+                        <option value="never">Never</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Authority Confidence <span class="optional" style="color: #95a5a6; font-size: 0.8rem;">(deprecated)</span></label>
+                    <input type="number" name="authority_confidence" step="0.1" min="0" max="1" class="form-control" value="0.9">
+                    <small class="form-text">Will be derived from content type.</small>
+                </div>
+                <div class="form-group">
+                    <label>Confidence Source <span class="optional" style="color: #95a5a6; font-size: 0.8rem;">(optional)</span></label>
+                    <input type="text" name="confidence_source" class="form-control" placeholder="e.g., Council Resolution 123">
+                </div>
+                <div class="form-group">
+                    <label>
+                        <input type="checkbox" name="cross_service_flag"> Cross service retrieval allowed?
+                    </label>
+                    <small class="form-text">Allow this document to be used for other services if primary service has no results.</small>
+                </div>
+
+                <!-- Review summary -->
+                <div class="review-summary" style="background: #f8f9fa; padding: 1rem; border-radius: 4px; margin-top: 1rem;">
+                    <h4>Review your information</h4>
+                    <p><strong>Service:</strong> <span id="reviewService">-</span></p>
+                    <p><strong>Content Type:</strong> <span id="reviewContentType">-</span></p>
+                    <p><strong>Title:</strong> <span id="reviewTitle">-</span></p>
+                    <p><strong>Department:</strong> <span id="reviewDepartment">-</span></p>
+                    <p><strong>Owner Email:</strong> <span id="reviewEmail">-</span></p>
+                    <p><strong>Valid From:</strong> <span id="reviewValidFrom">-</span></p>
+                    <p><strong>Valid To:</strong> <span id="reviewValidTo">-</span></p>
+                    <p><strong>Locations:</strong> <span id="reviewLocations">-</span></p>
+                    <p><strong>Topic Tags:</strong> <span id="reviewTags">-</span></p>
+                    <p><strong>Prerequisites:</strong> <span id="reviewPrereqs">-</span></p>
+                    <p><strong>Related Documents:</strong> <span id="reviewRelated">-</span></p>
+                    <p><strong>Review Cycle:</strong> <span id="reviewCycle">-</span></p>
+                    <p><strong>Cross Service:</strong> <span id="reviewCross">-</span></p>
+                </div>
+
+                <div style="display: flex; justify-content: space-between; margin-top: 1rem;">
+                    <button type="button" class="btn btn-secondary prev-step">Back</button>
+                    <button type="submit" class="btn btn-primary">Generate Draft</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

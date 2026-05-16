@@ -1,0 +1,180 @@
+{% extends "base.html" %}
+{% block title %}Escalations{% endblock %}
+{% block content %}
+<div class="escalations">
+    <h1>Escalations</h1>
+    <p class="description">Queries that have been escalated to human officers.</p>
+    <div class="filters">
+        <select id="statusFilter" onchange="loadEscalations()">
+            <option value="all">All</option>
+            <option value="pending">Pending</option>
+            <option value="in_progress">In Progress</option>
+            <option value="resolved">Resolved</option>
+        </select>
+        <button onclick="loadEscalations()">Refresh</button>
+    </div>
+    <div id="escalationList" class="escalation-list"></div>
+</div>
+
+<style>
+.escalations {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+.escalation-list {
+    margin-top: 20px;
+}
+.escalation-item {
+    background: white;
+    border-radius: 8px;
+    padding: 15px;
+    margin-bottom: 15px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    cursor: pointer;
+    transition: 0.2s;
+}
+.escalation-item:hover {
+    background: #f8f9fa;
+}
+.escalation-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+.escalation-ref {
+    font-weight: bold;
+    color: #2c3e50;
+}
+.escalation-query {
+    margin: 8px 0;
+}
+.escalation-status {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: bold;
+}
+.status-pending { background: #f39c12; color: white; }
+.status-in_progress { background: #3498db; color: white; }
+.status-resolved { background: #27ae60; color: white; }
+.modal-content {
+    max-width: 600px;
+}
+.modal-body p {
+    margin: 10px 0;
+}
+</style>
+
+<script>
+async function loadEscalations() {
+    const status = document.getElementById('statusFilter').value;
+    const url = `/escalations/api/list?status=${status}`;
+    const response = await fetch(url);
+    const data = await response.json();
+    const container = document.getElementById('escalationList');
+    container.innerHTML = data.items.map(e => `
+        <div class="escalation-item" onclick="viewEscalation(${e.id})">
+            <div class="escalation-header">
+                <span class="escalation-ref">${e.reference}</span>
+                <span class="escalation-status status-${e.status}">${e.status.replace('_', ' ')}</span>
+            </div>
+            <div class="escalation-query"><strong>Query:</strong> ${escapeHtml(e.query)}</div>
+            <div class="escalation-reason"><strong>Reason:</strong> ${escapeHtml(e.reason)}</div>
+            <div class="escalation-meta">
+                Created: ${new Date(e.created_at).toLocaleString()} |
+                Assigned: ${e.assigned_to || 'Unassigned'}
+            </div>
+        </div>
+    `).join('');
+}
+
+async function viewEscalation(id) {
+    const response = await fetch(`/escalations/api/${id}`);
+    const e = await response.json();
+    showModal(e);
+}
+
+function showModal(e) {
+    let modal = document.getElementById('escalationModal');
+    if (!modal) {
+        modal = document.createElement('div');
+        modal.id = 'escalationModal';
+        modal.className = 'modal';
+        document.body.appendChild(modal);
+    }
+    modal.innerHTML = `
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <h2>Escalation ${e.reference}</h2>
+            <div class="modal-body">
+                <p><strong>Query:</strong> ${escapeHtml(e.query)}</p>
+                <p><strong>Reason:</strong> ${escapeHtml(e.reason)}</p>
+                <p><strong>Status:</strong> ${e.status}</p>
+                <p><strong>Assigned to:</strong> ${e.assigned_to || 'Unassigned'}</p>
+                <p><strong>Notes:</strong><br>${escapeHtml(e.notes || 'None')}</p>
+                <div>
+                    <label>Update status:</label>
+                    <select id="newStatus">
+                        <option value="pending" ${e.status === 'pending' ? 'selected' : ''}>Pending</option>
+                        <option value="in_progress" ${e.status === 'in_progress' ? 'selected' : ''}>In Progress</option>
+                        <option value="resolved" ${e.status === 'resolved' ? 'selected' : ''}>Resolved</option>
+                    </select>
+                    <button onclick="updateStatus(${e.id})">Update</button>
+                </div>
+                <div>
+                    <label>Add note:</label>
+                    <textarea id="newNote" rows="2" style="width:100%"></textarea>
+                    <button onclick="addNote(${e.id})">Add Note</button>
+                </div>
+            </div>
+        </div>
+    `;
+    modal.style.display = 'flex';
+}
+
+async function updateStatus(id) {
+    const newStatus = document.getElementById('newStatus').value;
+    const response = await fetch(`/escalations/api/${id}/status`, {
+        method: 'PUT',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({status: newStatus})
+    });
+    if (response.ok) {
+        closeModal();
+        loadEscalations();
+    } else {
+        alert('Update failed');
+    }
+}
+
+async function addNote(id) {
+    const note = document.getElementById('newNote').value;
+    if (!note) return;
+    const response = await fetch(`/escalations/api/${id}/notes`, {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({note})
+    });
+    if (response.ok) {
+        document.getElementById('newNote').value = '';
+        viewEscalation(id);  // refresh modal
+    } else {
+        alert('Failed to add note');
+    }
+}
+
+function closeModal() {
+    const modal = document.getElementById('escalationModal');
+    if (modal) modal.style.display = 'none';
+}
+
+function escapeHtml(text) {
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
+}
+
+document.addEventListener('DOMContentLoaded', loadEscalations);
+</script>
+{% endblock %}

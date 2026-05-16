@@ -1,0 +1,51 @@
+# TITLE: WATER-CONTACT-DEPT-001
+document_id: water-contact_directory-water-contact-dept-001
+# DOCUMENT_ID: [AUTO-GENERATED]
+# VERSION: 1
+
+## METADATA_BLOCK
+department: [Department name]
+owner_email: ggg@gmail.com
+valid_from: 2026-05-06
+valid_to: 2027-05-06
+locations: ["Council-wide"]
+authority_confidence: 0.9
+confidence_source: [Source of authority, e.g., Council Resolution]
+content_type: contact_directory
+service_area: water
+topic_tags: ["water", "contacts", "phone", "email"]
+related_documents: []
+prerequisites: []
+review_cycle: 
+cross_service_flag: false
+## CONTENT_BLOCK
+
+### Summary
+Official contact points for water‑related enquiries, emergencies, and payments.
+
+### Department Contacts
+| Service | Phone | Email | Location |
+|---------|-------|-------|----------|
+| General Enquiries & Billing | 0800 1234 (toll‑free) | water.billing@harare.gov.zw | Selous Avenue, Harare |
+| New Connections & Applications | +263 242 752123 | water.connections@harare.gov.zw | Rowland Square, CBD |
+| Emergency Water Outages | 0800 1234 or 0712 345 678 (WhatsApp) | water.emergency@harare.gov.zw | 24/7 |
+| Meter Readings & Faults | +263 242 752124 | water.meter@harare.gov.zw | Morton Jaffray office |
+| Complaints & Feedback | +263 242 752125 | water.complaints@harare.gov.zw | Customer Service Centre, Mbare |
+
+### Zonal Water Offices (for local issues)
+| Zone | Areas Covered | Phone |
+|------|---------------|-------|
+| Zone 1 | CBD, Mbare, Sunningdale | +263 242 752201 |
+| Zone 4 | Budiriro, Glen View, Mufakose | +263 242 752204 |
+| Zone 5 | Kambuzuma, Kuwadzana, Dzivarasekwa | +263 242 752205 |
+
+### Payment Locations
+- **Online:** pay.harare.gov.zw
+- **Mobile:** EcoCash biller 2020 (account number = water bill number)
+- **In person:** Any council cashier (CBD, Mbare, Budiriro, Highfield)
+
+### Common Questions Answered
+- Q: What is the emergency number for a burst pipe in my street?
+  A: Call 0800 1234, available 24/7. Provide your street name and nearest cross street.
+- Q: How do I get my water bill emailed to me?
+  A: Send an email to water.billing@harare.gov.zw with your account number and request e‑billing.

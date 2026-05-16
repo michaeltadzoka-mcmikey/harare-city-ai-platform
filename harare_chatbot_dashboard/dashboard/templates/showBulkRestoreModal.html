@@ -1,0 +1,82 @@
+function showBulkRestoreModal(docIds) {
+    let modal = document.getElementById('bulkRestoreModal');
+    if (!modal) {
+        // Create modal if not present
+        const modalHTML = `
+            <div id="bulkRestoreModal" class="modal" style="display:none;">
+                <div class="modal-content" style="max-width: 500px;">
+                    <div class="modal-header">
+                        <h3>♻️ Bulk Restore Documents</h3>
+                        <button type="button" class="close-btn" onclick="closeModal('bulkRestoreModal')">&times;</button>
+                    </div>
+                    <p>Restoring <span id="bulkRestoreCount"></span> archived documents.</p>
+                    <div class="form-group">
+                        <label>Valid From:</label>
+                        <input type="date" id="bulkRestoreValidFrom" class="form-control" value="${new Date().toISOString().split('T')[0]}">
+                    </div>
+                    <div class="form-group">
+                        <label>Valid To (optional):</label>
+                        <input type="date" id="bulkRestoreValidTo" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label>Restore as:</label>
+                        <div class="radio-group">
+                            <label><input type="radio" name="bulkRestoreMode" value="draft" checked> Draft (requires manual ingest)</label>
+                            <label><input type="radio" name="bulkRestoreMode" value="ingest"> Ingest immediately</label>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" onclick="closeModal('bulkRestoreModal')">Cancel</button>
+                        <button type="button" class="btn btn-primary" id="executeBulkRestore">Restore</button>
+                    </div>
+                </div>
+            </div>
+        `;
+        document.body.insertAdjacentHTML('beforeend', modalHTML);
+        modal = document.getElementById('bulkRestoreModal'); // reassign after creation
+    }
+    
+    // Update count
+    document.getElementById('bulkRestoreCount').textContent = docIds.length;
+    
+    // Set default date
+    document.getElementById('bulkRestoreValidFrom').value = new Date().toISOString().split('T')[0];
+    
+    modal.style.display = 'block';
+    
+    // Remove previous listener and attach new one
+    const executeBtn = document.getElementById('executeBulkRestore');
+    const newBtn = executeBtn.cloneNode(true);
+    executeBtn.parentNode.replaceChild(newBtn, executeBtn);
+    
+    newBtn.addEventListener('click', () => {
+        const data = {
+            action: 'restore',
+            document_ids: docIds,
+            valid_from: document.getElementById('bulkRestoreValidFrom').value,
+            valid_to: document.getElementById('bulkRestoreValidTo').value || null,
+            mode: document.querySelector('input[name="bulkRestoreMode"]:checked').value
+        };
+        fetch('/documents/api/bulk', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data)
+        })
+        .then(res => res.json())
+        .then(data => {
+            if (data.success) {
+                alert(`Bulk restore completed on ${data.count} documents`);
+                modal.style.display = 'none';
+                loadList(currentPage);
+                selectedDocs.clear();
+                document.getElementById('selectAllCheckbox').checked = false;
+                refreshTree();
+                fetch('/documents/api/filter-options')
+                    .then(res => res.json())
+                    .then(filterData => populateFilters(filterData));
+            } else {
+                alert('Bulk restore failed');
+            }
+        });
+    });
+}

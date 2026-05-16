@@ -1,0 +1,60 @@
+function showConflictDetailModal(service) {
+    fetch(`/documents/api/conflict-details?service=${service}`)
+        .then(res => res.json())
+        .then(data => {
+            let modal = document.getElementById('conflictDetailModal');
+            if (!modal) {
+                const modalHTML = `
+                    <div id="conflictDetailModal" class="modal" style="display:none;">
+                        <div class="modal-content" style="max-width: 800px;">
+                            <div class="modal-header">
+                                <h3>⚔️ Conflict Details</h3>
+                                <button type="button" class="close-btn" onclick="closeModal('conflictDetailModal')">&times;</button>
+                            </div>
+                            <div style="overflow-x: auto;">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>Document 1</th>
+                                            <th>Title</th>
+                                            <th>Document 2</th>
+                                            <th>Title</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="conflictDetailBody">
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" onclick="closeModal('conflictDetailModal')">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                document.body.insertAdjacentHTML('beforeend', modalHTML);
+                modal = document.getElementById('conflictDetailModal');
+            }
+            
+            const tbody = document.getElementById('conflictDetailBody');
+            tbody.innerHTML = '';
+            if (data.conflicts && data.conflicts.length > 0) {
+                data.conflicts.forEach(c => {
+                    const row = tbody.insertRow();
+                    row.innerHTML = `
+                        <td>${c.doc1_id}</td>
+                        <td>${c.doc1_title}</td>
+                        <td>${c.doc2_id}</td>
+                        <td>${c.doc2_title}</td>
+                        <td>
+                            <button class="btn-small" onclick="resolveConflict('${c.id}', 'retire')">Retire Old</button>
+                            <button class="btn-small" onclick="resolveConflict('${c.id}', 'override')">Override</button>
+                        </td>
+                    `;
+                });
+            } else {
+                tbody.innerHTML = '<tr><td colspan="5">No conflicts found for this service.</td></tr>';
+            }
+            modal.style.display = 'block';
+        });
+}

@@ -1,0 +1,306 @@
+{% extends "base.html" %}
+
+{% block title %}Chat Interface{% endblock %}
+
+{% block extra_css %}
+<style>
+    .chat-container {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        background: white;
+        border-radius: 8px;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    }
+
+    .chat-header {
+        padding: 0.8rem 1rem;
+        border-bottom: 1px solid #ecf0f1;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background: #fff;
+        border-radius: 8px 8px 0 0;
+    }
+
+    .chat-header h2 {
+        font-size: 1.2rem;
+        font-weight: 600;
+        margin: 0;
+        color: #2c3e50;
+    }
+
+    .session-info {
+        font-size: 0.8rem;
+        color: #7f8c8d;
+        display: flex;
+        gap: 0.5rem;
+        align-items: center;
+    }
+
+    .session-info button {
+        background: #ecf0f1;
+        border: none;
+        padding: 0.2rem 0.6rem;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 0.7rem;
+        color: #2c3e50;
+        transition: background 0.2s;
+    }
+
+    .session-info button:hover {
+        background: #bdc3c7;
+    }
+
+    .public-link {
+        background: #2ecc71;
+        color: white;
+        padding: 0.2rem 0.6rem;
+        border-radius: 4px;
+        text-decoration: none;
+        font-size: 0.7rem;
+    }
+    .public-link:hover {
+        background: #27ae60;
+    }
+
+    .chat-messages {
+        flex: 1;
+        overflow-y: auto;
+        padding: 1rem;
+        background: #f9f9f9;
+    }
+
+    .empty-chat {
+        text-align: center;
+        color: #95a5a6;
+        margin-top: 2rem;
+        font-style: italic;
+    }
+
+    .message {
+        margin-bottom: 1rem;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .message.user {
+        align-items: flex-end;
+    }
+
+    .message.bot {
+        align-items: flex-start;
+    }
+
+    .message-header {
+        font-size: 0.75rem;
+        margin-bottom: 0.2rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .message-header .sender {
+        font-weight: 600;
+        color: #2c3e50;
+    }
+
+    .message-header .timestamp {
+        color: #95a5a6;
+    }
+
+    .message-text {
+        max-width: 70%;
+        padding: 0.6rem 1rem;
+        border-radius: 18px;
+        word-wrap: break-word;
+        line-height: 1.4;
+        font-size: 0.9rem;
+    }
+
+    .user .message-text {
+        background: #3498db;
+        color: white;
+        border-bottom-right-radius: 4px;
+    }
+
+    .bot .message-text {
+        background: #ecf0f1;
+        color: #2c3e50;
+        border-bottom-left-radius: 4px;
+    }
+
+    .message-badges {
+        margin-top: 0.3rem;
+        display: flex;
+        gap: 0.5rem;
+        flex-wrap: wrap;
+    }
+
+    .badge {
+        font-size: 0.65rem;
+        padding: 0.2rem 0.5rem;
+        border-radius: 12px;
+        font-weight: 500;
+    }
+
+    .badge.rag {
+        background: #6c757d;
+        color: white;
+    }
+
+    .badge.rasa {
+        background: #17a2b8;
+        color: white;
+    }
+
+    .badge.fallback {
+        background: #ffc107;
+        color: #2c3e50;
+    }
+
+    .badge.offline {
+        background: #dc3545;
+        color: white;
+    }
+
+    .badge.chitchat {
+        background: #6c757d;
+        color: white;
+    }
+
+    .badge.external {
+        background: #fd7e14;
+        color: white;
+    }
+
+    .badge.llm {
+        background: #20c997;
+        color: white;
+    }
+
+    .badge.fastpath {
+        background: #28a745;
+        color: white;
+    }
+
+    .badge.direct {
+        background: #17a2b8;
+        color: white;
+    }
+
+    .badge.system {
+        background: #6f42c1;
+        color: white;
+    }
+
+    .badge.confidence {
+        background: #28a745;
+        color: white;
+    }
+
+    .badge.confidence.medium {
+        background: #ffc107;
+        color: #2c3e50;
+    }
+
+    .badge.confidence.low {
+        background: #dc3545;
+        color: white;
+    }
+
+    .chat-input-area {
+        display: flex;
+        padding: 0.8rem 1rem;
+        border-top: 1px solid #ecf0f1;
+        background: white;
+        border-radius: 0 0 8px 8px;
+    }
+
+    .chat-input-area input {
+        flex: 1;
+        padding: 0.6rem 1rem;
+        border: 1px solid #bdc3c7;
+        border-radius: 20px;
+        font-size: 0.9rem;
+        outline: none;
+        transition: border-color 0.2s;
+    }
+
+    .chat-input-area input:focus {
+        border-color: #3498db;
+        box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+    }
+
+    .chat-input-area input:disabled {
+        background: #ecf0f1;
+        cursor: not-allowed;
+    }
+
+    .chat-input-area button {
+        margin-left: 0.5rem;
+        padding: 0.6rem 1.2rem;
+        background: #3498db;
+        color: white;
+        border: none;
+        border-radius: 20px;
+        cursor: pointer;
+        font-size: 0.9rem;
+        transition: background 0.2s;
+    }
+
+    .chat-input-area button:hover:not(:disabled) {
+        background: #2980b9;
+    }
+
+    .chat-input-area button:disabled {
+        background: #bdc3c7;
+        cursor: not-allowed;
+    }
+
+    @media (max-width: 768px) {
+        .chat-messages {
+            padding: 0.8rem;
+        }
+        .message-text {
+            max-width: 85%;
+        }
+        .session-info {
+            font-size: 0.7rem;
+        }
+        .chat-header h2 {
+            font-size: 1rem;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="chat-container">
+    <div class="chat-header">
+        <h2>Chat with Chatbot</h2>
+        <div class="session-info">
+            <span id="sessionId">Session: {{ session_id[:8] if session_id else '' }}…</span>
+            <button id="copySession">Copy</button>
+            <button id="clearSession">Clear</button>
+            <a href="{{ url_for('public_chat.index') }}" target="_blank" class="public-link">Citizen Chat</a>
+        </div>
+    </div>
+
+    <div class="chat-messages" id="chatHistory">
+        <div class="empty-chat">
+            <p>No messages yet. Start a conversation!</p>
+        </div>
+    </div>
+
+    <div class="chat-input-area">
+        <input type="text" id="messageInput" placeholder="Type your message here…" autofocus>
+        <button id="sendBtn">Send</button>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{{ url_for('static', filename='js/chat.js') }}" type="module"></script>
+{% endblock %}
