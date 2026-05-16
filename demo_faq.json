@@ -1,0 +1,19 @@
+﻿{
+  "document_id": "water-faq-bill-calc-demo-final",
+  "title": "Water Bill Calculation – Demo",
+  "version": 1,
+  "department": "Water and Sanitation",
+  "owner_email": "water.services@harare.gov.zw",
+  "valid_from": "2026-05-04",
+  "valid_to": "2027-05-04",
+  "locations": ["Council-wide"],
+  "content_type": "faq",
+  "service_area": "water",
+  "topic_tags": ["water","billing","calculation"],
+  "related_documents": [],
+  "prerequisites": [],
+  "review_cycle": "quarterly",
+  "cross_service_flag": false,
+  "override_overlap": true,
+  "content": "### Questions and Answers\n- Q: How is my water bill calculated?\n  A: Your bill = (volume used × tariff per kilolitre) + fixed service fee + sewerage charge (80% of water used). Tariffs are tiered: first 5 kL at a lower rate, above at a higher rate."
+}

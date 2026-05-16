@@ -1,0 +1,53 @@
+# Virtual environments
+.venv/
+venv/
+env/
+.venv_*/
+.venv_llm/
+.venv_rag/
+.venv_rasa/
+.venv_harare_chatbot_dashboard/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Data & indexes (rebuild on clone)
+rag_system/data/chroma/
+rag_system/data/manifest.json
+rag_system/data/backups/
+rag_system/data/archive/
+
+# Logs
+logs/
+*.log
+llm_gateway/llm_gateway.log
+llm_gateway/logs/
+harare_chatbot_dashboard/logs/
+rasa/rasa.db
+rasa/tracker_store.db
+
+# RASA cached models (too large, regenerated)
+rasa/models/
+rasa/.rasa/
+
+# Editor & OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Temporary debug scripts (not needed by users)
+check_chunks.py
+check_collections.py
+check_metadata.py
+check_path.py
+rebuild_index.py
+temp_ingest.json
+debug_services.py
+not optimized orchestrator.py
+not_optimized_llama_client.py
+not_optimized_main.py
+GUDEADED LLMCLIENT

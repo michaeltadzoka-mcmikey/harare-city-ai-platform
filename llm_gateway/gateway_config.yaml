@@ -1,0 +1,134 @@
+llm_gateway:
+  version: "6.0.0"
+  mode: "intelligent"
+  port: 8001
+  host: "0.0.0.0"
+
+  llama:
+    model: "llama3.2:1b"
+    base_url: "http://localhost:11434"
+    timeout: 120
+    max_tokens:
+      synthesis: 200
+      rewrite: 60
+      classification: 10
+      chain_of_thought: 200
+      chitchat: 80
+    num_ctx: 2048
+
+  rag:
+    url: "http://localhost:8000"
+    timeout: 30.0
+    top_k: 30
+    min_confidence: 0.0
+
+  rag_synthesis_prompt: |
+    You are a helpful Harare City Council assistant. Use ONLY the documents below.
+    NEVER invent numbers, fees, phone numbers, or emails.
+
+    If the user asks for a fact (fee, phone, date), reply with exactly that fact.
+    If they ask for steps, list them in order.
+    If you can't find the answer, say: "I can't find that specific detail in the documents, but here is related information:" then share what you do know.
+
+    <documents>
+    {documents}
+    </documents>
+
+    Question: {query}
+    Answer:
+
+  rasa:
+    server_url: "http://localhost:5005"
+    reports_only: true
+    timeout: 60
+
+  dashboard:
+    url: "http://localhost:5000"
+    timeout: 30
+    enabled: true
+    redact_pii: true
+    api_key: "${DASHBOARD_API_KEY}"
+
+  intent:
+    embedding_model: "sentence-transformers/all-MiniLM-L6-v2"
+    similarity_threshold: 0.7
+    ambiguity_threshold: 0.12
+    cache_ttl: 3600
+
+  context:
+    max_recent_messages: 2
+    relevance_threshold: 0.5
+    detect_topic_shift: true
+
+  intelligence:
+    use_chain_of_thought: false
+    use_self_critique: false
+    multi_step_confidence_threshold: 0.7
+    reasoning_trigger_query_types: ["policy", "procedure"]
+    summarisation_turn_interval: 5
+
+  confidence_actions:
+    high_threshold: 0.85
+    medium_threshold: 0.60
+    low_action: "trigger_gap"
+
+  freshness_warnings:
+    fee_schedule: 180
+    policy: 365
+    procedure: 180
+    faq: 90
+
+  limits:
+    requests_per_minute: 20
+    requests_per_day: 200
+    llm_timeout_seconds: 120
+    session_expiry_seconds: 3600
+
+  latency_budget:
+    total_ms: 120000
+    rag_ms: 30000
+    llm_ms: 60000
+    control_ms: 5000
+    tier1_ms: 30000
+    tier2_ms: 60000
+    tier3_ms: 90000
+
+  circuit_breaker:
+    failure_threshold: 0.5
+    cooldown_minutes: 2
+
+  cache_ttl: 300
+
+  api_key: "${LLM_GATEWAY_API_KEY}"
+  rate_limits:
+    per_session: "20/minute"
+    global_concurrency: 5
+
+  governance:
+    blocklist_path: "config/blocklist.txt"
+    out_of_scope_keywords:
+      - "politics"
+      - "election"
+      - "president"
+      - "religion"
+
+  rasa_intents:
+    - "report_intent"
+    - "status_check"
+
+  # ── NEW: per‑stage LLM configuration ──
+  use_llm_synthesis: true
+
+  llm_stages:
+    intent:
+      provider: ollama
+      model: llama3.2:1b
+      url: http://localhost:11434
+    rewrite:
+      provider: ollama
+      model: llama3.2:1b
+      url: http://localhost:11434
+    synthesis:
+      provider: groq
+      model: llama-3.1-8b-instant
+      api_key:         # ← replace with your real Grok API key

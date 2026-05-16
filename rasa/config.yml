@@ -1,0 +1,83 @@
+recipe: default.v1
+
+assistant_id: harare_city_council_chatbot
+
+language: en
+
+# ---------------------------------------------------------------------------
+# NLU Pipeline
+# ---------------------------------------------------------------------------
+# Pipeline is optimised for:
+#   - Short citizen messages (WhatsApp / USSD / web chat)
+#   - Entity extraction: reference_id, location, landmark
+#   - Robust handling of partial/informal Zimbabwean English
+#
+# DIETClassifier is the primary NLU model.
+# FallbackClassifier threshold set to 0.40 (slightly raised from 0.30)
+# so that genuinely ambiguous messages are caught rather than
+# mis-classified into a low-confidence intent.
+# ---------------------------------------------------------------------------
+
+pipeline:
+  - name: WhitespaceTokenizer
+
+  - name: RegexFeaturizer
+    # Provides the HCC-RPT-YYYY-XXXXX pattern as a feature to downstream models.
+    case_insensitive: true
+
+  - name: LexicalSyntacticFeaturizer
+
+  - name: CountVectorsFeaturizer
+
+  - name: CountVectorsFeaturizer
+    analyzer: char_wb
+    min_ngram: 1
+    max_ngram: 4
+
+  - name: DIETClassifier
+    epochs: 150
+    constrain_similarities: true
+    entity_recognition: true
+    # Random seed for reproducible training runs.
+    random_seed: 42
+
+  - name: EntitySynonymMapper
+
+  - name: ResponseSelector
+    epochs: 100
+    constrain_similarities: true
+    random_seed: 42
+
+  # Catches messages the DIETClassifier is not confident about (< 0.40).
+  # These fall through to action_default_fallback → utter_default.
+  - name: FallbackClassifier
+    threshold: 0.40
+    ambiguity_threshold: 0.10
+
+# ---------------------------------------------------------------------------
+# Dialogue Policies
+# ---------------------------------------------------------------------------
+# MemoizationPolicy   – exact story match (most deterministic, fast).
+# RulePolicy          – enforces rules.yml (highest priority for rule paths).
+# TEDPolicy           – generalises to unseen paths from stories.
+#
+# Policy priority (highest → lowest): RulePolicy > MemoizationPolicy > TEDPolicy
+# ---------------------------------------------------------------------------
+
+policies:
+  - name: MemoizationPolicy
+    max_history: 8
+
+  - name: RulePolicy
+    core_fallback_threshold: 0.40
+    core_fallback_action_name: "action_default_fallback"
+    enable_fallback_prediction: true
+
+  - name: TEDPolicy
+    max_history: 8
+    epochs: 150
+    constrain_similarities: true
+    random_seed: 42
+    # split_entities_by_comma prevents the TEDPolicy from treating comma-separated
+    # entity values as a single token during feature extraction.
+    split_entities_by_comma: true

@@ -1,0 +1,239 @@
+version: "3.1"
+
+# ---------------------------------------------------------------------------
+# Harare City Council – RASA Domain
+# Spec: Unified System Doc v3.2 §4.3 + RASA Integration Doc v1.0
+#
+# RASA handles ONLY structured report collection and status checks.
+# All general knowledge queries are routed by the LLM Gateway to RAG.
+# Non-reporting intents have been removed to enforce architectural separation.
+# ---------------------------------------------------------------------------
+
+intents:
+  - greet
+  - goodbye
+  - affirm
+  - deny
+  - report_restart
+  - cancel
+  - submit_report
+  - check_report_status
+  - provide_location
+  - provide_description
+  - provide_landmark
+  - out_of_scope
+  - gateway_trigger
+
+entities:
+  - reference_id
+  - location
+  - landmark
+
+slots:
+  # ── Form collection slots ────────────────────────────────────────────────
+  report_description:
+    type: text
+    influence_conversation: true
+    mappings:
+      - type: from_text
+        conditions:
+          - active_loop: report_form
+            requested_slot: report_description
+
+  report_location:
+    type: text
+    influence_conversation: true
+    mappings:
+      - type: from_entity
+        entity: location
+        conditions:
+          - active_loop: report_form
+            requested_slot: report_location
+      - type: from_text
+        conditions:
+          - active_loop: report_form
+            requested_slot: report_location
+
+  report_landmark:
+    type: text
+    influence_conversation: true
+    mappings:
+      - type: from_entity
+        entity: landmark
+        conditions:
+          - active_loop: report_form
+            requested_slot: report_landmark
+      - type: from_text
+        conditions:
+          - active_loop: report_form
+            requested_slot: report_landmark
+
+  # ── Confirmation / intent flag ───────────────────────────────────────────
+  report_confirmed:
+    type: bool
+    influence_conversation: true
+    mappings:
+      - type: from_intent
+        intent: affirm
+        value: true
+      - type: from_intent
+        intent: deny
+        value: false
+
+  # ── Status check ─────────────────────────────────────────────────────────
+  reference_id:
+    type: text
+    influence_conversation: true
+    mappings:
+      - type: from_entity
+        entity: reference_id
+
+  # ── Submission outcome ───────────────────────────────────────────────────
+  submission_reference_id:
+    type: text
+    influence_conversation: false
+    mappings:
+      - type: custom
+
+  # ── Spam detection (doc §2.7 / §2.7.3) ──────────────────────────────────
+  spam_flag:
+    type: bool
+    influence_conversation: false
+    mappings:
+      - type: custom
+
+  spam_reason:
+    type: text
+    influence_conversation: false
+    mappings:
+      - type: custom
+
+  # ── Location quality flag ────────────────────────────────────────────────
+  location_known:
+    type: bool
+    influence_conversation: false
+    mappings:
+      - type: custom
+
+  # ── Reliability flags ────────────────────────────────────────────────────
+  gateway_unreachable:
+    type: bool
+    influence_conversation: false
+    mappings:
+      - type: custom
+
+  # ── Rate limiting (doc §2.7: max 3 per session per hour) ─────────────────
+  submission_timestamps:
+    type: text
+    influence_conversation: false
+    mappings:
+      - type: custom
+
+  # ── Gateway trigger (FIXED: use 'custom' mapping) ────────────────────────
+  trigger_form:
+    type: text
+    influence_conversation: true
+    mappings:
+      - type: custom   # <-- Changed from 'from_metadata' to 'custom'
+
+forms:
+  report_form:
+    required_slots:
+      - report_description
+      - report_location
+      - report_landmark
+
+responses:
+  # ── Greeting / farewell ──────────────────────────────────────────────────
+  utter_greet:
+    - text: |
+        Hello! Welcome to Harare City Council.
+
+        I can help you with:
+        📋 **Submit a report** – water leaks, potholes, streetlights, drainage, etc.
+        🔍 **Check a report status** – send your reference number (HCC-RPT-YYYY-XXXXX)
+
+        For information about council services, simply ask and I will connect you to the right team.
+
+        What can I help you with today?
+
+  utter_goodbye:
+    - text: "Thank you for contacting Harare City Council. Have a great day!"
+
+  # ── Fallback / out-of-scope ──────────────────────────────────────────────
+  utter_default:
+    - text: "I am not sure I understood that. I can help you submit a report or check a report status. What would you like to do?"
+
+  utter_out_of_scope:
+    - text: "I can assist with submitting infrastructure reports and checking their status. For other council service enquiries, please visit www.hararecity.gov.zw or call the main helpline."
+
+  # ── Form slot prompts ────────────────────────────────────────────────────
+  utter_ask_report_description:
+    - text: "Please describe the issue in detail. What is happening, and roughly where? (e.g. 'burst water pipe flooding the road near Mbare Musika')"
+
+  utter_ask_report_location:
+    - text: "Which suburb or ward is the issue in? For example: Mbare, Budiriro, or Avondale."
+
+  utter_ask_report_landmark:
+    - text: "Is there a nearby landmark? For example: 'next to Mbare Musika' or 'opposite the school'. If there is none, type **none**."
+
+  # ── Confirmation ─────────────────────────────────────────────────────────
+  utter_confirm_report:
+    - text: |
+        Please review your report:
+
+        📋 Description: {report_description}
+        📍 Location:    {report_location}
+        🗺  Landmark:   {report_landmark}
+
+        Reply **CONFIRM** to submit, **RESTART** to start over, or **CANCEL** to discard.
+
+  # ── Submission outcomes ──────────────────────────────────────────────────
+  utter_report_submitted:
+    - text: |
+        ✅ Your report has been received!
+
+        Reference Number: **{submission_reference_id}**
+
+        Send this number anytime to check your report status. Thank you for helping improve Harare!
+
+  utter_report_submitted_delayed:
+    - text: "Your report has been received but we are experiencing a short technical delay. Your reference number will be sent to you shortly. For urgent matters contact digital@harare.gov.zw"
+
+  utter_duplicate_report_notice:
+    - text: |
+        ℹ️  A similar report may already exist. Your report has still been logged.
+
+        Reference Number: **{submission_reference_id}**
+
+  utter_report_cancelled:
+    - text: "Your report has been cancelled. No information has been submitted. Feel free to start a new report anytime."
+
+  utter_report_restarted:
+    - text: "No problem! Let us start fresh. I will guide you through the report again."
+
+  # ── Status check ─────────────────────────────────────────────────────────
+  utter_ask_reference_id:
+    - text: "Please provide your reference number. It should look like: **HCC-RPT-2026-00001**"
+
+  utter_reference_not_found:
+    - text: "I could not find a report with that reference number. Please double-check and try again. For further help contact digital@harare.gov.zw"
+
+  # ── Spam / rate limiting ─────────────────────────────────────────────────
+  utter_spam_warning:
+    - text: "Your message has been flagged for review. Please ensure your report contains a genuine description of an infrastructure issue."
+
+  utter_rate_limit_warning:
+    - text: "You have reached the maximum of 3 report submissions per hour for this session. Please try again later or contact digital@harare.gov.zw for urgent matters."
+
+  # ── Location quality ─────────────────────────────────────────────────────
+  utter_location_clarification:
+    - text: "We could not match that to a known Harare suburb. Could you provide a nearby landmark or the exact street name? Your report will still be accepted."
+
+actions:
+  - action_submit_report
+  - action_check_report_status
+  - action_handle_restart
+  - action_handle_cancel
+  - validate_report_form
+  - action_activate_trigger_form

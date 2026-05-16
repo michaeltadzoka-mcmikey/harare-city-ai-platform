@@ -1,0 +1,113 @@
+llm_gateway:
+  version: "6.0.0"
+  mode: "intelligent"
+  port: 8001
+  host: "0.0.0.0"
+
+  # LLM (Ollama)
+  llama:
+    model: "llama3.2:1b"
+    base_url: "http://localhost:11434"
+    timeout: 60
+    max_tokens:
+      synthesis: 150
+      rewrite: 100
+      classification: 10
+      chain_of_thought: 300
+      chitchat: 100
+
+  # RAG
+  rag:
+    url: "http://localhost:8000"
+    timeout: 15.0
+    top_k: 7
+    min_confidence: 0.3
+
+  # RASA
+  rasa:
+    server_url: "http://localhost:5005"
+    reports_only: true
+    timeout: 30
+
+  # Dashboard
+  dashboard:
+    url: "http://localhost:5000"
+    timeout: 10
+    enabled: true
+    redact_pii: true
+    api_key: "${DASHBOARD_API_KEY}"
+
+  # Intent classification
+  intent:
+    embedding_model: "sentence-transformers/all-MiniLM-L6-v2"
+    similarity_threshold: 0.7
+    ambiguity_threshold: 0.12
+    cache_ttl: 3600
+
+  # Context & memory
+  context:
+    max_recent_messages: 2
+    relevance_threshold: 0.5
+    detect_topic_shift: true
+
+  # Intelligence features
+  intelligence:
+    use_chain_of_thought: true
+    use_self_critique: true
+    multi_step_confidence_threshold: 0.7
+    reasoning_trigger_query_types: ["policy", "procedure"]
+    summarisation_turn_interval: 3
+
+  # Confidence actions
+  confidence_actions:
+    high_threshold: 0.85
+    medium_threshold: 0.60
+    low_action: "trigger_gap"
+
+  # Freshness warnings
+  freshness_warnings:
+    fee_schedule: 180
+    policy: 365
+    procedure: 180
+    faq: 90
+
+  # Limits & performance
+  limits:
+    requests_per_minute: 20
+    requests_per_day: 200
+    llm_timeout_seconds: 5
+    session_expiry_seconds: 3600
+  latency_budget:
+    total_ms: 6000
+    rag_ms: 2000
+    llm_ms: 3000
+    control_ms: 500
+    tier1_ms: 2000   # after this, skip self_check
+    tier2_ms: 3500   # after this, skip follow_up
+    tier3_ms: 4500   # after this, use RAG answer directly
+  circuit_breaker:
+    failure_threshold: 0.5
+    cooldown_minutes: 2
+
+  # Caching
+  cache_ttl: 300
+
+  # Security
+  api_key: "${LLM_GATEWAY_API_KEY}"
+  rate_limits:
+    per_session: "20/minute"
+    global_concurrency: 5
+
+  # Governance
+  governance:
+    blocklist_path: "config/blocklist.txt"
+    out_of_scope_keywords:
+      - "politics"
+      - "election"
+      - "president"
+      - "religion"
+
+  # RASA intents that go directly
+  rasa_intents:
+    - "report_intent"
+    - "status_check"

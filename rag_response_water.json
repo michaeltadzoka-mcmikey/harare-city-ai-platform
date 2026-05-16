@@ -1,0 +1,255 @@
+﻿{
+    "query":  "how can i get water connected at my house",
+    "answer":  "Based on Harare City Council information:\n1. # TITLE: How to Apply for a New Residential Water Connection document_id: water-procedure-how-to-apply-for-a-new-residential-water-connection # DOCUMENT_ID:  # VERSION: 1 ## METADATA_BLOCK department:  owner_email: ggg@gmail.\n2. Com valid_from: 2026-04-16 valid_to: 2027-04-16 locations:  authority_confidence: 0.\n3. ### StepâbyâStep Instructions 1.\n4. Q: How do I read my water meter.\n5. A: The meter is usually in a concrete box near the street.\n\nFor complete information, visit the City Council offices or website.",
+    "sources":  [
+                    {
+                        "document_id":  "water-procedure-how-to-apply-for-a-new-residential-water-connection",
+                        "version":  1,
+                        "title":  "How to Apply for a New Residential Water Connection",
+                        "department":  "[Department name]",
+                        "last_updated":  "2026-05-01T15:08:17.097203",
+                        "confidence_source":  "[Source of authority, e.g., Council Resolution]",
+                        "locations":  [
+                                          "Council-wide"
+                                      ],
+                        "match_reason":  "semantic similarity (score 0.44)"
+                    },
+                    {
+                        "document_id":  "water-faq-water-faq-billing-001",
+                        "version":  1,
+                        "title":  "WATER-FAQ-BILLING-001",
+                        "department":  "[Department name]",
+                        "last_updated":  "2026-05-01T15:08:17.097203",
+                        "confidence_source":  "[Source of authority, e.g., Council Resolution]",
+                        "locations":  [
+                                          "Council-wide"
+                                      ],
+                        "match_reason":  "semantic similarity (score 0.43)"
+                    },
+                    {
+                        "document_id":  "water-contact_directory-water-contact-dept-001",
+                        "version":  1,
+                        "title":  "WATER-CONTACT-DEPT-001",
+                        "department":  "[Department name]",
+                        "last_updated":  "2026-05-01T15:08:17.097203",
+                        "confidence_source":  "[Source of authority, e.g., Council Resolution]",
+                        "locations":  [
+                                          "Council-wide"
+                                      ],
+                        "match_reason":  "semantic similarity (score 0.34)"
+                    },
+                    {
+                        "document_id":  "water-fee_schedule-water-fee-connection-001",
+                        "version":  1,
+                        "title":  "WATER-FEE-CONNECTION-001",
+                        "department":  "[Department name]",
+                        "last_updated":  "2026-05-01T15:08:17.097203",
+                        "confidence_source":  "[Source of authority, e.g., Council Resolution]",
+                        "locations":  [
+                                          "Council-wide"
+                                      ],
+                        "match_reason":  "semantic similarity (score 0.33)"
+                    }
+                ],
+    "evidence":  [
+                     {
+                         "text":  "# TITLE: How to Apply for a New Residential Water Connection document_id: water-procedure-how-to-apply-for-a-new-residential-water-connection # DOCUMENT_ID:  # VERSION: 1 ## METADATA_BLOCK department:  owner_email: ggg@gmail.com valid_from: 2026-04-16 valid_to: 2027-04-16 locations:  authority_confidence: 0.9 confidence_source:  content_type: procedure service_area: water topic_tags:  related_documents:  prerequisites:  review_cycle: cross_service_flag: false ## CONTENT_BLOCK ### Summary This document explains how to apply for a new residential water connection in Harare, including required documents, fees, and expected timelines. ### StepâbyâStep Instructions 1. Obtain an application form from any Harare City Customer Service Centre (CBD, Mbare, Budiriro, or your zonal office) or download it from the council website. 2. Complete the form and attach certified copies of your National ID and proof of residence (e.g., utility bill, lease agreement not older than 3 months). 3. Submit the form and documents at the nearest customer service centre. You will receive an acknowledgement slip with a reference number. 4. Pay the connection fee (see WATER-FEE-CONNECTION-001) at the cashier. Keep the receipt. 5. A water department inspector will visit your property within 7 working days to verify details and assess the connection point. 6. If approved, a plumber will be scheduled to install the connection. You will be notified of the date via SMS. 7. After installation, the meter will be sealed, and your account will be activated. Your first bill will arrive within 30 days. ### Required Documents - Certified copy of National ID (both sides) - Proof of residence (not older than 3 months) - Completed application form - Payment receipt (after step 4) ### Common Questions Answered - Q: How long does the whole process take? A: Typically 2â4 weeks from submission to activation, depending on inspector availability and weather. - Q: Can I apply online? A: Not yet, but you can download the form online and submit it in person. Online application is planned for 2027. - Q: What if I live in a rented property? A: The landlord\u0027s written consent is required. Contact the water department for a consent form. - Q: Is there a discount for pensioners on the connection fee? A: No, the connection fee is nonâdiscountable. However, pensioners receive a 15% discount on monthly consumption (see WATER-POL-SENIOR-DISCOUNT-001).",
+                         "score":  0.43877564177371486,
+                         "metadata":  {
+                                          "authority_confidence":  0.9,
+                                          "chunk_end":  2573,
+                                          "chunk_start":  0,
+                                          "confidence_source":  "[Source of authority, e.g., Council Resolution]",
+                                          "content_type":  "procedure",
+                                          "cross_service_flag":  false,
+                                          "department":  "[Department name]",
+                                          "document_id":  "water-procedure-how-to-apply-for-a-new-residential-water-connection",
+                                          "filename":  "water-procedure-how-to-apply-for-a-new-residential-water-connection",
+                                          "is_active":  true,
+                                          "locations":  "[\"Council-wide\"]",
+                                          "owner_email":  "ggg@gmail.com",
+                                          "prerequisites":  "[\"Proof of Residence\", \"National ID\", \"Application Form\"]",
+                                          "related_documents":  "[\"WATER-FEE-CONNECTION-001\", \"WATER-CONTACT-DEPT-001\"]",
+                                          "review_cycle":  "",
+                                          "service_area":  "water",
+                                          "source":  "C:\\Users\\PHILADELPHIA\\Documents\\CHATBOT\\harare-chatbot\\shared_documents\\water-procedure-how-to-apply-for-a-new-residential-water-connection.txt",
+                                          "title":  "How to Apply for a New Residential Water Connection",
+                                          "topic_tags":  "[\"connection\", \"apply\", \"new\"]",
+                                          "total_chars":  2573,
+                                          "valid_from":  "2026-04-16",
+                                          "valid_from_int":  20260416,
+                                          "valid_to":  "2027-04-16",
+                                          "valid_to_int":  20270416,
+                                          "version":  1
+                                      },
+                         "match_reason":  "semantic similarity (score 0.44)"
+                     },
+                     {
+                         "text":  "Q: How do I read my water meter? A: The meter is usually in a concrete box near the street. Read the black numbers (kilolitres). Subtract last monthâs reading to get your usage. Send a photo to water.meter@harare.gov.zw if you suspect a mistake. -",
+                         "score":  0.4322876421677433,
+                         "metadata":  {
+                                          "authority_confidence":  0.9,
+                                          "chunk_end":  471,
+                                          "chunk_start":  220,
+                                          "confidence_source":  "[Source of authority, e.g., Council Resolution]",
+                                          "content_type":  "faq",
+                                          "cross_service_flag":  false,
+                                          "department":  "[Department name]",
+                                          "document_id":  "water-faq-water-faq-billing-001",
+                                          "filename":  "water-faq-water-faq-billing-001",
+                                          "is_active":  true,
+                                          "locations":  "[\"Council-wide\"]",
+                                          "owner_email":  "ggg@gmail.com",
+                                          "prerequisites":  "[]",
+                                          "related_documents":  "[\"WATER-PROC-CONNECTION-001\", \"WATER-POL-SENIOR-DISCOUNT-001\"]",
+                                          "review_cycle":  "",
+                                          "service_area":  "water",
+                                          "source":  "C:\\Users\\PHILADELPHIA\\Documents\\CHATBOT\\harare-chatbot\\shared_documents\\water-faq-water-faq-billing-001.txt",
+                                          "title":  "WATER-FAQ-BILLING-001",
+                                          "topic_tags":  "[\"water\", \"billing\", \"meter\", \"payments\"]",
+                                          "total_chars":  1921,
+                                          "valid_from":  "2026-04-17",
+                                          "valid_from_int":  20260417,
+                                          "valid_to":  "2027-04-17",
+                                          "valid_to_int":  20270417,
+                                          "version":  1
+                                      },
+                         "match_reason":  "semantic similarity (score 0.43)"
+                     },
+                     {
+                         "text":  "Q: How do I report a billing error? A: Send an email to water.billing@harare.gov.zw with your account number and a photo of your meter. Response within 5 working days.",
+                         "score":  0.34421912614266237,
+                         "metadata":  {
+                                          "authority_confidence":  0.9,
+                                          "chunk_end":  1251,
+                                          "chunk_start":  1082,
+                                          "confidence_source":  "[Source of authority, e.g., Council Resolution]",
+                                          "content_type":  "faq",
+                                          "cross_service_flag":  false,
+                                          "department":  "[Department name]",
+                                          "document_id":  "water-faq-water-faq-billing-001",
+                                          "filename":  "water-faq-water-faq-billing-001",
+                                          "is_active":  true,
+                                          "locations":  "[\"Council-wide\"]",
+                                          "owner_email":  "ggg@gmail.com",
+                                          "prerequisites":  "[]",
+                                          "related_documents":  "[\"WATER-PROC-CONNECTION-001\", \"WATER-POL-SENIOR-DISCOUNT-001\"]",
+                                          "review_cycle":  "",
+                                          "service_area":  "water",
+                                          "source":  "C:\\Users\\PHILADELPHIA\\Documents\\CHATBOT\\harare-chatbot\\shared_documents\\water-faq-water-faq-billing-001.txt",
+                                          "title":  "WATER-FAQ-BILLING-001",
+                                          "topic_tags":  "[\"water\", \"billing\", \"meter\", \"payments\"]",
+                                          "total_chars":  1921,
+                                          "valid_from":  "2026-04-17",
+                                          "valid_from_int":  20260417,
+                                          "valid_to":  "2027-04-17",
+                                          "valid_to_int":  20270417,
+                                          "version":  1
+                                      },
+                         "match_reason":  "semantic similarity (score 0.34)"
+                     },
+                     {
+                         "text":  "### Summary Official contact points for waterârelated enquiries, emergencies, and payments. ### Department Contacts | Service | Phone | Email | Location | |---------|-------|-------|----------| | General Enquiries \u0026 Billing | 0800 1234 (tollâfree) | water.billing@harare.gov.zw | Selous Avenue, Harare | | New Connections \u0026 Applications | +263 242 752123 | water.connections@harare.gov.zw | Rowland Square, CBD | | Emergency Water Outages | 0800 1234 or 0712 345 678 (WhatsApp) | water.emergency@harare.gov.zw | 24/7 | | Meter Readings \u0026 Faults | +263 242 752124 | water.meter@harare.gov.zw | Morton Jaffray office | | Complaints \u0026 Feedback | +263 242 752125 | water.complaints@harare.gov.zw | Customer Service Centre, Mbare | ### Zonal Water Offices (for local issues) | Zone | Areas Covered | Phone | |------|---------------|-------| | Zone 1 | CBD, Mbare, Sunningdale | +263 242 752201 | | Zone 4 | Budiriro, Glen View, Mufakose | +263 242 752204 | | Zone 5 | Kambuzuma, Kuwadzana, Dzivarasekwa | +263 242 752205 | ### Payment Locations - **Online:** pay.harare.gov.zw - **Mobile:** EcoCash biller 2020 (account number = water bill number) - **In person:** Any council cashier (CBD, Mbare, Budiriro, Highfield) ### Common Questions Answered - Q: What is the emergency number for a burst pipe in my street? A: Call 0800 1234, available 24/7. Provide your street name and nearest cross street. - Q: How do I get my water bill emailed to me? A: Send an email to water.billing@harare.gov.zw with your account number and request eâbilling.",
+                         "score":  0.3434655174088006,
+                         "metadata":  {
+                                          "authority_confidence":  0.9,
+                                          "chunk_end":  2126,
+                                          "chunk_start":  579,
+                                          "confidence_source":  "[Source of authority, e.g., Council Resolution]",
+                                          "content_type":  "contact_directory",
+                                          "cross_service_flag":  false,
+                                          "department":  "[Department name]",
+                                          "document_id":  "water-contact_directory-water-contact-dept-001",
+                                          "filename":  "water-contact_directory-water-contact-dept-001",
+                                          "is_active":  true,
+                                          "locations":  "[\"Council-wide\"]",
+                                          "owner_email":  "ggg@gmail.com",
+                                          "prerequisites":  "[]",
+                                          "related_documents":  "[\"WATER-PROC-CONNECTION-001\", \"WATER-EMERG-OUTAGE-001\"]",
+                                          "review_cycle":  "",
+                                          "service_area":  "water",
+                                          "source":  "C:\\Users\\PHILADELPHIA\\Documents\\CHATBOT\\harare-chatbot\\shared_documents\\water-contact_directory-water-contact-dept-001.txt",
+                                          "title":  "WATER-CONTACT-DEPT-001",
+                                          "topic_tags":  "[\"water\", \"contacts\", \"phone\", \"email\"]",
+                                          "total_chars":  2126,
+                                          "valid_from":  "2026-04-17",
+                                          "valid_from_int":  20260417,
+                                          "valid_to":  "2027-04-17",
+                                          "valid_to_int":  20270417,
+                                          "version":  1
+                                      },
+                         "match_reason":  "semantic similarity (score 0.34)"
+                     },
+                     {
+                         "text":  "# TITLE: WATER-FEE-CONNECTION-001 document_id: water-fee_schedule-water-fee-connection-001 # DOCUMENT_ID:  # VERSION: 1 ## METADATA_BLOCK department:  owner_email: ggg@gmail.com valid_from: 2026-04-17 valid_to: 2027-04-17 locations:  authority_confidence: 0.9 confidence_source:  content_type: fee_schedule service_area: water topic_tags:  related_documents:  prerequisites:  review_cycle: cross_service_flag: false ## CONTENT_BLOCK ### Summary Fees for new residential water connections in Harare. All fees are in Zimbabwean dollars (ZiG) and subject to change without notice. ### Fee Table | Item | Fee (ZiG) | |------|-----------| | Application fee (nonârefundable) | 250 | | Connection fee (standard 15mm meter) | 1,200 | | Meter deposit (refundable after 12 months of good payment) | 800 | | Inspection fee | 350 | | Plumbing works (if required, charged by council plumber) | 500â1,500 (variable) | | Reconnection fee (if disconnected for nonâpayment) | 400 | **Total estimated upfront cost (standard connection, no extra plumbing):** 2,600 ZiG ### Payment Methods - **In person:** Cash or debit card at any Harare City Council cashier (CBD, Mbare, Budiriro, or zonal offices). - **Online:** Pay via the councilâs payment portal (pay.harare.gov.zw) using RTGS or Visa/Mastercard. - **Bank deposit:** CABS account 1002733316 (online payments) or 1003655211 (RTGS). Use your reference number from the application form. ### Common Questions Answered - Q: Is the deposit refundable? A: Yes, after 12 consecutive months of onâtime bill payments, you can request a refund at the water department. - Q: What if I need a larger meter (for a block of flats)? A: Contact the water department for a commercial connection quote. Fees are significantly higher. - Q: Can I pay in instalments? A: No, all fees except the deposit must be paid before installation begins.",
+                         "score":  0.33097518498153067,
+                         "metadata":  {
+                                          "authority_confidence":  0.9,
+                                          "chunk_end":  2011,
+                                          "chunk_start":  0,
+                                          "confidence_source":  "[Source of authority, e.g., Council Resolution]",
+                                          "content_type":  "fee_schedule",
+                                          "cross_service_flag":  false,
+                                          "department":  "[Department name]",
+                                          "document_id":  "water-fee_schedule-water-fee-connection-001",
+                                          "filename":  "water-fee_schedule-water-fee-connection-001",
+                                          "is_active":  true,
+                                          "locations":  "[\"Council-wide\"]",
+                                          "owner_email":  "ggg@gmail.com",
+                                          "prerequisites":  "[]",
+                                          "related_documents":  "[\"WATER-PROC-CONNECTION-001\", \"WATER-PROC-DISCOUNT-APPLY-001\"]",
+                                          "review_cycle":  "",
+                                          "service_area":  "water",
+                                          "source":  "C:\\Users\\PHILADELPHIA\\Documents\\CHATBOT\\harare-chatbot\\shared_documents\\water-fee_schedule-water-fee-connection-001.txt",
+                                          "title":  "WATER-FEE-CONNECTION-001",
+                                          "topic_tags":  "[\"water\", \"fees\", \"connection\", \"cost\"]",
+                                          "total_chars":  2011,
+                                          "valid_from":  "2026-04-17",
+                                          "valid_from_int":  20260417,
+                                          "valid_to":  "2027-04-17",
+                                          "valid_to_int":  20270417,
+                                          "version":  1
+                                      },
+                         "match_reason":  "semantic similarity (score 0.33)"
+                     }
+                 ],
+    "total_results":  5,
+    "coverage":  "full",
+    "has_knowledge_gap":  false,
+    "confidence":  0.7189723112474452,
+    "suggested_actions":  [
+
+                          ],
+    "contradictions":  [
+                           {
+                               "topic":  "fee",
+                               "conflicting_sources":  [
+                                                           "water-procedure-how-to-apply-for-a-new-residential-water-connection",
+                                                           "water-contact_directory-water-contact-dept-001",
+                                                           "water-contact_directory-water-contact-dept-001",
+                                                           "water-contact_directory-water-contact-dept-001",
+                                                           "water-fee_schedule-water-fee-connection-001",
+                                                           "water-fee_schedule-water-fee-connection-001",
+                                                           "water-fee_schedule-water-fee-connection-001",
+                                                           "water-fee_schedule-water-fee-connection-001",
+                                                           "water-fee_schedule-water-fee-connection-001",
+                                                           "water-fee_schedule-water-fee-connection-001",
+                                                           "water-fee_schedule-water-fee-connection-001",
+                                                           "water-fee_schedule-water-fee-connection-001"
+                                                       ],
+                               "resolution":  "Value: 1.0 ",
+                               "resolution_basis":  "authority and recency"
+                           }
+                       ],
+    "metadata":  {
+                     "filtering_stats":  {
+                                             "total_chunks":  9,
+                                             "removed_non_domain":  2,
+                                             "removed_low_relevance":  0,
+                                             "kept_chunks":  6
+                                         },
+                     "location_used":  null,
+                     "historical":  false
+                 },
+    "timestamp":  "2026-05-01T15:08:17.098203"
+}

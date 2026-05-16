@@ -1,0 +1,44 @@
+# Harare suburbs
+mbare
+highfield
+glen norah
+warren park
+dzivarasekwa
+budiriro
+hatcliffe
+epworth
+borrowdale
+mount pleasant
+avondale
+mabelreign
+marlborough
+greendale
+highlands
+msasa
+workington
+southerton
+ardbennie
+waterfalls
+chitungwiza
+ruwa
+# Service terms
+water bill
+rates
+waste collection
+garbage
+rubbish
+refuse
+permit
+license
+pothole
+leak
+burst pipe
+street light
+clinic
+# Common misspellings
+watter
+permmit
+applycation
+buildig
+stritlight
+pothol

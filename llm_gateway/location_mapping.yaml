@@ -1,0 +1,279 @@
+# location_mapping.yaml - Harare City Council Location Mappings
+# Maps suburbs to wards and provides aliases for location normalization
+
+locations:
+  suburbs:
+    - name: Mbare
+      ward: Ward 8
+      aliases:
+        - mbare township
+        - mbare harare
+      coordinates:
+        lat: -17.8667
+        lng: 31.0500
+    
+    - name: Highfield
+      ward: Ward 7
+      aliases:
+        - high field
+        - highfields
+      coordinates:
+        lat: -17.8333
+        lng: 31.0333
+    
+    - name: Glen Norah
+      ward: Ward 6
+      aliases:
+        - glennorah
+        - glen nora
+      coordinates:
+        lat: -17.8833
+        lng: 31.0000
+    
+    - name: Warren Park
+      ward: Ward 36
+      aliases:
+        - warrenpark
+      coordinates:
+        lat: -17.8167
+        lng: 30.9833
+    
+    - name: Dzivarasekwa
+      ward: Ward 38
+      aliases:
+        - dziva
+        - dzivaresekwa
+      coordinates:
+        lat: -17.7833
+        lng: 30.9500
+    
+    - name: Budiriro
+      ward: Ward 5
+      aliases:
+        - budiriro 1
+        - budiriro 2
+      coordinates:
+        lat: -17.9000
+        lng: 30.9500
+    
+    - name: Hatcliffe
+      ward: Ward 4
+      aliases:
+        - hatcliff
+      coordinates:
+        lat: -17.7000
+        lng: 31.0000
+    
+    - name: Epworth
+      ward: Ward 3
+      aliases:
+        - epworth harare
+      coordinates:
+        lat: -17.8833
+        lng: 31.1500
+    
+    - name: Borrowdale
+      ward: Ward 30
+      aliases:
+        - borrowdale brooke
+      coordinates:
+        lat: -17.7833
+        lng: 31.0833
+    
+    - name: Mount Pleasant
+      ward: Ward 17
+      aliases:
+        - mt pleasant
+        - mountpleasant
+      coordinates:
+        lat: -17.7833
+        lng: 31.0500
+    
+    - name: Avondale
+      ward: Ward 17
+      aliases:
+        - avondale west
+      coordinates:
+        lat: -17.7833
+        lng: 31.0333
+    
+    - name: Mabelreign
+      ward: Ward 18
+      aliases:
+        - mabel reigh
+      coordinates:
+        lat: -17.8000
+        lng: 31.0167
+    
+    - name: Marlborough
+      ward: Ward 19
+      aliases:
+        - marlboro
+      coordinates:
+        lat: -17.8167
+        lng: 31.0167
+    
+    - name: Greendale
+      ward: Ward 20
+      aliases:
+        - green dale
+      coordinates:
+        lat: -17.7667
+        lng: 31.0667
+    
+    - name: Highlands
+      ward: Ward 15
+      aliases:
+        - highland
+      coordinates:
+        lat: -17.7833
+        lng: 31.0667
+    
+    - name: Msasa
+      ward: Ward 23
+      aliases:
+        - msasa park
+      coordinates:
+        lat: -17.8167
+        lng: 31.1000
+    
+    - name: Workington
+      ward: Ward 24
+      aliases:
+        - workington ext
+      coordinates:
+        lat: -17.8333
+        lng: 31.1000
+    
+    - name: Southerton
+      ward: Ward 25
+      aliases:
+        - southern industrial
+      coordinates:
+        lat: -17.8500
+        lng: 31.0500
+    
+    - name: Ardbennie
+      ward: Ward 26
+      aliases:
+        - ardbennie harare
+      coordinates:
+        lat: -17.8500
+        lng: 31.0833
+    
+    - name: Waterfalls
+      ward: Ward 27
+      aliases:
+        - water falls
+      coordinates:
+        lat: -17.8833
+        lng: 31.0667
+  
+  wards:
+    - name: Ward 1
+      description: Hatfield, Cranborne
+    - name: Ward 2
+      description: Mount Hampden
+    - name: Ward 3
+      description: Epworth
+    - name: Ward 4
+      description: Hatcliffe
+    - name: Ward 5
+      description: Budiriro
+    - name: Ward 6
+      description: Glen Norah
+    - name: Ward 7
+      description: Highfield
+    - name: Ward 8
+      description: Mbare
+    - name: Ward 9
+      description: Glen View
+    - name: Ward 10
+      description: Tafara
+    - name: Ward 11
+      description: Kuwadzana
+    - name: Ward 12
+      description: Kuwadzana Extension
+    - name: Ward 13
+      description: Sunningdale
+    - name: Ward 14
+      description: Greystone Park
+    - name: Ward 15
+      description: Highlands
+    - name: Ward 16
+      description: Avenues, CBD North
+    - name: Ward 17
+      description: Mount Pleasant, Avondale
+    - name: Ward 18
+      description: Mabelreign
+    - name: Ward 19
+      description: Marlborough
+    - name: Ward 20
+      description: Greendale
+    - name: Ward 21
+      description: Belvedere
+    - name: Ward 22
+      description: Eastlea
+    - name: Ward 23
+      description: Msasa
+    - name: Ward 24
+      description: Workington
+    - name: Ward 25
+      description: Southerton
+    - name: Ward 26
+      description: Ardbennie
+    - name: Ward 27
+      description: Waterfalls
+    - name: Ward 28
+      description: CBD South
+    - name: Ward 29
+      description: Borrowdale
+    - name: Ward 30
+      description: Borrowdale Brooke
+    - name: Ward 31
+      description: Alexandra Park
+    - name: Ward 32
+      description: Milton Park
+    - name: Ward 33
+      description: Strathaven
+    - name: Ward 34
+      description: Warren Park
+    - name: Ward 35
+      description: Warren Park D
+    - name: Ward 36
+      description: Warren Park Extension
+    - name: Ward 37
+      description: Mabvuku
+    - name: Ward 38
+      description: Dzivarasekwa
+    - name: Ward 39
+      description: Dzivarasekwa Extension
+    - name: Ward 40
+      description: Kambuzuma
+    - name: Ward 41
+      description: Glenview
+    - name: Ward 42
+      description: Mufakose
+    - name: Ward 43
+      description: Rugare
+    - name: Ward 44
+      description: Kambuzuma Extension
+    - name: Ward 45
+      description: Aspindale
+    - name: Ward 46
+      description: Hopley
+
+# Special locations
+special:
+  - name: CBD
+    full_name: Central Business District
+    wards: [Ward 16, Ward 28]
+  
+  - name: Industrial Areas
+    areas: [Workington, Southerton, Msasa, Ardbennie]
+    
+  - name: High-Density Suburbs
+    areas: [Mbare, Highfield, Glen Norah, Budiriro, Dzivarasekwa]
+  
+  - name: Low-Density Suburbs
+    areas: [Borrowdale, Mount Pleasant, Highlands, Avondale]

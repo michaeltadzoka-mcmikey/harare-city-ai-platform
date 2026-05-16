@@ -1,0 +1,130 @@
+version: "3.1"
+
+# ---------------------------------------------------------------------------
+# Harare City Council – RASA Rules
+# Spec: RASA Integration Doc v1.0 §3.4, §3.6
+#
+# Rules govern deterministic, condition-based conversation paths.
+# Non-reporting rules (water services, waste management, etc.) have been
+# REMOVED – those queries are handled by the LLM Gateway + RAG pipeline.
+# ---------------------------------------------------------------------------
+
+rules:
+  # ── Greeting / farewell ──────────────────────────────────────────────────
+  - rule: Greet user
+    steps:
+      - intent: greet
+      - action: utter_greet
+
+  - rule: Say goodbye
+    steps:
+      - intent: goodbye
+      - action: utter_goodbye
+
+  # ── Fallback / out-of-scope ──────────────────────────────────────────────
+  - rule: Handle deny outside form
+    condition:
+      - active_loop: null
+    steps:
+      - intent: deny
+      - action: utter_default
+
+  - rule: Handle out of scope
+    steps:
+      - intent: out_of_scope
+      - action: utter_out_of_scope
+
+  # ── Status check ─────────────────────────────────────────────────────────
+  # When user includes a reference_id entity, go straight to status check.
+  - rule: Check status with reference ID in message
+    steps:
+      - intent: check_report_status
+        entities:
+          - reference_id
+      - action: action_check_report_status
+
+  # When user says "check status" but provides no reference ID, ask for it.
+  - rule: Check status without reference ID
+    steps:
+      - intent: check_report_status
+      - action: utter_ask_reference_id
+
+  # ── Report form activation ───────────────────────────────────────────────
+  - rule: Activate report form
+    steps:
+      - intent: submit_report
+      - action: report_form
+      - active_loop: report_form
+
+  # ── Report form completion ───────────────────────────────────────────────
+  # Triggered when all required slots are filled and form deactivates.
+  - rule: Submit report form when complete
+    condition:
+      - active_loop: report_form
+    steps:
+      - action: report_form
+      - active_loop: null
+      - slot_was_set:
+          - requested_slot: null
+      - action: utter_confirm_report
+
+  # ── Confirmation: affirm AFTER seeing the confirm summary ────────────────
+  # Only fires outside any active loop (i.e. after form has completed and
+  # utter_confirm_report has been shown).
+  - rule: Confirm and submit report
+    condition:
+      - active_loop: null
+    steps:
+      - intent: affirm
+      - action: action_submit_report
+
+  # ── Cancel: inside form ──────────────────────────────────────────────────
+  - rule: Cancel during form
+    condition:
+      - active_loop: report_form
+    steps:
+      - intent: cancel
+      - action: action_handle_cancel
+      - active_loop: null
+      - action: utter_report_cancelled
+    wait_for_user_input: false
+
+  # ── Cancel: outside form (e.g. after confirm prompt) ────────────────────
+  - rule: Cancel outside form
+    condition:
+      - active_loop: null
+    steps:
+      - intent: cancel
+      - action: action_handle_cancel
+      - active_loop: null
+      - action: utter_report_cancelled
+    wait_for_user_input: false
+
+  # ── Restart: inside form ─────────────────────────────────────────────────
+  - rule: Restart during form
+    condition:
+      - active_loop: report_form
+    steps:
+      - intent: report_restart
+      - action: action_handle_restart
+      - active_loop: null
+      - action: utter_report_restarted
+    wait_for_user_input: false
+
+  # ── Restart: outside form ────────────────────────────────────────────────
+  - rule: Restart outside form
+    condition:
+      - active_loop: null
+    steps:
+      - intent: report_restart
+      - action: action_handle_restart
+      - active_loop: null
+      - action: utter_report_restarted
+    wait_for_user_input: false
+
+  # ── Activate form from gateway trigger (NEW) ─────────────────────────────
+  - rule: Activate form from gateway trigger
+    steps:
+      - intent: gateway_trigger
+      - action: action_activate_trigger_form
+      - active_loop: null

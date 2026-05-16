@@ -1,0 +1,55 @@
+version: "3.1"
+
+stories:
+  - story: Test complete report flow
+    steps:
+      - intent: greet
+      - action: utter_greet
+      - intent: start_report
+      - action: utter_report_requirements
+      - action: report_issue_form
+      - active_loop: report_issue_form
+      - slot_was_set:
+          - requested_slot: report_confirm_proceed
+      - intent: affirm
+      - slot_was_set:
+          - report_confirm_proceed: true
+      - slot_was_set:
+          - requested_slot: report_location
+      - slot_was_set:
+          - report_location: "123 Samora Machel Avenue near ZB Bank"
+      - slot_was_set:
+          - requested_slot: report_description
+      - slot_was_set:
+          - report_description: "Large pothole causing traffic issues, about 2 feet deep and dangerous"
+      - slot_was_set:
+          - requested_slot: report_urgency
+      - slot_was_set:
+          - report_urgency: "high"
+      - slot_was_set:
+          - requested_slot: confirm_submission
+      - intent: affirm
+      - slot_was_set:
+          - confirm_submission: true
+      - slot_was_set:
+          - requested_slot: null
+      - active_loop: null
+      - action: action_submit_report
+
+  - story: Test cancellation
+    steps:
+      - intent: start_report
+      - action: utter_report_requirements
+      - action: report_issue_form
+      - active_loop: report_issue_form
+      - intent: cancel_report
+      - action: utter_report_cancelled
+      - action: action_reset_form
+      - active_loop: null
+
+  - story: Test ticket status check
+    steps:
+      - intent: check_ticket_status
+        entities:
+          - ticket_id: "TICKET-20240204123456-1234"
+      - action: action_check_ticket_status

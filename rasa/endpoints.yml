@@ -1,0 +1,21 @@
+# RASA Endpoints Configuration
+# No Redis - using InMemoryTrackerStore
+
+action_endpoint:
+  url: http://localhost:5055/webhook
+
+# Redis tracker store - DISABLED (using default InMemoryTrackerStore)
+# tracker_store:
+#   type: redis
+#   url: localhost
+#   port: 6379
+#   db: 0
+#   key_prefix: "harare_tracker:"
+
+# NLG endpoint (if used)
+# nlg:
+#   url: http://localhost:5005/nlg
+
+# NLU endpoint (if used)
+# nlu:
+#   url: http://localhost:5005/nlu

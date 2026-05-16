@@ -1,0 +1,239 @@
+version: "3.1"
+
+# ---------------------------------------------------------------------------
+# Harare City Council – RASA Stories
+# Spec: RASA Integration Doc v1.0 §6 (End-to-End Flow Summary)
+#
+# Stories cover multi-turn paths not fully captured by rules.
+# All non-reporting stories (water services info, rates, etc.) have been REMOVED.
+# New edge-case paths (delayed submission, unknown location, spam flagged) added.
+# ---------------------------------------------------------------------------
+
+stories:
+  # ── Happy path: full report submission ───────────────────────────────────
+  - story: happy path full report submission
+    steps:
+      - intent: submit_report
+      - action: report_form
+      - active_loop: report_form
+      - slot_was_set:
+          - requested_slot: report_description
+      - intent: provide_description
+      - action: report_form
+      - slot_was_set:
+          - requested_slot: report_location
+      - intent: provide_location
+      - action: report_form
+      - slot_was_set:
+          - requested_slot: report_landmark
+      - intent: provide_landmark
+      - action: report_form
+      - active_loop: null
+      - slot_was_set:
+          - requested_slot: null
+      - action: utter_confirm_report
+      - intent: affirm
+      - action: action_submit_report
+
+  # ── Cancel after confirmation prompt ────────────────────────────────────
+  - story: report submission then cancel at confirm
+    steps:
+      - intent: submit_report
+      - action: report_form
+      - active_loop: report_form
+      - slot_was_set:
+          - requested_slot: report_description
+      - intent: provide_description
+      - action: report_form
+      - slot_was_set:
+          - requested_slot: report_location
+      - intent: provide_location
+      - action: report_form
+      - slot_was_set:
+          - requested_slot: report_landmark
+      - intent: provide_landmark
+      - action: report_form
+      - active_loop: null
+      - slot_was_set:
+          - requested_slot: null
+      - action: utter_confirm_report
+      - intent: cancel
+      - action: action_handle_cancel
+      - active_loop: null
+      - action: utter_report_cancelled
+
+  # ── Restart after confirmation prompt ────────────────────────────────────
+  - story: report submission then restart at confirm
+    steps:
+      - intent: submit_report
+      - action: report_form
+      - active_loop: report_form
+      - slot_was_set:
+          - requested_slot: report_description
+      - intent: provide_description
+      - action: report_form
+      - slot_was_set:
+          - requested_slot: report_location
+      - intent: provide_location
+      - action: report_form
+      - slot_was_set:
+          - requested_slot: report_landmark
+      - intent: provide_landmark
+      - action: report_form
+      - active_loop: null
+      - slot_was_set:
+          - requested_slot: null
+      - action: utter_confirm_report
+      - intent: report_restart
+      - action: action_handle_restart
+      - active_loop: null
+      - action: utter_report_restarted
+
+  # ── Status check with reference ID entity ────────────────────────────────
+  - story: check report status with reference id entity
+    steps:
+      - intent: check_report_status
+        entities:
+          - reference_id: "HCC-RPT-2026-01452"
+      - action: action_check_report_status
+
+  # ── Status check: user gives ID on follow-up ─────────────────────────────
+  - story: check report status without then with reference id
+    steps:
+      - intent: check_report_status
+      - action: utter_ask_reference_id
+      - intent: check_report_status
+        entities:
+          - reference_id: "HCC-RPT-2026-00001"
+      - action: action_check_report_status
+
+  # ── Greeting then report ──────────────────────────────────────────────────
+  - story: greet then report
+    steps:
+      - intent: greet
+      - action: utter_greet
+      - intent: submit_report
+      - action: report_form
+      - active_loop: report_form
+
+  # ── Unknown location: user sees clarification then continues ─────────────
+  - story: report with unknown location proceeds anyway
+    steps:
+      - intent: submit_report
+      - action: report_form
+      - active_loop: report_form
+      - slot_was_set:
+          - requested_slot: report_description
+      - intent: provide_description
+      - action: report_form
+      - slot_was_set:
+          - requested_slot: report_location
+      - slot_was_set:
+          - location_known: false
+      - action: report_form
+      - slot_was_set:
+          - requested_slot: report_landmark
+      - intent: provide_landmark
+      - action: report_form
+      - active_loop: null
+      - slot_was_set:
+          - requested_slot: null
+      - action: utter_confirm_report
+      - intent: affirm
+      - action: action_submit_report
+
+  # ── Cancel mid-form ───────────────────────────────────────────────────────
+  - story: cancel during form at location step
+    steps:
+      - intent: submit_report
+      - action: report_form
+      - active_loop: report_form
+      - slot_was_set:
+          - requested_slot: report_description
+      - intent: provide_description
+      - action: report_form
+      - slot_was_set:
+          - requested_slot: report_location
+      - intent: cancel
+      - action: action_handle_cancel
+      - active_loop: null
+      - action: utter_report_cancelled
+
+  # ── Restart mid-form ─────────────────────────────────────────────────────
+  - story: restart during form at landmark step
+    steps:
+      - intent: submit_report
+      - action: report_form
+      - active_loop: report_form
+      - slot_was_set:
+          - requested_slot: report_description
+      - intent: provide_description
+      - action: report_form
+      - slot_was_set:
+          - requested_slot: report_location
+      - intent: provide_location
+      - action: report_form
+      - slot_was_set:
+          - requested_slot: report_landmark
+      - intent: report_restart
+      - action: action_handle_restart
+      - active_loop: null
+      - action: utter_report_restarted
+
+  # ── Delayed submission (Gateway unreachable) ──────────────────────────────
+  # When action_submit_report ends in dead-letter path, utter_report_submitted_delayed
+  # is sent. Story documents this so TEDPolicy learns the pattern.
+  - story: submit report gateway delayed path
+    steps:
+      - intent: submit_report
+      - action: report_form
+      - active_loop: report_form
+      - slot_was_set:
+          - requested_slot: report_description
+      - intent: provide_description
+      - action: report_form
+      - slot_was_set:
+          - requested_slot: report_location
+      - intent: provide_location
+      - action: report_form
+      - slot_was_set:
+          - requested_slot: report_landmark
+      - intent: provide_landmark
+      - action: report_form
+      - active_loop: null
+      - slot_was_set:
+          - requested_slot: null
+      - action: utter_confirm_report
+      - intent: affirm
+      - action: action_submit_report
+
+  # ── Full session: greet, report, check status ─────────────────────────────
+  - story: full session greet report then check status
+    steps:
+      - intent: greet
+      - action: utter_greet
+      - intent: submit_report
+      - action: report_form
+      - active_loop: report_form
+      - slot_was_set:
+          - requested_slot: report_description
+      - intent: provide_description
+      - action: report_form
+      - slot_was_set:
+          - requested_slot: report_location
+      - intent: provide_location
+      - action: report_form
+      - slot_was_set:
+          - requested_slot: report_landmark
+      - intent: provide_landmark
+      - action: report_form
+      - active_loop: null
+      - slot_was_set:
+          - requested_slot: null
+      - action: utter_confirm_report
+      - intent: affirm
+      - action: action_submit_report
+      - intent: check_report_status
+        entities:
+          - reference_id: "HCC-RPT-2026-01452"
+      - action: action_check_report_status

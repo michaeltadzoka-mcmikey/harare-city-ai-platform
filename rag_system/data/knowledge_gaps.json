@@ -1,0 +1,1626 @@
+[
+  {
+    "query": "water connection fee",
+    "user_id": null,
+    "timestamp": "2026-02-13T13:22:01.619514",
+    "confidence": 0.0,
+    "suggested_documents": []
+  },
+  {
+    "query": "water connection fee",
+    "user_id": "ps_test_1515763038",
+    "timestamp": "2026-02-13T13:22:01.694882",
+    "confidence": 0.0,
+    "suggested_documents": []
+  },
+  {
+    "query": "water connection fee",
+    "user_id": null,
+    "timestamp": "2026-02-13T13:31:06.148482",
+    "confidence": 0.0,
+    "suggested_documents": []
+  },
+  {
+    "query": "water connection fee",
+    "user_id": "ps_test_518503",
+    "timestamp": "2026-02-13T13:31:06.256118",
+    "confidence": 0.0,
+    "suggested_documents": []
+  },
+  {
+    "query": "water connection fee",
+    "user_id": null,
+    "timestamp": "2026-02-13T13:35:23.521477",
+    "confidence": 0.0,
+    "suggested_documents": []
+  },
+  {
+    "query": "water connection fee",
+    "user_id": "ps_test_1400222459",
+    "timestamp": "2026-02-13T13:35:23.621303",
+    "confidence": 0.0,
+    "suggested_documents": []
+  },
+  {
+    "query": "water connection fee",
+    "user_id": null,
+    "timestamp": "2026-02-13T13:40:13.201769",
+    "confidence": 0.0,
+    "suggested_documents": []
+  },
+  {
+    "query": "water connection fee",
+    "user_id": "ps_test_357911790",
+    "timestamp": "2026-02-13T13:40:13.281048",
+    "confidence": 0.0,
+    "suggested_documents": []
+  },
+  {
+    "query": "water connection fee",
+    "user_id": null,
+    "timestamp": "2026-02-13T13:42:58.902470",
+    "confidence": 0.0,
+    "suggested_documents": []
+  },
+  {
+    "query": "water connection fee",
+    "user_id": "ps_test_574485560",
+    "timestamp": "2026-02-13T13:42:59.002485",
+    "confidence": 0.0,
+    "suggested_documents": []
+  },
+  {
+    "query": "water connection fee",
+    "user_id": null,
+    "timestamp": "2026-02-13T13:50:18.429634",
+    "confidence": 0.0,
+    "suggested_documents": []
+  },
+  {
+    "query": "water connection fee",
+    "user_id": "ps_test_155696895",
+    "timestamp": "2026-02-13T13:50:18.540798",
+    "confidence": 0.0,
+    "suggested_documents": []
+  },
+  {
+    "query": "water connection fee",
+    "user_id": null,
+    "timestamp": "2026-02-13T13:53:03.555686",
+    "confidence": 0.0,
+    "suggested_documents": []
+  },
+  {
+    "query": "water connection fee",
+    "user_id": "ps_test_74567404",
+    "timestamp": "2026-02-13T13:53:03.625668",
+    "confidence": 0.0,
+    "suggested_documents": []
+  },
+  {
+    "query": "water connection fee",
+    "user_id": null,
+    "timestamp": "2026-02-13T13:54:26.320654",
+    "confidence": 0.0,
+    "suggested_documents": []
+  },
+  {
+    "query": "water connection fee",
+    "user_id": null,
+    "timestamp": "2026-02-13T14:02:56.930963",
+    "confidence": 0.0,
+    "suggested_documents": []
+  },
+  {
+    "query": "nonexistent topic xyz123",
+    "user_id": null,
+    "timestamp": "2026-02-13T14:02:57.408254",
+    "confidence": 0.0,
+    "suggested_documents": []
+  },
+  {
+    "query": "water connection fee",
+    "user_id": null,
+    "timestamp": "2026-02-13T14:06:22.649374",
+    "confidence": 0.0,
+    "suggested_documents": []
+  },
+  {
+    "query": "nonexistent topic xyz123",
+    "user_id": null,
+    "timestamp": "2026-02-13T14:06:23.683370",
+    "confidence": 0.0,
+    "suggested_documents": []
+  },
+  {
+    "query": "how can i get a shop licesnse",
+    "user_id": null,
+    "timestamp": "2026-02-20T08:49:14.038963",
+    "confidence": 0.0,
+    "suggested_documents": []
+  },
+  {
+    "query": "what can you do",
+    "user_id": null,
+    "timestamp": "2026-03-12T13:49:10.954716",
+    "confidence": 0.0,
+    "suggested_documents": []
+  },
+  {
+    "query": "what can you do",
+    "user_id": null,
+    "timestamp": "2026-03-12T13:50:34.840205",
+    "confidence": 0.0,
+    "suggested_documents": []
+  },
+  {
+    "query": "water fees",
+    "user_id": null,
+    "timestamp": "2026-03-17T10:25:14.949949",
+    "confidence": 0.0,
+    "suggested_documents": []
+  },
+  {
+    "query": "water fees",
+    "user_id": null,
+    "timestamp": "2026-03-17T11:05:11.873616",
+    "confidence": 0.0,
+    "suggested_documents": []
+  },
+  {
+    "query": "test",
+    "user_id": null,
+    "timestamp": "2026-03-17T12:32:20.509542",
+    "confidence": 0.0,
+    "suggested_documents": []
+  },
+  {
+    "query": "water connection fees",
+    "user_id": null,
+    "timestamp": "2026-03-20T13:21:21.335525",
+    "confidence": 0.0,
+    "suggested_documents": []
+  },
+  {
+    "query": "How do I pay my water bill?",
+    "user_id": null,
+    "timestamp": "2026-03-21T03:50:29.235258",
+    "confidence": 0.0,
+    "suggested_documents": []
+  },
+  {
+    "query": "How do I pay my water bill?",
+    "user_id": null,
+    "timestamp": "2026-03-21T03:51:17.803984",
+    "confidence": 0.0,
+    "suggested_documents": []
+  },
+  {
+    "query": "I want to report a pothole",
+    "user_id": null,
+    "timestamp": "2026-03-21T08:05:57.978900",
+    "confidence": 0.0,
+    "suggested_documents": []
+  },
+  {
+    "query": "How do I pay my water bill?",
+    "user_id": null,
+    "timestamp": "2026-03-21T08:06:21.253590",
+    "confidence": 0.0,
+    "suggested_documents": []
+  },
+  {
+    "query": "water connection",
+    "user_id": null,
+    "timestamp": "2026-03-21T08:06:22.926863",
+    "confidence": 0.0,
+    "suggested_documents": []
+  },
+  {
+    "query": "I live in Mbare",
+    "user_id": null,
+    "timestamp": "2026-03-21T08:06:23.843237",
+    "confidence": 0.0,
+    "suggested_documents": []
+  },
+  {
+    "query": "what are the water fees?",
+    "user_id": null,
+    "timestamp": "2026-03-21T08:06:24.735827",
+    "confidence": 0.0,
+    "suggested_documents": []
+  },
+  {
+    "query": "Why are there water shortages in Mbare?",
+    "user_id": null,
+    "timestamp": "2026-03-21T08:06:25.825478",
+    "confidence": 0.0,
+    "suggested_documents": []
+  },
+  {
+    "query": "I want to report a pothole",
+    "user_id": null,
+    "timestamp": "2026-03-21T08:17:13.174319",
+    "confidence": 0.0,
+    "suggested_documents": []
+  },
+  {
+    "query": "How do I pay my water bill?",
+    "user_id": null,
+    "timestamp": "2026-03-21T08:17:30.638984",
+    "confidence": 0.0,
+    "suggested_documents": []
+  },
+  {
+    "query": "water connection",
+    "user_id": null,
+    "timestamp": "2026-03-21T08:17:31.452288",
+    "confidence": 0.0,
+    "suggested_documents": []
+  },
+  {
+    "query": "I live in Mbare",
+    "user_id": null,
+    "timestamp": "2026-03-21T08:17:32.188489",
+    "confidence": 0.0,
+    "suggested_documents": []
+  },
+  {
+    "query": "what are the water fees?",
+    "user_id": null,
+    "timestamp": "2026-03-21T08:17:32.932277",
+    "confidence": 0.0,
+    "suggested_documents": []
+  },
+  {
+    "query": "Why are there water shortages in Mbare?",
+    "user_id": null,
+    "timestamp": "2026-03-21T08:17:33.728702",
+    "confidence": 0.0,
+    "suggested_documents": []
+  },
+  {
+    "query": "I want to report a pothole",
+    "user_id": null,
+    "timestamp": "2026-03-21T08:22:44.375448",
+    "confidence": 0.0,
+    "suggested_documents": []
+  },
+  {
+    "query": "How do I pay my water bill?",
+    "user_id": null,
+    "timestamp": "2026-03-21T08:23:00.393959",
+    "confidence": 0.0,
+    "suggested_documents": []
+  },
+  {
+    "query": "water connection",
+    "user_id": null,
+    "timestamp": "2026-03-21T08:23:01.202976",
+    "confidence": 0.0,
+    "suggested_documents": []
+  },
+  {
+    "query": "I live in Mbare",
+    "user_id": null,
+    "timestamp": "2026-03-21T08:23:01.921189",
+    "confidence": 0.0,
+    "suggested_documents": []
+  },
+  {
+    "query": "what are the water fees?",
+    "user_id": null,
+    "timestamp": "2026-03-21T08:23:02.630268",
+    "confidence": 0.0,
+    "suggested_documents": []
+  },
+  {
+    "query": "Why are there water shortages in Mbare?",
+    "user_id": null,
+    "timestamp": "2026-03-21T08:23:03.410632",
+    "confidence": 0.0,
+    "suggested_documents": []
+  },
+  {
+    "query": "How do I pay my water bill?",
+    "user_id": null,
+    "timestamp": "2026-03-21T08:32:27.971877",
+    "confidence": 0.0,
+    "suggested_documents": []
+  },
+  {
+    "query": "water connection",
+    "user_id": null,
+    "timestamp": "2026-03-21T08:32:28.041961",
+    "confidence": 0.0,
+    "suggested_documents": []
+  },
+  {
+    "query": "I live in Mbare",
+    "user_id": null,
+    "timestamp": "2026-03-21T08:33:21.276544",
+    "confidence": 0.0,
+    "suggested_documents": []
+  },
+  {
+    "query": "what are the water fees?",
+    "user_id": null,
+    "timestamp": "2026-03-21T08:33:23.159979",
+    "confidence": 0.0,
+    "suggested_documents": []
+  },
+  {
+    "query": "Why are there water shortages in Mbare?",
+    "user_id": null,
+    "timestamp": "2026-03-21T08:34:31.460142",
+    "confidence": 0.0,
+    "suggested_documents": []
+  },
+  {
+    "query": "water connection",
+    "user_id": null,
+    "timestamp": "2026-03-21T08:44:41.098525",
+    "confidence": 0.0,
+    "suggested_documents": []
+  },
+  {
+    "query": "How do I pay my water bill?",
+    "user_id": null,
+    "timestamp": "2026-03-21T08:44:41.239240",
+    "confidence": 0.0,
+    "suggested_documents": []
+  },
+  {
+    "query": "I live in Mbare",
+    "user_id": null,
+    "timestamp": "2026-03-21T08:45:24.491058",
+    "confidence": 0.0,
+    "suggested_documents": []
+  },
+  {
+    "query": "what are the water fees?",
+    "user_id": null,
+    "timestamp": "2026-03-21T08:45:25.260554",
+    "confidence": 0.0,
+    "suggested_documents": []
+  },
+  {
+    "query": "How do I pay my water bill?",
+    "user_id": null,
+    "timestamp": "2026-03-21T08:48:30.869502",
+    "confidence": 0.0,
+    "suggested_documents": []
+  },
+  {
+    "query": "water connection",
+    "user_id": null,
+    "timestamp": "2026-03-21T08:48:30.952239",
+    "confidence": 0.0,
+    "suggested_documents": []
+  },
+  {
+    "query": "I live in Mbare",
+    "user_id": null,
+    "timestamp": "2026-03-21T08:49:10.171610",
+    "confidence": 0.0,
+    "suggested_documents": []
+  },
+  {
+    "query": "what are the water fees?",
+    "user_id": null,
+    "timestamp": "2026-03-21T08:49:11.941603",
+    "confidence": 0.0,
+    "suggested_documents": []
+  },
+  {
+    "query": "Why are there water shortages in Mbare?",
+    "user_id": null,
+    "timestamp": "2026-03-21T08:50:17.335154",
+    "confidence": 0.0,
+    "suggested_documents": []
+  },
+  {
+    "query": "How do I pay my water bill?",
+    "user_id": null,
+    "timestamp": "2026-03-21T08:55:16.083544",
+    "confidence": 0.0,
+    "suggested_documents": []
+  },
+  {
+    "query": "water connection",
+    "user_id": null,
+    "timestamp": "2026-03-21T08:55:16.477370",
+    "confidence": 0.0,
+    "suggested_documents": []
+  },
+  {
+    "query": "I live in Mbare",
+    "user_id": null,
+    "timestamp": "2026-03-21T08:55:51.240891",
+    "confidence": 0.0,
+    "suggested_documents": []
+  },
+  {
+    "query": "what are the water fees?",
+    "user_id": null,
+    "timestamp": "2026-03-21T08:55:51.963379",
+    "confidence": 0.0,
+    "suggested_documents": []
+  },
+  {
+    "query": "Why are there water shortages in Mbare?",
+    "user_id": null,
+    "timestamp": "2026-03-21T08:56:53.423732",
+    "confidence": 0.0,
+    "suggested_documents": []
+  },
+  {
+    "query": "water connection",
+    "user_id": null,
+    "timestamp": "2026-03-21T09:02:31.427444",
+    "confidence": 0.0,
+    "suggested_documents": []
+  },
+  {
+    "query": "How do I pay my water bill?",
+    "user_id": null,
+    "timestamp": "2026-03-21T09:03:04.294759",
+    "confidence": 0.0,
+    "suggested_documents": []
+  },
+  {
+    "query": "I live in Mbare",
+    "user_id": null,
+    "timestamp": "2026-03-21T09:03:39.902842",
+    "confidence": 0.0,
+    "suggested_documents": []
+  },
+  {
+    "query": "what are the water fees?",
+    "user_id": null,
+    "timestamp": "2026-03-21T09:03:41.824026",
+    "confidence": 0.0,
+    "suggested_documents": []
+  },
+  {
+    "query": "Why are there water shortages in Mbare?",
+    "user_id": null,
+    "timestamp": "2026-03-21T09:04:47.118497",
+    "confidence": 0.0,
+    "suggested_documents": []
+  },
+  {
+    "query": "water connection fee",
+    "user_id": null,
+    "timestamp": "2026-03-23T09:57:53.221882",
+    "confidence": 0.0,
+    "suggested_documents": []
+  },
+  {
+    "query": "What about business permits?",
+    "user_id": null,
+    "timestamp": "2026-03-23T11:17:09.406019",
+    "confidence": 0.0,
+    "suggested_documents": []
+  },
+  {
+    "query": "My location is Mbare",
+    "user_id": null,
+    "timestamp": "2026-03-23T13:15:20.471760",
+    "confidence": 0.0,
+    "suggested_documents": []
+  },
+  {
+    "query": "What about business permits?",
+    "user_id": null,
+    "timestamp": "2026-03-23T13:15:22.464139",
+    "confidence": 0.0,
+    "suggested_documents": []
+  },
+  {
+    "query": "My location is Mbare",
+    "user_id": null,
+    "timestamp": "2026-03-23T13:31:54.269260",
+    "confidence": 0.0,
+    "suggested_documents": []
+  },
+  {
+    "query": "What about business permits?",
+    "user_id": null,
+    "timestamp": "2026-03-23T13:31:55.111376",
+    "confidence": 0.0,
+    "suggested_documents": []
+  },
+  {
+    "query": "My location is Mbare",
+    "user_id": null,
+    "timestamp": "2026-03-23T13:42:10.111807",
+    "confidence": 0.0,
+    "suggested_documents": []
+  },
+  {
+    "query": "What about business permits?",
+    "user_id": null,
+    "timestamp": "2026-03-23T13:44:54.292040",
+    "confidence": 0.0,
+    "suggested_documents": []
+  },
+  {
+    "query": "My location is Mbare",
+    "user_id": null,
+    "timestamp": "2026-03-23T13:47:38.468911",
+    "confidence": 0.0,
+    "suggested_documents": []
+  },
+  {
+    "query": "What about business permits?",
+    "user_id": null,
+    "timestamp": "2026-03-23T13:50:20.741596",
+    "confidence": 0.0,
+    "suggested_documents": []
+  },
+  {
+    "query": "what are you",
+    "user_id": null,
+    "timestamp": "2026-03-24T12:02:29.747889",
+    "confidence": 0.0,
+    "suggested_documents": []
+  },
+  {
+    "query": "What about business permits?",
+    "user_id": null,
+    "timestamp": "2026-03-24T12:09:19.157921",
+    "confidence": 0.0,
+    "suggested_documents": []
+  },
+  {
+    "query": "What about business permits?",
+    "user_id": null,
+    "timestamp": "2026-03-24T12:20:30.018359",
+    "confidence": 0.0,
+    "suggested_documents": []
+  },
+  {
+    "query": "What about business permits?",
+    "user_id": null,
+    "timestamp": "2026-03-24T12:31:04.358594",
+    "confidence": 0.0,
+    "suggested_documents": []
+  },
+  {
+    "query": "How much is it?",
+    "user_id": null,
+    "timestamp": "2026-03-27T13:18:47.363127",
+    "confidence": 0.0,
+    "suggested_documents": []
+  },
+  {
+    "query": "My location is Mbare",
+    "user_id": null,
+    "timestamp": "2026-03-27T13:20:52.970544",
+    "confidence": 0.0,
+    "suggested_documents": []
+  },
+  {
+    "query": "What about business permits?",
+    "user_id": null,
+    "timestamp": "2026-03-27T13:20:53.706201",
+    "confidence": 0.0,
+    "suggested_documents": []
+  },
+  {
+    "query": "HELLLO",
+    "user_id": null,
+    "timestamp": "2026-03-28T11:04:30.276110",
+    "confidence": 0.0,
+    "suggested_documents": []
+  },
+  {
+    "query": "WHAT IS THIS",
+    "user_id": null,
+    "timestamp": "2026-03-28T11:04:49.751626",
+    "confidence": 0.0,
+    "suggested_documents": []
+  },
+  {
+    "query": "HELLP",
+    "user_id": null,
+    "timestamp": "2026-03-28T11:06:34.948961",
+    "confidence": 0.0,
+    "suggested_documents": []
+  },
+  {
+    "query": "my lights are off",
+    "user_id": null,
+    "timestamp": "2026-03-30T14:08:48.874097",
+    "confidence": 0.0,
+    "suggested_documents": []
+  },
+  {
+    "query": "report theft",
+    "user_id": null,
+    "timestamp": "2026-03-30T14:09:50.669317",
+    "confidence": 0.0,
+    "suggested_documents": []
+  },
+  {
+    "query": "My location is Mbare",
+    "user_id": null,
+    "timestamp": "2026-03-30T14:13:17.311557",
+    "confidence": 0.0,
+    "suggested_documents": []
+  },
+  {
+    "query": "I want to report a pothole",
+    "user_id": null,
+    "timestamp": "2026-03-30T14:15:31.362425",
+    "confidence": 0.0,
+    "suggested_documents": []
+  },
+  {
+    "query": "Check HCC-RPT-2026-12345",
+    "user_id": null,
+    "timestamp": "2026-03-30T14:16:15.828624",
+    "confidence": 0.0,
+    "suggested_documents": []
+  },
+  {
+    "query": "my lights are off",
+    "user_id": null,
+    "timestamp": "2026-03-31T06:59:41.345475",
+    "confidence": 0.0,
+    "suggested_documents": []
+  },
+  {
+    "query": "report theft",
+    "user_id": null,
+    "timestamp": "2026-03-31T07:01:05.854122",
+    "confidence": 0.0,
+    "suggested_documents": []
+  },
+  {
+    "query": "My location is Mbare",
+    "user_id": null,
+    "timestamp": "2026-03-31T07:04:29.603131",
+    "confidence": 0.0,
+    "suggested_documents": []
+  },
+  {
+    "query": "I want to report a pothole",
+    "user_id": null,
+    "timestamp": "2026-03-31T07:06:24.162312",
+    "confidence": 0.0,
+    "suggested_documents": []
+  },
+  {
+    "query": "Check HCC-RPT-2026-12345",
+    "user_id": null,
+    "timestamp": "2026-03-31T07:07:42.886871",
+    "confidence": 0.0,
+    "suggested_documents": []
+  },
+  {
+    "query": "My location is Mbare",
+    "user_id": null,
+    "timestamp": "2026-03-31T07:21:43.728053",
+    "confidence": 0.0,
+    "suggested_documents": []
+  },
+  {
+    "query": "My location is Mbare",
+    "user_id": null,
+    "timestamp": "2026-03-31T08:19:52.077220",
+    "confidence": 0.0,
+    "suggested_documents": []
+  },
+  {
+    "query": "I want to report a pothole",
+    "user_id": null,
+    "timestamp": "2026-03-31T08:21:20.159488",
+    "confidence": 0.0,
+    "suggested_documents": []
+  },
+  {
+    "query": "My location is Mbare",
+    "user_id": null,
+    "timestamp": "2026-03-31T08:36:40.769620",
+    "confidence": 0.0,
+    "suggested_documents": []
+  },
+  {
+    "query": "this is useless",
+    "user_id": null,
+    "timestamp": "2026-03-31T09:25:25.577970",
+    "confidence": 0.0,
+    "suggested_documents": []
+  },
+  {
+    "query": "My location is Mbare",
+    "user_id": null,
+    "timestamp": "2026-03-31T09:25:26.214367",
+    "confidence": 0.0,
+    "suggested_documents": []
+  },
+  {
+    "query": "What about business permits?",
+    "user_id": null,
+    "timestamp": "2026-03-31T09:25:28.054297",
+    "confidence": 0.0,
+    "suggested_documents": []
+  },
+  {
+    "query": "My location is Mbare",
+    "user_id": null,
+    "timestamp": "2026-03-31T10:11:59.632165",
+    "confidence": 0.0,
+    "suggested_documents": []
+  },
+  {
+    "query": "I want to report a pothole",
+    "user_id": null,
+    "timestamp": "2026-03-31T10:14:24.938814",
+    "confidence": 0.0,
+    "suggested_documents": []
+  },
+  {
+    "query": "hello",
+    "user_id": null,
+    "timestamp": "2026-03-31T11:50:36.665342",
+    "confidence": 0.0,
+    "suggested_documents": []
+  },
+  {
+    "query": "my lights are off",
+    "user_id": null,
+    "timestamp": "2026-03-31T11:52:47.127771",
+    "confidence": 0.0,
+    "suggested_documents": []
+  },
+  {
+    "query": "report theft",
+    "user_id": null,
+    "timestamp": "2026-03-31T11:54:22.766781",
+    "confidence": 0.0,
+    "suggested_documents": []
+  },
+  {
+    "query": "My location is Mbare",
+    "user_id": null,
+    "timestamp": "2026-03-31T11:58:08.433933",
+    "confidence": 0.0,
+    "suggested_documents": []
+  },
+  {
+    "query": "I want to report a pothole",
+    "user_id": null,
+    "timestamp": "2026-03-31T12:00:45.594424",
+    "confidence": 0.0,
+    "suggested_documents": []
+  },
+  {
+    "query": "My location is Mbare",
+    "user_id": null,
+    "timestamp": "2026-03-31T12:12:14.652505",
+    "confidence": 0.0,
+    "suggested_documents": []
+  },
+  {
+    "query": "My location is Mbare",
+    "user_id": null,
+    "timestamp": "2026-03-31T12:27:19.841270",
+    "confidence": 0.0,
+    "suggested_documents": []
+  },
+  {
+    "query": "My location is Mbare",
+    "user_id": null,
+    "timestamp": "2026-03-31T12:35:12.305916",
+    "confidence": 0.0,
+    "suggested_documents": []
+  },
+  {
+    "query": "My location is Mbare",
+    "user_id": null,
+    "timestamp": "2026-03-31T12:44:54.930073",
+    "confidence": 0.0,
+    "suggested_documents": []
+  },
+  {
+    "query": "what can you do",
+    "user_id": null,
+    "timestamp": "2026-03-31T12:52:58.392144",
+    "confidence": 0.0,
+    "suggested_documents": []
+  },
+  {
+    "query": "My location is Mbare",
+    "user_id": null,
+    "timestamp": "2026-03-31T12:57:08.608157",
+    "confidence": 0.0,
+    "suggested_documents": []
+  },
+  {
+    "query": "what can you do",
+    "user_id": null,
+    "timestamp": "2026-03-31T13:24:14.677429",
+    "confidence": 0.0,
+    "suggested_documents": []
+  },
+  {
+    "query": "My location is Mbare",
+    "user_id": null,
+    "timestamp": "2026-03-31T13:27:46.311459",
+    "confidence": 0.0,
+    "suggested_documents": []
+  },
+  {
+    "query": "what can you do",
+    "user_id": null,
+    "timestamp": "2026-03-31T13:34:37.018496",
+    "confidence": 0.0,
+    "suggested_documents": []
+  },
+  {
+    "query": "My location is Mbare",
+    "user_id": null,
+    "timestamp": "2026-03-31T13:37:53.830334",
+    "confidence": 0.0,
+    "suggested_documents": []
+  },
+  {
+    "query": "what can you do",
+    "user_id": null,
+    "timestamp": "2026-03-31T13:46:53.023288",
+    "confidence": 0.0,
+    "suggested_documents": []
+  },
+  {
+    "query": "My location is Mbare",
+    "user_id": null,
+    "timestamp": "2026-03-31T13:56:22.953339",
+    "confidence": 0.0,
+    "suggested_documents": []
+  },
+  {
+    "query": "what are you",
+    "user_id": null,
+    "timestamp": "2026-03-31T14:04:22.839786",
+    "confidence": 0.0,
+    "suggested_documents": []
+  },
+  {
+    "query": "Mbare",
+    "user_id": null,
+    "timestamp": "2026-03-31T16:53:14.939925",
+    "confidence": 0.0,
+    "suggested_documents": []
+  },
+  {
+    "query": "Big hole on Main Street",
+    "user_id": null,
+    "timestamp": "2026-03-31T16:55:43.619069",
+    "confidence": 0.0,
+    "suggested_documents": []
+  },
+  {
+    "query": "Urgent",
+    "user_id": null,
+    "timestamp": "2026-03-31T16:58:06.245359",
+    "confidence": 0.0,
+    "suggested_documents": []
+  },
+  {
+    "query": "My location is Mbare",
+    "user_id": null,
+    "timestamp": "2026-04-02T08:10:36.071353",
+    "confidence": 0.0,
+    "suggested_documents": []
+  },
+  {
+    "query": "There is a large pothole on Main Street that is damaging cars",
+    "user_id": null,
+    "timestamp": "2026-04-02T08:16:18.142502",
+    "confidence": 0.0,
+    "suggested_documents": []
+  },
+  {
+    "query": "My location is Mbare",
+    "user_id": null,
+    "timestamp": "2026-04-02T08:34:09.048718",
+    "confidence": 0.0,
+    "suggested_documents": []
+  },
+  {
+    "query": "There is a large pothole on Main Street that is damaging cars",
+    "user_id": null,
+    "timestamp": "2026-04-02T08:38:49.972969",
+    "confidence": 0.0,
+    "suggested_documents": []
+  },
+  {
+    "query": "My location is Mbare",
+    "user_id": null,
+    "timestamp": "2026-04-02T09:28:16.579181",
+    "confidence": 0.0,
+    "suggested_documents": []
+  },
+  {
+    "query": "There is a large pothole on Main Street that is damaging cars",
+    "user_id": null,
+    "timestamp": "2026-04-02T09:33:48.258289",
+    "confidence": 0.0,
+    "suggested_documents": []
+  },
+  {
+    "query": "Mbare",
+    "user_id": null,
+    "timestamp": "2026-04-02T09:36:34.748169",
+    "confidence": 0.0,
+    "suggested_documents": []
+  },
+  {
+    "query": "near the market",
+    "user_id": null,
+    "timestamp": "2026-04-02T09:39:31.607276",
+    "confidence": 0.0,
+    "suggested_documents": []
+  },
+  {
+    "query": "CONFIRM",
+    "user_id": null,
+    "timestamp": "2026-04-02T09:42:41.911175",
+    "confidence": 0.0,
+    "suggested_documents": []
+  },
+  {
+    "query": "My location is Mbare",
+    "user_id": null,
+    "timestamp": "2026-04-02T09:54:05.433521",
+    "confidence": 0.0,
+    "suggested_documents": []
+  },
+  {
+    "query": "There is a large pothole on Main Street that is damaging cars",
+    "user_id": null,
+    "timestamp": "2026-04-02T10:00:23.769573",
+    "confidence": 0.0,
+    "suggested_documents": []
+  },
+  {
+    "query": "Mbare",
+    "user_id": null,
+    "timestamp": "2026-04-02T10:03:00.544147",
+    "confidence": 0.0,
+    "suggested_documents": []
+  },
+  {
+    "query": "near the market",
+    "user_id": null,
+    "timestamp": "2026-04-02T10:05:59.352164",
+    "confidence": 0.0,
+    "suggested_documents": []
+  },
+  {
+    "query": "CONFIRM",
+    "user_id": null,
+    "timestamp": "2026-04-02T10:08:30.068631",
+    "confidence": 0.0,
+    "suggested_documents": []
+  },
+  {
+    "query": "There is a large pothole on Main Street that is damaging cars",
+    "user_id": null,
+    "timestamp": "2026-04-02T10:11:38.288872",
+    "confidence": 0.0,
+    "suggested_documents": []
+  },
+  {
+    "query": "Mbare",
+    "user_id": null,
+    "timestamp": "2026-04-02T10:14:26.378466",
+    "confidence": 0.0,
+    "suggested_documents": []
+  },
+  {
+    "query": "My location is Mbare",
+    "user_id": null,
+    "timestamp": "2026-04-02T11:19:59.152377",
+    "confidence": 0.0,
+    "suggested_documents": []
+  },
+  {
+    "query": "There is a large pothole on Main Street that is damaging cars",
+    "user_id": null,
+    "timestamp": "2026-04-02T11:25:06.357152",
+    "confidence": 0.0,
+    "suggested_documents": []
+  },
+  {
+    "query": "Mbare",
+    "user_id": null,
+    "timestamp": "2026-04-02T11:27:36.969481",
+    "confidence": 0.0,
+    "suggested_documents": []
+  },
+  {
+    "query": "near the market",
+    "user_id": null,
+    "timestamp": "2026-04-02T11:30:28.900719",
+    "confidence": 0.0,
+    "suggested_documents": []
+  },
+  {
+    "query": "CONFIRM",
+    "user_id": null,
+    "timestamp": "2026-04-02T11:32:58.965524",
+    "confidence": 0.0,
+    "suggested_documents": []
+  },
+  {
+    "query": "There is a large pothole on Main Street that is damaging cars",
+    "user_id": null,
+    "timestamp": "2026-04-02T11:36:03.080881",
+    "confidence": 0.0,
+    "suggested_documents": []
+  },
+  {
+    "query": "My location is Mbare",
+    "user_id": null,
+    "timestamp": "2026-04-02T11:55:55.922748",
+    "confidence": 0.0,
+    "suggested_documents": []
+  },
+  {
+    "query": "There is a large pothole on Main Street that is damaging cars",
+    "user_id": null,
+    "timestamp": "2026-04-02T12:01:23.256235",
+    "confidence": 0.0,
+    "suggested_documents": []
+  },
+  {
+    "query": "Mbare",
+    "user_id": null,
+    "timestamp": "2026-04-02T12:04:01.015089",
+    "confidence": 0.0,
+    "suggested_documents": []
+  },
+  {
+    "query": "near the market",
+    "user_id": null,
+    "timestamp": "2026-04-02T12:06:37.785983",
+    "confidence": 0.0,
+    "suggested_documents": []
+  },
+  {
+    "query": "CONFIRM",
+    "user_id": null,
+    "timestamp": "2026-04-02T12:09:08.331209",
+    "confidence": 0.0,
+    "suggested_documents": []
+  },
+  {
+    "query": "There is a large pothole on Main Street that is damaging cars",
+    "user_id": null,
+    "timestamp": "2026-04-02T12:12:16.501466",
+    "confidence": 0.0,
+    "suggested_documents": []
+  },
+  {
+    "query": "Mbare",
+    "user_id": null,
+    "timestamp": "2026-04-02T12:15:46.475092",
+    "confidence": 0.0,
+    "suggested_documents": []
+  },
+  {
+    "query": "My location is Mbare",
+    "user_id": null,
+    "timestamp": "2026-04-02T12:24:52.617102",
+    "confidence": 0.0,
+    "suggested_documents": []
+  },
+  {
+    "query": "There is a large pothole on Main Street that is damaging cars",
+    "user_id": null,
+    "timestamp": "2026-04-02T12:30:19.596804",
+    "confidence": 0.0,
+    "suggested_documents": []
+  },
+  {
+    "query": "Mbare",
+    "user_id": null,
+    "timestamp": "2026-04-03T03:06:51.873347",
+    "confidence": 0.0,
+    "suggested_documents": []
+  },
+  {
+    "query": "My location is Mbare",
+    "user_id": null,
+    "timestamp": "2026-04-03T03:34:50.928248",
+    "confidence": 0.0,
+    "suggested_documents": []
+  },
+  {
+    "query": "There is a large pothole on Main Street that is damaging cars",
+    "user_id": null,
+    "timestamp": "2026-04-03T03:39:24.576279",
+    "confidence": 0.0,
+    "suggested_documents": []
+  },
+  {
+    "query": "Mbare",
+    "user_id": null,
+    "timestamp": "2026-04-03T03:42:08.482786",
+    "confidence": 0.0,
+    "suggested_documents": []
+  },
+  {
+    "query": "My location is Mbare",
+    "user_id": null,
+    "timestamp": "2026-04-03T14:09:36.354361",
+    "confidence": 0.0,
+    "suggested_documents": []
+  },
+  {
+    "query": "There is a large pothole on Main Street that is damaging cars",
+    "user_id": null,
+    "timestamp": "2026-04-03T14:16:23.391852",
+    "confidence": 0.0,
+    "suggested_documents": []
+  },
+  {
+    "query": "Mbare",
+    "user_id": null,
+    "timestamp": "2026-04-03T14:19:30.346472",
+    "confidence": 0.0,
+    "suggested_documents": []
+  },
+  {
+    "query": "near the market",
+    "user_id": null,
+    "timestamp": "2026-04-03T14:22:13.659547",
+    "confidence": 0.0,
+    "suggested_documents": []
+  },
+  {
+    "query": "My location is Mbare",
+    "user_id": null,
+    "timestamp": "2026-04-03T14:36:47.066475",
+    "confidence": 0.0,
+    "suggested_documents": []
+  },
+  {
+    "query": "i want to make a report",
+    "user_id": null,
+    "timestamp": "2026-04-03T14:55:48.547211",
+    "confidence": 0.0,
+    "suggested_documents": []
+  },
+  {
+    "query": "i want to make a report",
+    "user_id": null,
+    "timestamp": "2026-04-03T14:58:14.403797",
+    "confidence": 0.0,
+    "suggested_documents": []
+  },
+  {
+    "query": "What is the transport department's phone number?",
+    "user_id": null,
+    "timestamp": "2026-04-07T07:52:07.304673",
+    "confidence": 0.0,
+    "suggested_documents": []
+  },
+  {
+    "query": "What is the transport department's address in Harare?",
+    "user_id": null,
+    "timestamp": "2026-04-07T16:31:30.878541",
+    "confidence": 0.0,
+    "suggested_documents": []
+  },
+  {
+    "query": "What is the transport department's address?",
+    "user_id": null,
+    "timestamp": "2026-04-07T16:37:14.193922",
+    "confidence": 0.0,
+    "suggested_documents": []
+  },
+  {
+    "query": "What is the transport department's address in Harare?",
+    "user_id": null,
+    "timestamp": "2026-04-07T16:51:34.431031",
+    "confidence": 0.0,
+    "suggested_documents": []
+  },
+  {
+    "query": "What is the transport department's address?",
+    "user_id": null,
+    "timestamp": "2026-04-07T16:55:47.364726",
+    "confidence": 0.0,
+    "suggested_documents": []
+  },
+  {
+    "query": "What is the transport department's address?",
+    "user_id": null,
+    "timestamp": "2026-04-07T17:04:15.100228",
+    "confidence": 0.0,
+    "suggested_documents": []
+  },
+  {
+    "query": "What is the transport department's address?",
+    "user_id": null,
+    "timestamp": "2026-04-07T17:11:07.840703",
+    "confidence": 0.0,
+    "suggested_documents": []
+  },
+  {
+    "query": "What is the transport department's address?",
+    "user_id": null,
+    "timestamp": "2026-04-07T17:12:37.666486",
+    "confidence": 0.0,
+    "suggested_documents": []
+  },
+  {
+    "query": "What is the transport department's address?",
+    "user_id": null,
+    "timestamp": "2026-04-07T17:33:37.664546",
+    "confidence": 0.0,
+    "suggested_documents": []
+  },
+  {
+    "query": "What is the transport department's address?",
+    "user_id": null,
+    "timestamp": "2026-04-07T17:58:36.975077",
+    "confidence": 0.0,
+    "suggested_documents": []
+  },
+  {
+    "query": "What is the transport department's address?",
+    "user_id": null,
+    "timestamp": "2026-04-07T18:11:35.518670",
+    "confidence": 0.0,
+    "suggested_documents": []
+  },
+  {
+    "query": "What are the council's requirements for a birth certificate?",
+    "user_id": null,
+    "timestamp": "2026-04-07T18:20:03.173658",
+    "confidence": 0.0,
+    "suggested_documents": []
+  },
+  {
+    "query": "What are the council's requirements for a birth certificate?",
+    "user_id": null,
+    "timestamp": "2026-04-07T18:27:09.238271",
+    "confidence": 0.0,
+    "suggested_documents": []
+  },
+  {
+    "query": "What are the council's requirements for a birth certificate?",
+    "user_id": null,
+    "timestamp": "2026-04-07T18:35:41.241158",
+    "confidence": 0.0,
+    "suggested_documents": []
+  },
+  {
+    "query": "What are the council's requirements for a birth certificate?",
+    "user_id": null,
+    "timestamp": "2026-04-07T18:40:43.659518",
+    "confidence": 0.0,
+    "suggested_documents": []
+  },
+  {
+    "query": "My location is Mbare",
+    "user_id": null,
+    "timestamp": "2026-04-07T19:20:29.482607",
+    "confidence": 0.0,
+    "suggested_documents": []
+  },
+  {
+    "query": "What is the transport department's address?",
+    "user_id": null,
+    "timestamp": "2026-04-07T19:24:30.583618",
+    "confidence": 0.0,
+    "suggested_documents": []
+  },
+  {
+    "query": "My location is Mbare",
+    "user_id": null,
+    "timestamp": "2026-04-07T19:44:42.729641",
+    "confidence": 0.0,
+    "suggested_documents": []
+  },
+  {
+    "query": "What is the transport department's address?",
+    "user_id": null,
+    "timestamp": "2026-04-07T19:48:14.028951",
+    "confidence": 0.0,
+    "suggested_documents": []
+  },
+  {
+    "query": "My location is Mbare",
+    "user_id": null,
+    "timestamp": "2026-04-07T20:07:20.107131",
+    "confidence": 0.0,
+    "suggested_documents": []
+  },
+  {
+    "query": "My location is Mbare",
+    "user_id": null,
+    "timestamp": "2026-04-08T11:56:29.685300",
+    "confidence": 0.0,
+    "suggested_documents": []
+  },
+  {
+    "query": "My location is Mbare",
+    "user_id": null,
+    "timestamp": "2026-04-08T12:05:02.647056",
+    "confidence": 0.0,
+    "suggested_documents": []
+  },
+  {
+    "query": "give me the full digits of pi",
+    "user_id": null,
+    "timestamp": "2026-04-08T12:45:05.025085",
+    "confidence": 0.0,
+    "suggested_documents": []
+  },
+  {
+    "query": "\"Report pi digits to assistance team for review and resolution\"",
+    "user_id": null,
+    "timestamp": "2026-04-08T12:52:00.900795",
+    "confidence": 0.0,
+    "suggested_documents": []
+  },
+  {
+    "query": "i want a shop license",
+    "user_id": null,
+    "timestamp": "2026-04-09T08:31:17.576612",
+    "confidence": 0.0,
+    "suggested_documents": []
+  },
+  {
+    "query": "\"Urgent shop license inquiry for review by team to improve, or alternative reporting method if needed\"\n\nThis query includes the topic of \"shop license\" and specifies that it's an urgent issue that",
+    "user_id": null,
+    "timestamp": "2026-04-09T08:35:12.618642",
+    "confidence": 0.0,
+    "suggested_documents": []
+  },
+  {
+    "query": "This is a test override message",
+    "user_id": null,
+    "timestamp": "2026-04-16T10:41:29.712523",
+    "confidence": 0.0,
+    "suggested_documents": []
+  },
+  {
+    "query": "This is a test_e2e override message",
+    "user_id": null,
+    "timestamp": "2026-04-16T12:17:29.361198",
+    "confidence": 0.0,
+    "suggested_documents": []
+  },
+  {
+    "query": "test_e2e_final",
+    "user_id": null,
+    "timestamp": "2026-04-16T12:22:46.540282",
+    "confidence": 0.0,
+    "suggested_documents": []
+  },
+  {
+    "query": "test_e2e_final",
+    "user_id": null,
+    "timestamp": "2026-04-16T12:31:58.264535",
+    "confidence": 0.0,
+    "suggested_documents": []
+  },
+  {
+    "query": "test_all",
+    "user_id": null,
+    "timestamp": "2026-04-16T12:45:03.718495",
+    "confidence": 0.0,
+    "suggested_documents": []
+  },
+  {
+    "query": "test_nowait",
+    "user_id": null,
+    "timestamp": "2026-04-16T12:52:07.238363",
+    "confidence": 0.0,
+    "suggested_documents": []
+  },
+  {
+    "query": "ping",
+    "user_id": null,
+    "timestamp": "2026-04-18T12:09:06.927703",
+    "confidence": 0.0,
+    "suggested_documents": []
+  },
+  {
+    "query": "what are the system s of cholera",
+    "user_id": null,
+    "timestamp": "2026-04-21T10:00:04.934658",
+    "confidence": 0.0,
+    "suggested_documents": []
+  },
+  {
+    "query": "What are the symptoms of cholera",
+    "user_id": null,
+    "timestamp": "2026-05-01T18:32:35.053994",
+    "confidence": 0.0,
+    "suggested_documents": []
+  },
+  {
+    "query": "What are the symptoms of cholera",
+    "user_id": null,
+    "timestamp": "2026-05-02T10:22:23.726964",
+    "confidence": 0.0,
+    "suggested_documents": []
+  },
+  {
+    "query": "What are the symptoms of cholera",
+    "user_id": null,
+    "timestamp": "2026-05-02T10:57:44.295037",
+    "confidence": 0.0,
+    "suggested_documents": []
+  },
+  {
+    "query": "What are the symptoms of cholera",
+    "user_id": null,
+    "timestamp": "2026-05-02T11:28:25.866807",
+    "confidence": 0.0,
+    "suggested_documents": []
+  },
+  {
+    "query": "What are the symptoms of cholera",
+    "user_id": null,
+    "timestamp": "2026-05-02T11:53:49.421205",
+    "confidence": 0.0,
+    "suggested_documents": []
+  },
+  {
+    "query": "What are the symptoms of cholera",
+    "user_id": null,
+    "timestamp": "2026-05-02T13:23:29.435670",
+    "confidence": 0.0,
+    "suggested_documents": []
+  },
+  {
+    "query": "What are the symptoms of cholera",
+    "user_id": null,
+    "timestamp": "2026-05-02T14:05:42.488603",
+    "confidence": 0.0,
+    "suggested_documents": []
+  },
+  {
+    "query": "What are the symptoms of cholera",
+    "user_id": null,
+    "timestamp": "2026-05-02T14:55:47.839540",
+    "confidence": 0.0,
+    "suggested_documents": []
+  },
+  {
+    "query": "What symptoms cholera",
+    "user_id": null,
+    "timestamp": "2026-05-02T14:55:48.253124",
+    "confidence": 0.0,
+    "suggested_documents": []
+  },
+  {
+    "query": "What are the symptoms of cholera",
+    "user_id": null,
+    "timestamp": "2026-05-02T15:56:37.280617",
+    "confidence": 0.0,
+    "suggested_documents": []
+  },
+  {
+    "query": "What symptoms cholera",
+    "user_id": null,
+    "timestamp": "2026-05-02T15:56:37.666301",
+    "confidence": 0.0,
+    "suggested_documents": []
+  },
+  {
+    "query": "What are the symptoms of cholera",
+    "user_id": null,
+    "timestamp": "2026-05-03T06:28:50.898511",
+    "confidence": 0.0,
+    "suggested_documents": []
+  },
+  {
+    "query": "What symptoms cholera",
+    "user_id": null,
+    "timestamp": "2026-05-03T06:28:51.395195",
+    "confidence": 0.0,
+    "suggested_documents": []
+  },
+  {
+    "query": "What are the symptoms of cholera",
+    "user_id": "rag-direct-test",
+    "timestamp": "2026-05-03T06:51:27.827434",
+    "confidence": 0.0,
+    "suggested_documents": []
+  },
+  {
+    "query": "What are the symptoms of cholera",
+    "user_id": "rag-direct-test",
+    "timestamp": "2026-05-03T07:25:40.428632",
+    "confidence": 0.0,
+    "suggested_documents": []
+  },
+  {
+    "query": "What are the symptoms of cholera",
+    "user_id": "rag-direct-test",
+    "timestamp": "2026-05-03T07:42:11.351540",
+    "confidence": 0.0,
+    "suggested_documents": []
+  },
+  {
+    "query": "What are the symptoms of cholera",
+    "user_id": "rag-direct-test",
+    "timestamp": "2026-05-03T07:53:46.424730",
+    "confidence": 0.0,
+    "suggested_documents": []
+  },
+  {
+    "query": "How is my water bill calculated",
+    "user_id": "rag-direct-test",
+    "timestamp": "2026-05-04T11:26:39.127674",
+    "confidence": 0.0,
+    "suggested_documents": []
+  },
+  {
+    "query": "Do pensioners get a discount on water bills",
+    "user_id": "rag-direct-test",
+    "timestamp": "2026-05-04T11:26:39.461211",
+    "confidence": 0.0,
+    "suggested_documents": []
+  },
+  {
+    "query": "What are the symptoms of cholera",
+    "user_id": "rag-direct-test",
+    "timestamp": "2026-05-04T11:26:39.784771",
+    "confidence": 0.0,
+    "suggested_documents": []
+  },
+  {
+    "query": "How is my water bill calculated",
+    "user_id": "rag-direct-test",
+    "timestamp": "2026-05-04T11:28:11.702362",
+    "confidence": 0.0,
+    "suggested_documents": []
+  },
+  {
+    "query": "Do pensioners get a discount on water bills",
+    "user_id": "rag-direct-test",
+    "timestamp": "2026-05-04T11:28:11.985980",
+    "confidence": 0.0,
+    "suggested_documents": []
+  },
+  {
+    "query": "What are the symptoms of cholera",
+    "user_id": "rag-direct-test",
+    "timestamp": "2026-05-04T11:28:12.276038",
+    "confidence": 0.0,
+    "suggested_documents": []
+  },
+  {
+    "query": "How is my water bill calculated",
+    "user_id": "rag-direct-test",
+    "timestamp": "2026-05-04T11:29:56.862237",
+    "confidence": 0.0,
+    "suggested_documents": []
+  },
+  {
+    "query": "Do pensioners get a discount on water bills",
+    "user_id": "rag-direct-test",
+    "timestamp": "2026-05-04T11:29:57.187978",
+    "confidence": 0.0,
+    "suggested_documents": []
+  },
+  {
+    "query": "What are the symptoms of cholera",
+    "user_id": "rag-direct-test",
+    "timestamp": "2026-05-04T11:30:00.679488",
+    "confidence": 0.0,
+    "suggested_documents": []
+  }
+]

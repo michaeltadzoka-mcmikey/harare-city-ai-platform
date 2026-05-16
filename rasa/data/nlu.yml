@@ -1,0 +1,278 @@
+version: "3.1"
+
+# ---------------------------------------------------------------------------
+# Harare City Council – RASA NLU Training Data
+# Spec: RASA Integration Doc v1.0 §3.1
+#
+# RASA handles ONLY: report submission, status checks, and conversational
+# flow (greet/goodbye/affirm/deny/cancel/restart).
+# General service enquiry intents have been REMOVED – handled by LLM Gateway.
+# ---------------------------------------------------------------------------
+
+nlu:
+  # ── Conversational flow ──────────────────────────────────────────────────
+  - intent: greet
+    examples: |
+      - hi
+      - hello
+      - hey
+      - good morning
+      - good afternoon
+      - good evening
+      - howdy
+      - hi there
+      - hello there
+      - greetings
+      - start
+      - begin
+
+  - intent: goodbye
+    examples: |
+      - bye
+      - goodbye
+      - see you
+      - see you later
+      - take care
+      - good night
+      - that is all
+      - thanks bye
+      - thank you goodbye
+      - I am done
+      - exit
+      - done
+      - finished
+
+  - intent: affirm
+    examples: |
+      - CONFIRM
+      - confirm
+      - yes
+      - yeah
+      - yep
+      - correct
+      - that is right
+      - ok
+      - okay
+      - sure
+      - absolutely
+      - definitely
+      - yes please
+      - confirmed
+      - submit
+      - go ahead
+      - proceed
+      - that looks right
+      - looks good
+
+  - intent: deny
+    examples: |
+      - no
+      - nope
+      - nah
+      - not really
+      - that is wrong
+      - incorrect
+      - do not submit
+      - negative
+      - that is not right
+      - wrong
+
+  - intent: report_restart
+    examples: |
+      - RESTART
+      - start over
+      - start again
+      - begin again
+      - redo
+      - let me start over
+      - I want to start again
+      - reset
+      - let me redo this
+      - I made a mistake start over
+      - go back to the beginning
+      - I want to redo my report
+      - restart the report
+      - change my report
+
+  - intent: cancel
+    examples: |
+      - CANCEL
+      - cancel
+      - stop
+      - discard
+      - forget it
+      - never mind
+      - nevermind
+      - abandon
+      - I do not want to report
+      - stop the report
+      - do not submit
+      - I changed my mind
+      - quit
+
+  # ── Report submission ─────────────────────────────────────────────────────
+  # Core intent: any message indicating citizen wants to report an issue.
+  - intent: submit_report
+    examples: |
+      - I want to report an issue
+      - report a problem
+      - I need to report something
+      - there is a problem
+      - I want to submit a report
+      - report issue
+      - log a complaint
+      - I want to log a report
+      - there is a burst water pipe
+      - there is a pothole
+      - there is illegal dumping
+      - the streetlight is broken
+      - the drain is blocked
+      - there is a sewer overflow
+      - burst pipe
+      - report water leak
+      - report pothole
+      - report illegal dumping
+      - report streetlight fault
+      - report blocked drain
+      - report sewer overflow
+      - I want to report a fault
+      - there is flooding on my street
+      - garbage has not been collected
+      - the road has a big hole
+      - water is leaking from a pipe
+      - there is a broken street light
+      - sewage is overflowing
+      - I need to make a complaint
+      - I want to report damaged road
+      - report a manhole cover missing
+      - there is raw sewage on the street
+      - the water supply has been cut off unexpectedly
+      - there is a collapsed road surface
+      - the refuse collectors have not come in weeks
+      - there is waste dumped near my house
+      - a fire hydrant is broken and leaking
+      - my street has no lighting at night
+      - there is a broken water main
+
+  # ── Status checks ─────────────────────────────────────────────────────────
+  - intent: check_report_status
+    examples: |
+      - check my report status
+      - what is the status of my report
+      - track my report
+      - my reference number is HCC-RPT-2026-00789
+      - check [HCC-RPT-2026-01452](reference_id)
+      - status of [HCC-RPT-2026-00001](reference_id)
+      - [HCC-RPT-2026-00050](reference_id)
+      - I have reference number HCC-RPT-2026-00200
+      - what happened to my report
+      - has my report been resolved
+      - is my issue fixed
+      - [HCC-RPT-2025-00456](reference_id)
+      - follow up on my report
+      - any update on my complaint
+      - [HCC-RPT-2026-09999](reference_id)
+      - track [HCC-RPT-2026-00123](reference_id)
+      - I sent a report last week what is the update
+      - check status [HCC-RPT-2026-00321](reference_id)
+
+  # ── Gateway trigger (NEW) ─────────────────────────────────────────────────
+  # This intent is never triggered by a real user – it is only sent by the
+  # LLM Gateway to activate a specific form (e.g., report_form).
+  - intent: gateway_trigger
+    examples: |
+      - __trigger__
+
+  # ── Form slot fillers ─────────────────────────────────────────────────────
+
+  - intent: provide_description
+    examples: |
+      - there is a burst water pipe flooding the road
+      - a large pothole that is damaging vehicles
+      - the streetlight has been broken for two weeks
+      - illegal dumping near the community centre
+      - the drain is blocked causing flooding
+      - sewage is overflowing onto the pavement
+      - garbage has not been collected for three weeks
+      - there is a broken water main near the school
+      - the road surface is completely damaged
+      - raw sewage is spilling onto the road from an overflowing manhole
+      - the street light pole has fallen down
+      - my water supply has been cut and the main pipe is clearly broken
+      - potholes have made the road impassable
+      - there is a huge amount of illegal rubbish dumped on the verge
+      - the stormwater drain is blocked with debris causing flooding
+
+  - intent: provide_location
+    examples: |
+      - it is in [Mbare](location)
+      - the location is [Budiriro](location)
+      - [Greendale](location)
+      - [Avondale](location)
+      - [Highfield](location)
+      - [Glen View](location)
+      - [Kuwadzana](location)
+      - [Warren Park](location)
+      - [Hatfield](location)
+      - [Borrowdale](location)
+      - [Mount Pleasant](location)
+      - [Eastlea](location)
+      - [Waterfalls](location)
+      - [Dzivarasekwa](location)
+      - [Tafara](location)
+      - it is in [Mbare](location) near the market
+      - it is located in [Budiriro](location) on Glenview Road
+      - the issue is in [Mabvuku](location)
+      - [Southerton](location) industrial area
+      - near [Belvedere](location)
+      - in [Msasa](location) near the shops
+      - [Workington](location) suburb
+      - [Chitungwiza](location)
+      - [Zengeza](location)
+      - [Highlands](location) area
+      - [Strathaven](location)
+      - [Vainona](location)
+
+  - intent: provide_landmark
+    examples: |
+      - next to [Mbare Musika](landmark)
+      - near [Pick n Pay](landmark)
+      - opposite [the school](landmark)
+      - near [the water tower](landmark)
+      - [none](landmark)
+      - there is no landmark
+      - no landmark
+      - I do not know any landmark
+      - next to [the church](landmark)
+      - near [the market](landmark)
+      - opposite [Avondale Shopping Centre](landmark)
+      - beside [the bus terminus](landmark)
+      - near [the football ground](landmark)
+      - next to [the primary school](landmark)
+      - opposite [the clinic](landmark)
+      - no
+      - n/a
+      - nothing nearby
+      - I cannot think of one
+
+  # ── Out of scope ──────────────────────────────────────────────────────────
+  - intent: out_of_scope
+    examples: |
+      - what is the weather today
+      - tell me a joke
+      - who is the president
+      - football scores
+      - politics
+      - help me with my homework
+      - what time is it
+      - book a flight
+      - what movies are on
+      - what is the exchange rate
+      - help me with my taxes
+      - tell me about Zimbabwe
+      - news today
+
+  # ── Regex patterns ────────────────────────────────────────────────────────
+  - regex: reference_id
+    examples: |
+      - HCC-RPT-\d{4}-\d{5}

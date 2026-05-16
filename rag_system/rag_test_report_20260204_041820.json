@@ -1,0 +1,65 @@
+﻿{
+    "DetailedResults":  {
+                            "LongQueryHandling":  true,
+                            "PerformanceSuccessRate":  100,
+                            "GapLogging":  false,
+                            "FilePathLeaks":  0,
+                            "CoverageScore":  50,
+                            "ProfessionalScore":  100,
+                            "Health":  true,
+                            "Info":  true,
+                            "ConcurrentHandling":  true,
+                            "DomainScore":  100,
+                            "NoMetadata":  true,
+                            "AvgResponseTime":  48,
+                            "NonDomainScore":  87.5,
+                            "MalformedHandlingScore":  0,
+                            "GapDetectionScore":  0,
+                            "Stats":  false
+                        },
+    "BaseUrl":  "http://localhost:8000/api/v1",
+    "Timestamp":  "2026-02-04 04:18:19",
+    "TestSummary":  [
+                        {
+                            "Weight":  20,
+                            "Score":  100,
+                            "Name":  "Domain Guardrails"
+                        },
+                        {
+                            "Weight":  15,
+                            "Score":  87.5,
+                            "Name":  "Non-Domain Filtering"
+                        },
+                        {
+                            "Weight":  15,
+                            "Score":  100,
+                            "Name":  "Response Cleanliness"
+                        },
+                        {
+                            "Weight":  10,
+                            "Score":  100,
+                            "Name":  "Professional Format"
+                        },
+                        {
+                            "Weight":  10,
+                            "Score":  0,
+                            "Name":  "Knowledge Gap Detection"
+                        },
+                        {
+                            "Weight":  15,
+                            "Score":  100,
+                            "Name":  "Performance"
+                        },
+                        {
+                            "Weight":  10,
+                            "Score":  0,
+                            "Name":  "Error Handling"
+                        },
+                        {
+                            "Weight":  5,
+                            "Score":  50,
+                            "Name":  "Document Coverage"
+                        }
+                    ],
+    "OverallScore":  87.5
+}

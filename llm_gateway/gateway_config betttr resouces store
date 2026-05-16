@@ -1,0 +1,377 @@
+# =============================================================================
+# Harare City Council LLM Gateway — gateway_config.yaml
+# Location: llm_gateway/gateway_config.yaml  (project root, next to main.py)
+# Updated: 2026-03-25
+# Changes from previous version:
+#   - Model upgraded from llama3.2:1b → llama3.2:3b
+#   - Strengthened chitchat system prompt (persona, memory, warmth)
+#   - mode changed from balanced → balanced (kept) but reasoning thresholds tuned
+#   - Redis made optional with graceful fallback (was hard-required)
+#   - RAG timeout increased (3b model is slower)
+#   - Context window increased from 2 → 4 exchanges
+#   - Summarisation interval reduced 3 → 2 turns (more frequent memory updates)
+#   - Dashboard disabled by default (enable when service is running)
+#   - Added explicit chitchat system prompt block
+#   - Confidence thresholds tuned for 3b model behaviour
+# =============================================================================
+
+llm_gateway:
+  version: "5.6.2"
+  mode: "balanced"          # simple | balanced | strict
+  port: 8001
+  host: "0.0.0.0"
+  environment: "production"
+
+  # ---------------------------------------------------------------------------
+  # INTENT CLASSIFICATION  (semantic cascade: regex → embeddings → LLM fallback)
+  # ---------------------------------------------------------------------------
+  intent:
+    use_semantic_classifier: true
+    embedding_model: "sentence-transformers/all-MiniLM-L6-v2"
+    similarity_threshold: 0.68        # slightly lower than 0.7 — catches more edge cases
+    cache_ttl: 3600
+    examples_path: "data/intent_examples.json"
+
+  # ---------------------------------------------------------------------------
+  # EXTERNAL SERVICES  (ZESA, ZRP, ZIMRA, ZINARA, medical, clinics)
+  # ---------------------------------------------------------------------------
+  external_services:
+    enabled: true
+    file_path: "data/external_services.yaml"
+
+  # ---------------------------------------------------------------------------
+  # CHITCHAT HANDLER
+  # The system prompt here is what gives Coh Connect its personality.
+  # Keep it specific — vague prompts produce vague bots.
+  # ---------------------------------------------------------------------------
+  chitchat:
+    enabled: true
+    temperature: 0.3                  # low = consistent, on-brand tone
+    max_tokens: 200
+    system_prompt: |
+      You are Coh Connect, the official digital assistant for the City of Harare.
+      Your personality: warm, confident, helpful, and professional — like a knowledgeable
+      council officer who genuinely wants to help citizens.
+
+      WHAT YOU DO:
+      - Answer questions about Harare City Council services: water bills, refuse collection,
+        business permits, building permits, property rates, council clinics, and reporting
+        issues like potholes, burst pipes, or illegal dumping.
+      - Check the status of previously submitted reports when given a reference number.
+      - Remember things citizens tell you during the conversation — their name, suburb,
+        what they are trying to do — and use that information naturally in your replies.
+        For example: if a citizen says "I live in Mbare", and later asks about the nearest
+        clinic, you should factor in Mbare without being asked again.
+
+      WHAT YOU DO NOT DO:
+      - You do not answer questions about ZESA power cuts, Zimbabwe Republic Police matters,
+        ZIMRA taxes, or national government services. You politely redirect those.
+      - You do not guess or make up fees, dates, or policy details. If you are not sure,
+        you say so and offer to help find the right department.
+      - You do not break character. You are always Coh Connect.
+
+      TONE RULES:
+      - Greet citizens warmly and by name if they have introduced themselves.
+      - Be concise — citizens on WhatsApp or USSD do not want paragraphs.
+      - If a citizen seems frustrated, acknowledge it before trying to help.
+      - Never say "I cannot help with that" without offering an alternative.
+
+  # ---------------------------------------------------------------------------
+  # CONTEXT AND FOLLOW-UP HANDLING
+  # ---------------------------------------------------------------------------
+  context:
+    max_recent_messages: 4            # was 2 — more context = better follow-ups
+    relevance_threshold: 0.45         # slightly lower — less aggressive context clearing
+    detect_topic_shift: true
+
+  rewriter:
+    cache_ttl: 3600
+
+  # ---------------------------------------------------------------------------
+  # RAG  (document retrieval service — must be running on port 8000)
+  # ---------------------------------------------------------------------------
+  rag:
+    enabled: true
+    url: "http://localhost:8000"
+    timeout: 90                       # increased — 3b model takes longer to rerank
+    api_version: "2.2"
+    top_k: 7
+    min_confidence: 0.3
+    include_contradictions: true
+    location_boost_factor: 1.5
+    location_mapping: "config/location_mapping.yaml"
+    service_update_injection: true
+    missing_validity_freshness_cap: 0.6
+    use_llm_rerank: true
+    strict_mode_for_factual: true
+    min_sources_for_factual: 2
+    factual_query_types: ["factual", "policy"]
+    rerank:
+      generic_penalty: 0.7
+      location_boost: 1.3
+
+  # ---------------------------------------------------------------------------
+  # LLM  (Ollama — local, free, no API key needed)
+  # UPGRADED: llama3.2:1b → llama3.2:3b
+  # To pull the model:  ollama pull llama3.2:3b
+  # RAM requirement:    ~4-5 GB  (was ~2-3 GB for 1b)
+  # If your server only has 4 GB total, use llama3.2:1b and accept weaker reasoning.
+  # If you have 8 GB+, consider llama3.1:8b for significantly better quality.
+  # ---------------------------------------------------------------------------
+  llama:
+    enabled: true
+    model: "llama3.2:3b"             # CHANGED from llama3.2:1b
+    base_url: "http://localhost:11434"
+    timeout: 90                       # increased for 3b model
+    synthesis_temperature: 0.1        # low = factual, grounded responses
+    direct_response_temperature: 0.3  # slightly higher for natural chitchat
+    max_tokens: 800
+
+  # ---------------------------------------------------------------------------
+  # RASA  (report collection only — pothole, burst pipe, dumping, streetlights)
+  # ---------------------------------------------------------------------------
+  rasa:
+    enabled: true
+    server_url: "http://localhost:5005"
+    reports_only: true
+    timeout: 30
+
+  # ---------------------------------------------------------------------------
+  # DASHBOARD  (staff portal for viewing reports and knowledge gaps)
+  # Set enabled: false until your dashboard service is actually running.
+  # The gateway handles dashboard-down gracefully — it just logs locally.
+  # ---------------------------------------------------------------------------
+  dashboard:
+    enabled: false                    # CHANGED — set true when dashboard is running
+    url: "http://localhost:5000"
+    timeout: 10
+    knowledge_quality_metrics: true
+    redact_pii: true
+
+  # ---------------------------------------------------------------------------
+  # CONFIDENCE BANDS AND ACTIONS
+  # Tuned for 3b model — slightly more permissive on medium band
+  # because 3b synthesis is better than 1b
+  # ---------------------------------------------------------------------------
+  confidence_bands:
+    high:
+      threshold: 0.85
+      synthesis_allowed: true
+      template_group: "high_confidence"
+    medium:
+      threshold: 0.55                 # CHANGED from 0.60 — 3b synthesis is trustworthy lower
+      synthesis_allowed: true
+      template_group: "medium_confidence"
+    low:
+      threshold: 0.40
+      synthesis_allowed: false
+      template_group: "low_confidence"
+    insufficient:
+      threshold: 0.0
+      synthesis_allowed: false
+      action: "escalate"
+
+  confidence_actions:
+    high_threshold: 0.85
+    medium_threshold: 0.55            # CHANGED from 0.60
+    low_action: "trigger_gap"
+
+  confidence_decomposition:
+    enabled: true
+    weights:
+      retrieval: 0.5
+      authority: 0.3
+      freshness: 0.2
+    display_to_citizen: false
+
+  confidence_hard_floors:
+    authority_force_verbatim_threshold: 0.40
+    freshness_warning_threshold: 0.30
+    retrieval_escalate_threshold: 0.25
+
+  domain_normalisation:
+    enabled: true
+    multipliers:
+      "Water Department": 1.2
+      "Housing Department": 0.9
+      "Finance Department": 1.0
+      "Health Department": 1.1
+      "Waste Management": 1.0
+
+  # ---------------------------------------------------------------------------
+  # SESSION MANAGEMENT
+  # Redis is optional — gateway falls back to in-memory if Redis is down.
+  # For production with multiple workers, Redis is strongly recommended.
+  # ---------------------------------------------------------------------------
+  session:
+    storage: "redis"
+    redis_url: "redis://localhost:6379/0"
+    redis_optional: true              # NEW — if Redis unavailable, use in-memory
+    timeout: 1800
+    max_history: 15                   # CHANGED from 10 — more history for better follow-ups
+    cleanup_interval: 300
+    location_persistence: true
+
+  # ---------------------------------------------------------------------------
+  # INTELLIGENCE FEATURES
+  # ---------------------------------------------------------------------------
+  intelligence:
+    summarisation_turn_interval: 2    # CHANGED from 3 — update memory more frequently
+    multi_step_confidence_threshold: 0.65  # CHANGED from 0.7 — trigger reasoning sooner
+    query_types_enabled: true
+    clarification_enabled: true
+    use_chain_of_thought: true
+    use_query_rewriting: true
+    use_self_critique: true           # 3b model self-critique is useful
+    reasoning_trigger_confidence: 0.65
+    reasoning_trigger_query_types: ["policy", "procedure", "eligibility"]
+    benchmark_questions_path: "data/benchmark_questions.json"
+
+  metrics:
+    satisfaction_enabled: true
+    clarification_tracking: true
+    recurrence_tracking: true
+    benchmark_enabled: true
+
+  # ---------------------------------------------------------------------------
+  # PRESENTATION AND RESPONSE FORMATTING
+  # ---------------------------------------------------------------------------
+  presentation_directives:
+    enforce_template_compliance: true
+    enforce_output_schema: true
+    fallback_template: "SAFE_FALLBACK"
+    log_missing_slots: true
+    log_schema_violations: true
+
+  response:
+    enforce_standard_structure: true
+    tiered_fallbacks: true
+
+  # ---------------------------------------------------------------------------
+  # TEMPORAL GUARDRAILS
+  # ---------------------------------------------------------------------------
+  temporal_guardrails:
+    display_validity_if_expires_within_days: 90
+    always_display_if_freshness_below: 0.6
+    enforce_mandatory_slot: true
+    expired_action: "block_and_redirect"
+
+  # ---------------------------------------------------------------------------
+  # CONTRADICTION DISCLOSURE
+  # ---------------------------------------------------------------------------
+  contradiction_disclosure:
+    always_show_resolution: true
+    resolution_phrasing: "The City resolved this in {document} ({date})."
+    max_listed: 2
+
+  # ---------------------------------------------------------------------------
+  # EMERGENCY MODES
+  # ---------------------------------------------------------------------------
+  emergency_modes:
+    water_outage:
+      priority_boost: 10.0
+      response_style: "directive"
+      header: "EMERGENCY WATER OUTAGE INFORMATION"
+    health_alert:
+      priority_boost: 15.0
+      response_style: "alert"
+      header: "PUBLIC HEALTH ALERT"
+    council_strike:
+      priority_boost: 8.0
+      response_style: "informative"
+      header: "COUNCIL SERVICE DISRUPTION"
+    natural_disaster:
+      priority_boost: 20.0
+      response_style: "directive"
+      header: "EMERGENCY ALERT"
+
+  # ---------------------------------------------------------------------------
+  # HUMAN AUTHORITY OVERRIDES
+  # ---------------------------------------------------------------------------
+  override:
+    enabled: true
+    storage: "redis"
+    redis_url: "redis://localhost:6379/1"
+    cache_ttl: 5
+
+  # ---------------------------------------------------------------------------
+  # SANITIZER
+  # ---------------------------------------------------------------------------
+  sanitizer:
+    enabled: true
+    strip_control_instructions: true
+    blocklist_path: "config/sanitizer_blocklist.txt"
+    log_stripped_content: true
+
+  # ---------------------------------------------------------------------------
+  # AUDIT AND DECISION LEDGER
+  # ---------------------------------------------------------------------------
+  audit:
+    decision_ledger: true
+    ledger_path: "logs/decision_ledger.jsonl"
+    hash_chaining: true
+    log_full_payload: false
+
+  # ---------------------------------------------------------------------------
+  # GRACEFUL DEGRADATION
+  # ---------------------------------------------------------------------------
+  degradation:
+    rag_unavailable_message: >
+      Our knowledge base is temporarily unavailable.
+      Please try again in a moment, or call Harare City Council on 04-700600.
+    llm_unavailable_message: null
+    dashboard_unavailable: "continue_and_queue"
+    redis_unavailable: "fallback_to_memory"  # gateway keeps running without Redis
+
+  # ---------------------------------------------------------------------------
+  # KNOWLEDGE GAP FEEDBACK
+  # ---------------------------------------------------------------------------
+  knowledge_gap_feedback:
+    enabled: true
+    store_locally: true
+    feedback_log_path: "logs/knowledge_gap_feedback.jsonl"
+
+  # ---------------------------------------------------------------------------
+  # LOGGING
+  # ---------------------------------------------------------------------------
+  logging:
+    level: "INFO"
+    file: "logs/llm_gateway_v5.log"
+    max_size: "100MB"
+    backup_count: 5
+    log_contradictions: true
+    log_knowledge_gaps: true
+    log_sanitizer_actions: true
+    log_expired_documents: true
+    log_conflict_resolutions: true
+    log_missing_validity: true
+
+  # ---------------------------------------------------------------------------
+  # MONITORING  (Prometheus metrics at /metrics on port 9091)
+  # ---------------------------------------------------------------------------
+  monitoring:
+    enable_metrics: true
+    metrics_port: 9091
+    health_check_interval: 30
+    performance_tracking: true
+
+# =============================================================================
+# GOVERNANCE RECORD
+# =============================================================================
+governance:
+  last_reviewed: "2026-03-25"
+  reviewed_by: "Digital Transformation Unit"
+  approval_reference: "DTU-2026-007"
+  next_review: "2026-06-25"
+
+# =============================================================================
+# QUICK REFERENCE — what to change for common situations
+# =============================================================================
+# Low RAM server (4 GB):      llama.model → llama3.2:1b, llama.timeout → 60
+# High RAM server (8 GB+):    llama.model → llama3.1:8b, llama.timeout → 120
+# Dashboard running:          dashboard.enabled → true
+# Redis running:              session.storage → redis (already set)
+# No Redis at all:            session.storage → memory
+# Stricter answers:           mode → strict, confidence_bands.medium.threshold → 0.65
+# Faster responses:           mode → simple (disables reranking and reasoning)
+# =============================================================================

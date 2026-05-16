@@ -1,0 +1,121 @@
+{
+  "chitchat": [
+    "hi", "hello", "hey", "hey there", "hiya", "good morning", "good afternoon", "good evening", "good day",
+    "how are you", "how's it going", "what's up", "howdy", "how are things", "you good", "yo",
+    "bye", "goodbye", "see you later", "bye bye", "take care", "have a nice day", "later",
+    "thank you", "thanks", "thanks a lot", "thank you so much", "appreciate it", "much appreciated",
+    "what can you do", "what do you do", "how can you help", "what services do you offer", "what's your purpose",
+    "who are you", "what is your name", "who made you", "who created you", "what are you",
+    "tell me a joke", "make me laugh", "tell a joke", "say something funny",
+    "you are helpful", "you're awesome", "good bot", "you're great", "nice job",
+    "how old are you", "how long have you existed", "when were you created",
+    "what is your favourite colour", "do you have hobbies", "can you sing",
+    "i love you", "you're the best", "you rock"
+  ],
+  "knowledge_query": [
+    "how do I pay my water bill", "water bill payment", "where can I pay water bill", "water bill methods",
+    "what are the clinic hours", "clinic timings", "when is the clinic open", "clinic operating hours",
+    "tell me about business permits", "business license", "how to get a business permit", "business registration",
+    "how to apply for a housing grant", "housing grant application", "housing assistance", "council housing",
+    "water connection fee", "cost to connect water", "water installation fee", "new water connection",
+    "refuse collection schedule", "garbage collection day", "rubbish pickup", "waste collection",
+    "building permit requirements", "construction permit", "how to get a building permit", "building regulations",
+    "property rates", "council rates", "rates payment", "property tax",
+    "dog licence", "pet registration", "animal licence",
+    "library membership", "library hours", "how to join the library",
+    "cemetery fees", "burial charges", "grave plot cost",
+    "swimming pool fees", "pool entry", "swimming pool prices",
+    "sports facility booking", "book a sports ground", "sports field rental",
+    "market stall fees", "market stand cost", "vendor permit",
+    "health inspection", "food hygiene", "restaurant licence",
+    "fire safety permit", "fire certificate", "fire inspection",
+    "birth certificate", "death certificate", "marriage certificate",
+    "public toilet locations", "public restrooms", "where are the public toilets",
+    "park opening hours", "park timings", "when does the park open",
+    "waste disposal site", "dump site", "where to dump rubbish",
+    "recycling centres", "recycling drop off", "where to recycle"
+  ],
+  "report_intent": [
+    "I want to report a pothole", "pothole in the road", "there's a hole in the street", "road damage", "sinkhole",
+    "there's a burst pipe", "water pipe burst", "leaking pipe", "water main break", "water gushing",
+    "sewage overflow", "sewer overflow", "raw sewage", "sewage leaking", "manhole overflowing",
+    "illegal dumping", "rubbish dumped", "someone dumped waste", "fly tipping", "garbage dumping",
+    "streetlight not working", "streetlight out", "light pole not working", "dark street", "faulty streetlight",
+    "blocked drain", "drain blocked", "stormwater drain clogged", "drainage problem", "flooding",
+    "leaking water main", "water main leak", "water leak in street",
+    "damaged road", "road damaged", "bad road", "pothole needs fixing", "road collapse",
+    "fallen tree", "tree down", "branch blocking road", "dead tree",
+    "overgrown grass", "weeds", "grass too long", "unkept verge",
+    "abandoned vehicle", "junk car", "car dumped",
+    "graffiti", "vandalism", "tags on wall", "graffiti on building",
+    "noise complaint", "loud music", "party noise", "construction noise",
+    "animal problem", "stray dog", "dead animal", "dangerous animal",
+    "rubbish not collected", "missed bin collection", "trash not picked up",
+    "public toilet not working", "broken toilet", "toilet blocked",
+    "playground equipment broken", "damaged swing", "playground unsafe"
+  ],
+  "status_check": [
+    "status of my report", "report status", "check my report", "track my report", "where is my report",
+    "track reference HCC-RPT-2026-12345", "what's the status", "report update", "any update on my report",
+    "has my report been resolved", "is my report closed", "what's happening with my report",
+    "check reference number", "track case", "update on case", "how is my report going"
+  ],
+  "frustrated": [
+    "this is rubbish", "useless government", "you never help", "waste of time", "i'm tired",
+    "you are useless", "this is frustrating", "I've been waiting for weeks", "nobody comes", "i give up",
+    "this is a joke", "you are no help", "same old story", "nothing ever gets done", "incompetent",
+    "what a waste", "so disappointed", "why do you bother", "you don't care", "this is hopeless",
+    "i'm fed up", "i'm annoyed", "this is ridiculous", "absolutely useless", "pathetic",
+    "what a failure", "you are not listening", "i'm sick of this", "stop giving me the runaround",
+    "i've had enough", "why can't you fix anything", "useless system", "terrible service"
+  ],
+  "external_zesa": [
+    "my lights are off", "no electricity since yesterday", "power has been out", "load shedding in my area",
+    "when is power coming back", "my neighbourhood has no power", "ZESA outage", "power cut",
+    "electricity off", "blackout", "power failure", "no power", "lights out",
+    "load shedding schedule", "ZESA contact", "report power outage", "power trip",
+    "electricity problem", "voltage fluctuations", "frequent power cuts",
+    "transformer blew", "pole down", "cable theft", "ZESA number",
+    "how to report a power cut", "ZESA complaints", "ZESA customer care"
+  ],
+  "external_police": [
+    "someone broke into my house", "there was a fight on my street", "I want to report a crime",
+    "my car was stolen", "police assistance", "report theft", "burglary", "robbery",
+    "assault", "domestic violence", "missing person", "accident", "traffic accident",
+    "hit and run", "vandalism", "harassment", "illegal gambling", "drug dealing",
+    "police station", "nearest police station", "how to report a crime", "crime report",
+    "ZRP contact", "police emergency", "999", "police number", "police report"
+  ],
+  "external_zinara": [
+    "toll fees", "how much are tolls", "ZINARA contact", "toll gate prices",
+    "toll road costs", "toll charges", "toll fees Zimbabwe", "toll gate locations",
+    "ZINARA number", "ZINARA complaints", "vehicle licensing", "road fund",
+    "toll payment", "toll tariffs", "toll fees for cars", "toll fees for trucks",
+    "ZINARA email", "ZINARA office", "toll gate exemption", "toll pass"
+  ],
+  "external_zimra": [
+    "income tax", "customs duty", "ZIMRA number", "tax clearance",
+    "paye", "vat", "value added tax", "capital gains tax", "tax refund",
+    "customs clearance", "import duty", "export tax", "duty free",
+    "zimra contact", "tax registration", "tax number", "tax returns",
+    "fiscalisation", "tax invoice", "withholding tax", "tax audit",
+    "ZIMRA complaints", "ZIMRA email", "ZIMRA office"
+  ],
+  "external_medical": [
+    "hospital", "medical emergency", "ambulance", "I need a doctor", "accident", "medical help",
+    "emergency room", "urgent care", "paramedics", "bleeding", "heart attack", "stroke",
+    "chest pain", "difficulty breathing", "unconscious", "severe injury", "trauma",
+    "poisoning", "overdose", "childbirth", "pregnancy emergency", "mental health crisis",
+    "suicide", "self harm", "rape", "sexual assault", "emergency contact",
+    "closest hospital", "nearest emergency", "medical emergency number"
+  ],
+  "external_clinic": [
+    "clinic", "council clinic", "health centre", "nearest clinic", "clinic hours",
+    "clinic location", "council clinic near me", "public clinic", "primary care",
+    "family planning", "maternity clinic", "child health", "immunisation", "vaccination",
+    "hiv testing", "tb clinic", "std testing", "counselling", "dental clinic",
+    "clinic services", "clinic phone number", "when is the clinic open",
+    "health centre timings", "council health facility"
+  ],
+  "other": []
+}
